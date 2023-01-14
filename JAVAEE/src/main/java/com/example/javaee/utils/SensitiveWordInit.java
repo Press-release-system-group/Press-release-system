@@ -67,7 +67,7 @@ public class SensitiveWordInit {
     @SuppressWarnings("resource")
     private Set<String> readSensitiveWordFile() throws Exception{
         Set<String> set = null;
-        File file = new File("C:\\Users\\13491\\Desktop\\JAVAEE\\src\\main\\java\\com\\example\\javaee\\utils\\SensitiveWord.txt");    //读取文件
+        File file = new File("src/main/java/com/example/javaee/utils/SensitiveWord.txt");    //读取文件
         InputStreamReader read = new InputStreamReader(new FileInputStream(file),ENCODING);
         try {
             if(file.isFile() && file.exists()){      //文件流是否存在
