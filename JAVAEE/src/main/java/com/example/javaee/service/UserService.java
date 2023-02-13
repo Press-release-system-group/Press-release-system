@@ -9,9 +9,11 @@ import java.util.Map;
 
 public interface UserService {
 
-    Map<String, Object> signup(Map<String, String> loginInfo);
+    Map<String, Object> signup(Map<String, String> signupInfo);
     Map<String, Object> checkLogin(Map<String, String> loginInfo);
 
+    Map<String, Object> modifyPwd(Map<String, String> passwordInfo);
+    Map<String, Object> getUserInfo(Map<String, String> userID);
     Map<String, Object> updateUserInfo(Map<String, String> updateInfo);
     Map<String, Object> findAllUser();
 

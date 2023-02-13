@@ -24,10 +24,22 @@ public class UserController {
     public Map<String, Object> login(@RequestBody Map<String, String> loginInfo) {
         return userService.checkLogin(loginInfo);
     }
-
-    @PutMapping("/update")
+    @PutMapping("/modifyPwd")
     @ResponseBody
-    public Map<String, Object> update(@RequestBody Map<String, String> updateInfo) {
+    public Map<String, Object> modifyPwd(@RequestBody Map<String, String> passwordInfo) {
+        return userService.modifyPwd(passwordInfo);
+    }
+
+
+    @GetMapping("/getUserInfo")
+    @ResponseBody
+    public Map<String, Object> getUserInfo(@RequestBody Map<String, String> userID) {
+        return userService.getUserInfo(userID);
+    }
+
+    @PutMapping("/updateUserInfo")
+    @ResponseBody
+    public Map<String, Object> updateUserInfo(@RequestBody Map<String, String> updateInfo) {
         return userService.updateUserInfo(updateInfo);
     }
 

@@ -6,6 +6,7 @@ import com.example.javaee.service.UserService;
 import com.example.javaee.utils.Result;
 import com.example.javaee.utils.Role;
 import com.example.javaee.utils.SensitiveWordFilter;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -72,6 +73,49 @@ public class UserServiceImpl implements UserService
             return Result.fail("密码错误" , null);
 
         return Result.success("登录成功" , user);
+    }
+
+    @Override
+    public Map<String, Object> modifyPwd(Map<String, String> passwordInfo) {
+        try
+        {
+            int user_id = Integer.parseInt(passwordInfo.get("user_id"));
+            String old_pwd = passwordInfo.get("old_password");
+            String new_pwd = passwordInfo.get("new_password");
+
+            User user = userDao.findByUserId(user_id);
+
+            if(user == null)
+                return Result.fail("此用户id无效" , false);
+
+            if(old_pwd == null || old_pwd.isEmpty() || new_pwd == null || new_pwd.isEmpty())
+                return Result.fail("密码不能为空" , null);
+
+            if(!user.getPassword().equals(old_pwd))
+                return Result.fail("密码错误" , false);
+
+            if(old_pwd.equals(new_pwd))
+                return Result.fail("和原有密码一致，请修改" , false);
+
+            return Result.success("修改成功" , true);
+        }
+        catch (NumberFormatException e)
+        {
+            return Result.fail("该用户id类型不合法" , false);
+        }
+    }
+
+    public Map<String, Object> getUserInfo(Map<String, String> userID) {
+        try
+        {
+            int user_id = Integer.parseInt(userID.get("user_id"));
+            User user = userDao.findByUserId(user_id);
+            return Result.success("查询成功" , user);
+        }
+        catch (NumberFormatException e)
+        {
+            return Result.fail("该用户id类型不合法" , null);
+        }
     }
 
     public Map<String, Object> updateUserInfo(Map<String, String> updateInfo) {
