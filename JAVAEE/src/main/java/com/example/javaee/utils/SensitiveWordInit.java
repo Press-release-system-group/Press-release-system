@@ -1,9 +1,9 @@
 package com.example.javaee.utils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import com.example.javaee.JavaeeApplication;
+
+import java.io.*;
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -66,27 +66,63 @@ public class SensitiveWordInit {
     //读取敏感词文件 加到set集合中
     @SuppressWarnings("resource")
     private Set<String> readSensitiveWordFile() throws Exception{
-        Set<String> set = null;
-        File file = new File("src/main/java/com/example/javaee/utils/SensitiveWord.txt");    //读取文件
-        InputStreamReader read = new InputStreamReader(new FileInputStream(file),ENCODING);
-        try {
-            if(file.isFile() && file.exists()){      //文件流是否存在
-                set = new HashSet<String>();
-                BufferedReader bufferedReader = new BufferedReader(read);
-                String txt = null;
-                while((txt = bufferedReader.readLine()) != null){    //读取文件，将文件内容放入到set中
-                    System.out.println(txt);
-                    set.add(txt);
+        Set<String> set = new HashSet<String>();
+        ClassLoader classLoader = JavaeeApplication.class.getClassLoader();
+        URL resource = classLoader.getResource("SensitiveWord.txt");
+        File file = new File(resource.getFile());    //读取文件
+        InputStreamReader read = null;
+        BufferedReader bufferedReader = null;
+        try
+        {
+            if(file.isFile() && file.exists())//文件流是否存在
+            {
+                read = new InputStreamReader(new FileInputStream(file),ENCODING);
+                bufferedReader = new BufferedReader(read);
+            }
+            //经过各种尝试均未能成功从jar包中读取，我妥协了
+//            else//从jar包中读取，由于是压缩包，要使用InputStream
+//            {
+//                InputStream is = ClassLoader.getSystemResourceAsStream("SensitiveWord.txt");
+//                if((is != null))
+//                {
+//                    bufferedReader = new BufferedReader(new InputStreamReader(is));
+//                }
+//                else
+//                {
+//                    throw new Exception("敏感词库文件不存在");
+//                }
+//            }
+            else
+            {
+                File f = new File("SensitiveWord.txt");
+                if(f.isFile() && f.exists())//文件流是否存在
+                {
+                    read = new InputStreamReader(new FileInputStream(f),ENCODING);
+                    bufferedReader = new BufferedReader(read);
+                }
+                else
+                {
+                    throw new Exception("敏感词库文件不存在");
                 }
             }
-            else{         //不存在抛出异常信息
-                throw new Exception("敏感词库文件不存在");
+
+            String txt = null;
+            while((txt = bufferedReader.readLine()) != null)//读取文件，将文件内容放入到set中
+            {
+                System.out.println(txt);
+                set.add(txt);
             }
-        } catch (Exception e) {
-            throw e;
-        }finally{
-            read.close();     //关闭文件流
         }
+        catch (Exception e)
+        {
+            throw e;
+        }
+        finally
+        {
+            if(read != null)
+                read.close();
+        }
+
         return set;
     }
 }
