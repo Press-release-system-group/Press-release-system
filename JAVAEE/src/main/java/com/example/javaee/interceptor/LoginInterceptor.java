@@ -8,12 +8,21 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class LoginInterceptor implements HandlerInterceptor {
+    /**
+     * 拦截请求检查token
+     * @param request
+     * @param response
+     * @param handler
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         String token = request.getHeader("token");
         if (token != null && token.isEmpty()==false&&token.equals("null")!=true) {
             //检验是否是token签名
@@ -29,9 +38,11 @@ public class LoginInterceptor implements HandlerInterceptor {
                         Claims claims=JwtUtil.getClaim(token);
 
                         String username=(String)claims.get("username");
+                        int userId=(int)claims.get("userId");
                         Map<String,Object> map=new HashMap<>();
 
                         map.put("username",username);
+                        map.put("userId",userId);
                         String newToken=JwtUtil.generate(map);
                         response.setHeader("token",newToken);
                         return true;
@@ -46,10 +57,9 @@ public class LoginInterceptor implements HandlerInterceptor {
         response.setCharacterEncoding("UTF-8");
 
         String details="登录已过期或者没登陆";
-       Map<String,Object> map= Result.fail(details,null);
-       String json= JsonUtils.toJson(map);
+      Result result=new Result(404,"登录已过期或者没登陆");
+       String json= JsonUtils.toJson(result);
         response.getWriter().write(json);
-
         response.getWriter().flush();
         return false;
     }

@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.ArrayList;
 import java.util.List;
 
+//这里是拦截请求配置
 @Configuration
 public class LoginConfigInterceptor  implements WebMvcConfigurer {
     @Override
