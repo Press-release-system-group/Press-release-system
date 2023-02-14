@@ -47,7 +47,7 @@
    },
   //  async asyncData ({ $axios, $http}) {
   //      const {data:{ data:topics}} = await $axios.get('https://cnodejs.org/api/v1//topics');
-  //      // const {data:topics} = await $axios.$get('https://cnodejs.org/api/v1//topics');
+  //      
   //     //  const {data:topics} = await $http.$get('https://cnodejs.org/api/v1//topics');
   //      return {
   //        topics
