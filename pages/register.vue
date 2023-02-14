@@ -8,7 +8,7 @@
            <label>用户名</label>
          </div>
          <div class="user-box">
-           <el-input v-model="password" type="password" placeholder="Please input password" show-password class="B2"/>
+           <el-input v-model="password" type="password" placeholder="Please input password" show-password class="B2" @input="changeValue"/>
            <label>密码</label>
          </div>
          <div class="user-box">
@@ -55,7 +55,9 @@
   //  },
 
    methods: {
-  
+    changeValue (e) {
+      this.$forceUpdate()
+    }
    }
  }
  </script>
