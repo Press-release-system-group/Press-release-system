@@ -1,6 +1,6 @@
 <template>
     <div>
-     <div class="login">
+     <div class="register">
        <h2>校园趣闻</h2>
        <el-form>
          <div class="user-box">
@@ -13,8 +13,8 @@
          </div>
          <div class="user-box">
             <el-radio-group v-model="role" class="ml-4" >
-            <el-radio label="1" size="large" >普通用户</el-radio>
-            <el-radio label="2" size="large">管理员</el-radio>
+            <el-radio label="0" size="large" >普通用户</el-radio>
+            <el-radio label="1" size="large">管理员</el-radio>
             </el-radio-group>  
          </div>
          <div class="user-box">
@@ -27,7 +27,6 @@
        <!-- <ul>
          <li v-for="item in topics" :key="item.id"><a href="#">{{ item.title }}</a></li>
        </ul> -->
-       {{ data }}
      </div>
    </div>
  
@@ -38,11 +37,10 @@
      layout:"login",
      data() {
      return {
-        Info:{
-        username: '', // 账号
+        username: '111', // 账号
        password: '',    // 密码
        role:''
-     }
+     
      }
    },
   //  async asyncData ({ $axios, $http}) {
@@ -63,7 +61,7 @@
  </script>
  
  <style>
- .login{
+ .register{
    width: 50%;
    margin: 0 auto;
  }

@@ -1,11 +1,13 @@
 <template>
     <div>
-        <InfoBar/>
+        info
     </div>
 </template>
 
 <script>
-
+ export default{
+    layout:"Info"
+ }
 </script>
 
 <style>
