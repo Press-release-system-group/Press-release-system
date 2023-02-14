@@ -53,20 +53,9 @@
   //        topics
   //      }
   //  },
-  query() {
-  this.$axios.get('/user/getUserInfo?user_id==1', { 
-    params: {}
-  }).then((res) => {
-    this.records = res
-  })
-},
+
    methods: {
-     changeValue (e) {
-       this.$forceUpdate()
-     }
-   },
-   register(){
-    console("被点击")
+  
    }
  }
  </script>

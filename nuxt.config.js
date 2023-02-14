@@ -37,26 +37,15 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/proxy'
   ],
 
 
   axios: {
-    proxy: true,
-    prefix: '/api/',
-    credential: true
+    baseURL:'http://101.33.202.174:7777/'
   },
- 
-  proxy: {
-    '/api/': {
-      target: 'http://101.33.202.174:7777/', // 目标服务器ip
-      pathRewrite: {
-        '^/api/': '/',  // 把 /api 替换成 /
-        changeOrigin: true // 是否跨域
-      }
-    }},
+
   build: {
-    vendor: ["axios"]
+    
 
   }
 }
