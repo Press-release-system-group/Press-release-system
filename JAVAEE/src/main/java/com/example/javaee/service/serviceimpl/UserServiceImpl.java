@@ -1,4 +1,4 @@
-package com.example.javaee.serviceimpl;
+package com.example.javaee.service.serviceimpl;
 
 import com.example.javaee.dao.UserDao;
 import com.example.javaee.entity.User;
