@@ -12,13 +12,13 @@
 </script>
   <style>
   header{
-    top: 0;
+    margin: 0;
     position: relative;
     width: 100%;
     height: 2.5rem;
     background-color: rgb(255, 255, 255);
     padding: 1rem;
-    box-shadow: 0 0.1rem 1rem  rgb(222, 218, 218);
+    box-shadow: 0 0.1rem 0.5rem  rgb(222, 218, 218);
   }
 
   a {

@@ -1,6 +1,6 @@
 <template>
   <div>
-      <nav >
+      <nav class="tobarnav">
         <ul class="bars">
         <li><img src="~/assets/images/宠物.svg" class="logo" /></li>
         <li class="logo_font">校园趣闻</li>
@@ -20,25 +20,58 @@
            </el-dropdown>
         </li>
         <li><img src="~/assets/images/会员.svg"  class="tubiao"/></li>
-        <li><img src="~/assets/images/消息.svg" class="tubiao"/></li>
+        <li>
+          <el-dropdown class="avatar-container">
+           <div>
+            <img src="~/assets/images/消息.svg" class="tubiao"/>
+           </div>
+           <el-dropdown-menu slot="dropdown">
+           <nuxt-link to="/Info">
+            <el-dropdown-item>
+               评论
+             </el-dropdown-item>
+              </nuxt-link>
+              <nuxt-link to="/Info">
+              <el-dropdown-item>
+              <span style="display:block;">点赞</span>
+              </el-dropdown-item>
+              </nuxt-link>
+              <nuxt-link to="/Info">
+              <el-dropdown-item>
+              <span style="display:block;">关注</span>
+              </el-dropdown-item>
+              </nuxt-link>
+              <nuxt-link to="/Info">
+              <el-dropdown-item>
+              <span style="display:block;">私信</span>
+              </el-dropdown-item>
+              </nuxt-link>
+              <nuxt-link to="/Info">
+              <el-dropdown-item>
+              <span style="display:block;">系统消息</span>
+              </el-dropdown-item>
+              </nuxt-link>
+           </el-dropdown-menu>
+          </el-dropdown>
+        </li>
         <li class="menu">
         <el-dropdown class="avatar-container">
-          <div>
+           <div>
             <img src="~/assets/images/头像 女孩.svg" class="tubiao"/>
-          </div>
-         <el-dropdown-menu slot="dropdown">
-         <nuxt-link to="home">
+           </div>
+           <el-dropdown-menu slot="dropdown">
+           <nuxt-link to="home">
             <el-dropdown-item>
                我的主页
-            </el-dropdown-item>
-          </nuxt-link>>
-          <nuxt-link to="login">
-          <el-dropdown-item>
-          <span style="display:block;"> 登录注册</span>
-          </el-dropdown-item>
-          </nuxt-link>
-      </el-dropdown-menu>
-    </el-dropdown>
+             </el-dropdown-item>
+              </nuxt-link>
+              <nuxt-link to="login">
+              <el-dropdown-item>
+              <span style="display:block;"> 登录注册</span>
+              </el-dropdown-item>
+              </nuxt-link>
+           </el-dropdown-menu>
+          </el-dropdown>
         </li>
       </ul>
       </nav>
@@ -82,27 +115,11 @@ data() {
     ],
   }
 },
-// mounted() {
-//     let scrollingElement = document.scrollingElement
-//     let scrollTop = 0
-//     window.addEventListener('scroll', () => {
-//       if (scrollingElement.scrollTop < 300) {
-//         this.isTopbarBlock === false && this.UPDATE_TOPBAR_BLOCK(true)
-//         return
-//       }
-//       if (scrollingElement.scrollTop > scrollTop) {
-//         this.UPDATE_TOPBAR_BLOCK(false)
-//       } else if (scrollingElement.scrollTop < scrollTop) {
-//         this.UPDATE_TOPBAR_BLOCK(true)
-//       }
-//       scrollTop = scrollingElement.scrollTop
-//     })
-//   },
 }
 </script >
 
 <style >
-nav{
+.tobarnav{
 height: 3rem;
 }
 .logo_font{
