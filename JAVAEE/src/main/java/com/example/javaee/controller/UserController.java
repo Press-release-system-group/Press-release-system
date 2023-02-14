@@ -22,6 +22,7 @@ public class UserController {
     @PostMapping("/login")
     @ResponseBody
     public Map<String, Object> login(@RequestBody Map<String, String> loginInfo) {
+// 这块地方需要返回一个token给前端，但现在异常没写好，所以还没写
         return userService.checkLogin(loginInfo);
     }
     @PutMapping("/modifyPwd")
