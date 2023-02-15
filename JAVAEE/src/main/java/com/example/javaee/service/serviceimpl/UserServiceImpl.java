@@ -24,164 +24,66 @@ public class UserServiceImpl implements UserService
     @Autowired
     private UserDao userDao;
 
-    public boolean signup(@RequestBody Map<String, String> loginInfo) {
-        String username = loginInfo.get("username");
-        String password = loginInfo.get("password");
-        String role = loginInfo.get("role");
-
-        if(username == null || username.isEmpty())
-           throw new BusinessException(ExceptionEnum.USERNAME_空);
-
-
-        if(password == null || password.isEmpty())
-            throw new BusinessException(ExceptionEnum.PASSWORD_空);
-
-        if(role == null || role.isEmpty())
-            throw new BusinessException(ExceptionEnum.ROLE_空);
-
-        SensitiveWordFilter filter = new SensitiveWordFilter();// 加载敏感词库
-        Set<String> set = filter.getSensitiveWord(username, 1);// 比对敏感词
-        if (set.size() > 0)
-            throw new BusinessException(ExceptionEnum.USERNAME_敏感);
-
-        if(userDao.findByUsername(username) != null)
-            throw new BusinessException(ExceptionEnum.USERNAME_重复);
-
-        try
-        {
-
-            Role userRole = Role.valueOf(role);
-            userDao.insertNewUser(username , password , userRole);
-            return true;
-        }
-        catch (IllegalArgumentException e)
-        {
-           throw new BusinessException(ExceptionEnum.ROLE_范围外);
-        }
+    public boolean usernameExist(String username)
+    {
+        User user = userDao.findByUsername(username);
+        return user != null;
     }
 
-    public User checkLogin(@RequestBody Map<String, String> loginInfo) {
-        String username = loginInfo.get("username");
-        String password = loginInfo.get("password");
+    public boolean user_idExist(int user_id)
+    {
+        User user = userDao.findByUserId(user_id);
+        return user != null;
+    }
 
-        if(username == null || username.isEmpty())
-            throw new BusinessException(ExceptionEnum.USERNAME_空);
+    public boolean pwdCorrect(int user_id , String pwd)
+    {
+        User user = userDao.findByUserId(user_id);
+        return user.getPassword().equals(pwd);
+    }
 
-        if(password == null || password.isEmpty())
-            throw new BusinessException(ExceptionEnum.PASSWORD_空);
-
+    public boolean pwdCorrect(String username , String pwd)
+    {
         User user = userDao.findByUsername(username);
+        return user.getPassword().equals(pwd);
+    }
 
-        if(user == null)
-            throw new BusinessException(ExceptionEnum.USERNAME_无效);
 
-        if( ! user.getPassword().equals(password))
-            throw new BusinessException(ExceptionEnum.PASSWORD_错误);
 
+    public boolean signup(String username, String password,Role role) {
+        userDao.insertNewUser(username , password , role);
+        return true;
+    }
+
+    public User checkLogin(String username , String password) {
+        User user = userDao.findByUsername(username);
         return user;
     }
 
     @Override
-    public boolean modifyPwd(Map<String, String> passwordInfo) {
-        try
-        {
-            int user_id = Integer.parseInt(passwordInfo.get("user_id"));
-            String old_pwd = passwordInfo.get("old_password");
-            String new_pwd = passwordInfo.get("new_password");
-
-            User user = userDao.findByUserId(user_id);
-            System.out.println(user);
-
-            if(user == null)
-                throw new BusinessException(ExceptionEnum.ID_无效);
-
-            if(old_pwd == null || old_pwd.isEmpty() || new_pwd == null || new_pwd.isEmpty())
-                throw new BusinessException(ExceptionEnum.PASSWORD_空);
-
-            if(!user.getPassword().equals(old_pwd))
-                throw new BusinessException(ExceptionEnum.PASSWORD_错误);
-
-            if(old_pwd.equals(new_pwd))
-                throw new BusinessException(ExceptionEnum.PASSWORD_重复);
-
-            userDao.modifyPwd(user_id , new_pwd);
-            return true;
-        }
-        catch (NumberFormatException e)
-        {
-//            return Result.fail("该用户id类型不合法" , false);
-            throw new BusinessException(ExceptionEnum.ID_不合法);
-        }
+    public boolean modifyPwd(int user_id , String new_pwd) {
+        userDao.modifyPwd(user_id , new_pwd);
+        return true;
     }
 
-    public User getUserInfo(Map<String, String> userID) {
-        try
-        {
-            int user_id = Integer.parseInt(userID.get("user_id"));
-            User user = userDao.findByUserId(user_id);
-            return user;
-        }
-        catch (NumberFormatException e)
-        {
-            throw new BusinessException(ExceptionEnum.ID_不合法);
-        }
+    public User getUserInfo(int user_id)
+    {
+        return userDao.findByUserId(user_id);
     }
 
-    public User updateUserInfo(Map<String, String> updateInfo) {
-        try
-        {
-            int user_id = Integer.parseInt(updateInfo.get("user_id"));
-            String username = updateInfo.get("username");
-            String email = updateInfo.get("email");
-            String phone = updateInfo.get("phone");
-            String name = updateInfo.get("name");
-
-            if(username == null || username.isEmpty())
-                throw new BusinessException(ExceptionEnum.USERNAME_空);
-
-            User user = userDao.findByUserId(user_id);
-            if(user == null)
-                throw new BusinessException(ExceptionEnum.ID_无效);
-
-            SensitiveWordFilter filter = new SensitiveWordFilter();
-            Set<String> set = filter.getSensitiveWord(username, 1);
-            if (set.size() > 0)
-                throw new BusinessException(ExceptionEnum.USERNAME_敏感);
-
-            User repeatUser = userDao.findByUsername(username);
-            if(repeatUser != null && repeatUser.getUser_id() != user_id)
-                throw new BusinessException(ExceptionEnum.USERNAME_重复);
-
-            userDao.updateUserInfo(new User(user.getUser_id(), username , null , user.getRole() , email , phone , name));
-            User newUser = userDao.findByUsername(username);
-            System.out.println("updateDone");
-            return newUser;
-        }
-        catch (NumberFormatException e)
-        {
-            throw new BusinessException(ExceptionEnum.ID_不合法);
-        }
+    public User updateUserInfo(int user_id, String username, String email, String phone, String name)
+    {
+        User user = userDao.findByUserId(user_id);
+        userDao.updateUserInfo(new User(user.getUser_id(), username , user.getPassword() , user.getRole() , email , phone , name));
+        return userDao.findByUserId(user_id);
     }
 
     public List<User> findAllUser() {
         return  userDao.findAll();
     }
 
-    public int deleteById(Map<String, String> deleteInfo) {
-        try
-        {
-            int user_id = Integer.parseInt(deleteInfo.get("user_id"));
-            User user = userDao.findByUserId(user_id);
-            if(user == null)
-                throw new BusinessException(ExceptionEnum.ID_无效);
-
-            return  userDao.deleteById(user_id);
-
-        }
-        catch (NumberFormatException e)
-        {
-            throw new BusinessException(ExceptionEnum.ID_不合法);
-        }
+    public int deleteById(int user_id) {
+        return  userDao.deleteById(user_id);
     }
 
 }

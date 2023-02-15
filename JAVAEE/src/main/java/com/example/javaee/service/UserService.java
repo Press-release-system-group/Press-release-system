@@ -9,13 +9,17 @@ import java.util.Map;
 
 public interface UserService {
 
-    boolean signup(Map<String, String> signupInfo);
-    User checkLogin(Map<String, String> loginInfo);
+    boolean usernameExist(String username);
+    boolean user_idExist(int user_id);
+    boolean pwdCorrect(int user_id , String pwd);
+    boolean pwdCorrect(String username , String pwd);
 
-    boolean modifyPwd(Map<String, String> passwordInfo);
-    User getUserInfo(Map<String, String> userID);
-    User updateUserInfo(Map<String, String> updateInfo);
+    boolean signup(String username , String password , Role role);
+    User checkLogin(String username , String password);
+    boolean modifyPwd(int user_id , String new_pwd);
+    User getUserInfo(int user_id);
+    User updateUserInfo(int user_id, String username, String email, String phone, String name);
     List<User> findAllUser();
 
-    int deleteById(Map<String, String> updateInfo);
+    int deleteById(int user_id);
 }
