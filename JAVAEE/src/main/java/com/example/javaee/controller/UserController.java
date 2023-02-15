@@ -6,6 +6,7 @@ import com.example.javaee.exceptionHandler.exception.ExceptionEnum;
 import com.example.javaee.service.UserService;
 import com.example.javaee.utils.JwtUtil;
 import com.example.javaee.utils.Result;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping({"/user"})
+@Api(tags = "这是用户类接口")
 public class UserController {
 
     @Autowired
@@ -26,6 +28,13 @@ public class UserController {
 
     @PostMapping("/signup")
     @ResponseBody
+@ApiOperation(value = "这是描述用户接口",
+notes = "这里是更详细的描述，可以用html语言")
+
+    @ApiImplicitParams({@ApiImplicitParam(name = "signupInfo",value ="这里是参数的描述" )})
+
+//    @ApiImplicitParams({@ApiImplicitParam(name = "signupInfo",value ="这里是参数的描述" ,dataType = "Map"
+//            ,defaultValue = "ssssss",paramType = "body")})
     public Result signup(@RequestBody Map<String, String> signupInfo) {
 
          userService.signup(signupInfo);

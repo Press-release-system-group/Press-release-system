@@ -13,15 +13,16 @@ import java.util.List;
 //这里是拦截请求配置
 @Configuration
 public class LoginConfigInterceptor  implements WebMvcConfigurer {
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        HandlerInterceptor interceptor=new LoginInterceptor();
-            List<String> list=new ArrayList<>();
-
-            list.add("/user/login");
-
-            list.add("/user/signup");
-
-            registry.addInterceptor(interceptor).addPathPatterns("/**").excludePathPatterns(list);
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        HandlerInterceptor interceptor=new LoginInterceptor();
+//            List<String> list=new ArrayList<>();
+//
+//            list.add("/user/login");
+//
+//            list.add("/user/signup");
+//            list.add("/swagger-ui.html");
+//
+//            registry.addInterceptor(interceptor).addPathPatterns("/**").excludePathPatterns(list);
+//    }
 }
