@@ -1,6 +1,5 @@
 <template>
-    <div style="background-color: black; height: 100vh;">
-        <InfoBar/>
+    <div >
         <div>
             评论
         </div>
@@ -8,7 +7,9 @@
 </template>
 
 <script>
-
+ export default{
+    layout:"Info"
+ }
 </script>
 
 <style>

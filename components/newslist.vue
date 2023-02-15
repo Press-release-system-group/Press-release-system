@@ -4,14 +4,16 @@
         <span>最新</span>
         <hr/>
     </div>
-    <div v-for="o in navs" :key="o" class="item">
-    {{o.name}}
-    </div>
+    <div class="item"  v-for="o in navs" :key="o">
+          <img src="~/assets/images/头像 男孩.svg" class="item-img">
+          <div class="item-text">{{ o.name }}</div>
+        <div class="item-info">{{ o.name }}</div>
+        <!-- <div class="Aimg"><img src="~/assets/images/头像 男孩.svg" class="AAimg"></div> -->
+      </div>
     </div>
   </template>
   <script >
   export default {
-
   data() {
   return {
        navs: [
@@ -49,12 +51,6 @@
   .head hr{
     border-color: #dcdcdc;
   }
-  .item{
-    position:flex;
-    width: 100%;
-    margin-bottom: 1rem;
-    padding: 1rem 1rem 1rem 1rem;
-  }
   .box-card {
     padding: 0;
     margin: 0;
@@ -64,4 +60,38 @@
     margin-left: 14vw;
     box-shadow: 0 0.1rem 1rem  rgb(222, 218, 218);
   }
-  </style>
+  .item{
+  margin-left: 0.5rem;
+  display: inline-block; 
+  margin-bottom: 2rem;
+  width: 54vw;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 0.1rem 0.5rem  rgb(222, 218, 218);
+}
+.item-text{
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  width:45vw;
+  background-color: green;
+}
+.item-info{
+  float: left;
+  margin-bottom: 1rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  width:45vw;
+  background-color: rgb(127, 55, 86);
+}
+/* .Aimg{
+  margin-left: 0;
+  background-color: rgb(92, 76, 146);
+  float:left;
+} */
+.item-img{
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+  float: right;
+  width: 5rem;
+}
+</style>

@@ -15,15 +15,15 @@
          navs: [
         {
           name: '动态',
-          link: 'allNews'
+          link: 'home'
         },
         {
           name: '关注',
-          link: 'attention'
+          link: 'MyAttention'
         },
         {
           name: '点赞',
-          link: 'Collection'
+          link: 'MyCollection'
         }, 
       ],
     }

@@ -3,7 +3,6 @@
         info
     </div>
 </template>
-
 <script>
  export default{
     layout:"Info"

@@ -1,12 +1,13 @@
 <template>
     <div>
-        <InfoBar/>
         点赞
     </div>
 </template>
 
 <script>
-
+ export default{
+    layout:"Info"
+ }
 
 </script>
 

@@ -1,17 +1,72 @@
 <template>
-    <div>
-      <div class="d1"><my/></div>
-      <div class="d2"><mylist/></div>
+  <div>
+      <div class="myHOME"  v-for="o in navs" :key="o">
+          <img src="~/assets/images/头像 男孩.svg" class="CCimg">
+          <div class="Ctext">{{ o.name }}</div>
+        <div class="Cinfo">{{ o.name }}</div>
+        <!-- <div class="Aimg"><img src="~/assets/images/头像 男孩.svg" class="AAimg"></div> -->
       </div>
-  </template>
+    </div>
+</template>
 <script>
-
-  export default {
-    name: "IndexPage",
+export default {
+  layout:"home",
+  data() {
+return {
+     navs: [
+    {
+      name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
+    },
+    {
+      name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
+    },
+    {
+      name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
+    },
+    {
+      name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
+    },
+    {
+      name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
+    },
+  ],
 }
-  </script>
-  <style> 
-  .d2{
-    margin-top: 2rem;
-  }  
-  </style>
+},
+}
+</script>
+<style> 
+.myHOME{
+  display: inline-block; 
+  margin-bottom: 2rem;
+  margin-left: 14vw;
+  width: 52.3vw;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 0.1rem 0.5rem  rgb(222, 218, 218);
+}
+.Ctext{
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  width:45vw;
+  background-color: green;
+}
+.Cinfo{
+  float: left;
+  margin-bottom: 1rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  width:45vw;
+  background-color: rgb(127, 55, 86);
+}
+/* .Aimg{
+  margin-left: 0;
+  background-color: rgb(92, 76, 146);
+  float:left;
+} */
+.CCimg{
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+  float: right;
+  width: 5rem;
+}
+</style>

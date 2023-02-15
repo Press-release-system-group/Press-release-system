@@ -5,7 +5,9 @@
 </template>
 
 <script>
-
+ export default{
+    layout:"Info"
+ }
 </script>
 
 <style>
