@@ -21,8 +21,9 @@ public interface UserDao {
     @Insert("INSERT INTO Users (username,password,role) VALUES (#{username},#{password},#{role})")
     int insertNewUser(String username , String password , Role role);
 
-    @Update("UPDATE Users SET username = #{username}, password = #{password}," +
-            " email = #{email}, phone = #{phone}, name = #{name} WHERE user_id = #{user_id}")
+    @Update("UPDATE Users SET password = #{password} WHERE user_id = #{user_id}")
+    int modifyPwd(int user_id , String password);
+
     int updateUserInfo(User user);
 
     @Delete("DELETE * FROM Users WHERE user_id=#{user_id}")

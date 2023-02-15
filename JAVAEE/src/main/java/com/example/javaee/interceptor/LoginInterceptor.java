@@ -1,8 +1,11 @@
 package com.example.javaee.interceptor;
 
+import com.example.javaee.exceptionHandler.exception.BusinessException;
+import com.example.javaee.exceptionHandler.exception.ExceptionEnum;
 import com.example.javaee.utils.JsonUtils;
 import com.example.javaee.utils.JwtUtil;
 import com.example.javaee.utils.Result;
+import com.example.javaee.utils.Role;
 import io.jsonwebtoken.Claims;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -37,8 +40,22 @@ public class LoginInterceptor implements HandlerInterceptor {
 
                         Claims claims=JwtUtil.getClaim(token);
 
+                        //role权限校验
+                        String uri = request.getRequestURI();
+                        System.out.println(uri);
+                        Role role = Role.valueOf((String)claims.get("role"));
+
+                        //放行的条件取反
+                        if(!(uri.startsWith("/common") ||
+                                uri.startsWith("/publisher") && (role == Role.新闻发布者 || role == Role.管理员) ||
+                                uri.startsWith("/admin") && role == Role.管理员))
+                        {
+                            throw new BusinessException(ExceptionEnum.USER_无权限);
+                        }
+
                         String username=(String)claims.get("username");
                         int userId=(int)claims.get("userId");
+
                         Map<String,Object> map=new HashMap<>();
 
                         map.put("username",username);
