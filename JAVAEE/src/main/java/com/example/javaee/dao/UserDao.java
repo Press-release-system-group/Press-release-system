@@ -24,6 +24,7 @@ public interface UserDao {
     @Update("UPDATE Users SET password = #{password} WHERE user_id = #{user_id}")
     int modifyPwd(int user_id , String password);
 
+    @Update("UPDATE Users SET username = #{username}, email = #{email}, phone = #{phone}, name = #{name} WHERE user_id = #{user_id}")
     int updateUserInfo(User user);
 
     @Delete("DELETE * FROM Users WHERE user_id=#{user_id}")
