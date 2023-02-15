@@ -18,7 +18,9 @@ public enum ExceptionEnum implements BaseErrorInfoInterface{
     ROLE_范围外("5009","用户角色值不在枚举范围内"),
 
     ID_不合法("5010","该用户id类型不合法"),
-    ID_无效("5011","此用户id无效");
+    ID_无效("5011","此用户id无效"),
+
+    USER_无权限("5012","该用户无访问权限");
 
     /**
      * 错误码

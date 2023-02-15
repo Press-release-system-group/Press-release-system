@@ -90,6 +90,7 @@ public class UserServiceImpl implements UserService
             String new_pwd = passwordInfo.get("new_password");
 
             User user = userDao.findByUserId(user_id);
+            System.out.println(user);
 
             if(user == null)
                 throw new BusinessException(ExceptionEnum.ID_无效);
@@ -103,6 +104,7 @@ public class UserServiceImpl implements UserService
             if(old_pwd.equals(new_pwd))
                 throw new BusinessException(ExceptionEnum.PASSWORD_重复);
 
+            userDao.modifyPwd(user_id , new_pwd);
             return true;
         }
         catch (NumberFormatException e)
@@ -130,16 +132,12 @@ public class UserServiceImpl implements UserService
         {
             int user_id = Integer.parseInt(updateInfo.get("user_id"));
             String username = updateInfo.get("username");
-            String password = updateInfo.get("password");
             String email = updateInfo.get("email");
             String phone = updateInfo.get("phone");
             String name = updateInfo.get("name");
 
             if(username == null || username.isEmpty())
                 throw new BusinessException(ExceptionEnum.USERNAME_空);
-
-            if(password == null || password.isEmpty())
-                throw new BusinessException(ExceptionEnum.PASSWORD_空);
 
             User user = userDao.findByUserId(user_id);
             if(user == null)
@@ -154,7 +152,7 @@ public class UserServiceImpl implements UserService
             if(repeatUser != null && repeatUser.getUser_id() != user_id)
                 throw new BusinessException(ExceptionEnum.USERNAME_重复);
 
-            userDao.updateUserInfo(new User(user.getUser_id(), username , password , user.getRole() , email , phone , name));
+            userDao.updateUserInfo(new User(user.getUser_id(), username , null , user.getRole() , email , phone , name));
             User newUser = userDao.findByUsername(username);
             System.out.println("updateDone");
             return newUser;
