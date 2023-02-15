@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.javaee.dao.UpdateDao">
+
+
+
+    <!--    这里是用户表的sql-->
+
+    <!--    这里是新闻表的sql-->
+
+    <!--    这里是评论表的sql-->
+
+    <!--    //这里是喜欢表-->
+
+    <!--    //这里是新闻类别表-->
+
+    <!--    这里是联合表操作-->
+</mapper>
