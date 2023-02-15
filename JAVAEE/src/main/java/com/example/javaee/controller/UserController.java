@@ -7,6 +7,7 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -26,9 +27,9 @@ public class UserController {
     @PostMapping("/user/signup")
     @ResponseBody
     @ApiOperation(value = "用户注册", notes = "{\n" +
-            "    \"username\":\"8\",\n" +
-            "    \"password\":\"8\",\n" +
-            "    \"role\":\"管理员\"\n" +
+            "    \"username\":\"周星驰\",\n" +
+            "    \"password\":\"周星驰\",\n" +
+            "    \"role\":\"普通用户\"\n" +
             "}")
     //@ApiImplicitParams({@ApiImplicitParam(name = "signupInfo",value ="这里是参数的描述" ,dataType = "Map",defaultValue = "ssssss",paramType = "body")})//    @ApiImplicitParam(name = "signupInfo" , paramType = "body",examples = @Example({
 //            @ExampleProperty(value = "{'user':'id'}", mediaType = "application/json"),
@@ -43,12 +44,10 @@ public class UserController {
 //            @ApiJsonProperty(type = Integer.class,key = "page", example = "", description = "当前页"),
 //            @ApiJsonProperty(type = Integer.class,key = "rows", example = "15", description = "行数")
 //    })
-
-    public Result signup(@RequestBody Map<String, String> signupInfo) {
+    public Result signup(@ApiIgnore @RequestBody Map<String, String> signupInfo) {
 
          userService.signup(signupInfo);
-
-         return new Result<Void>(200,"注册成功");
+         return new Result<>(200,"注册成功");
     }
 
     @PostMapping("/user/login")
@@ -58,7 +57,8 @@ public class UserController {
             "    \"username\":\"n\",\n" +
             "    \"password\":\"n\"\n" +
             "}")
-    public Result login(@RequestBody Map<String, String> loginInfo, HttpServletResponse response) {
+
+    public Result login(@ApiIgnore @RequestBody Map<String, String> loginInfo, HttpServletResponse response) {
 
       User user= userService.checkLogin(loginInfo);
 
@@ -87,10 +87,9 @@ public class UserController {
             "    \"old_password\": \"2\",\n" +
             "    \"new_password\": \"2\"\n" +
             "}")
-    public Result modifyPwd(@RequestBody Map<String, String> passwordInfo) {
+    public Result modifyPwd(@ApiIgnore @RequestBody Map<String, String> passwordInfo) {
         userService.modifyPwd(passwordInfo);
-            Result result =new Result(200,"修改成功");
-            return result;
+        return new Result<>(200,"修改成功");
     }
 
     @PutMapping("/common/updateUserInfo")
@@ -103,7 +102,7 @@ public class UserController {
             "    \"phone\": \"123456789\",\n" +
             "    \"name\": \"丁一\"\n" +
             "}")
-    public Result<User> updateUserInfo(@RequestBody Map<String, String> updateInfo) {
+    public Result<User> updateUserInfo(@ApiIgnore @RequestBody Map<String, String> updateInfo) {
         return new Result<>(200,"更新成功",userService.updateUserInfo(updateInfo));
     }
 
@@ -112,7 +111,7 @@ public class UserController {
     @ApiOperation(value = "获取单个用户信息", notes = "\n{\n" +
             "    \"user_id\":2\n" +
             "}")
-    public Result<User> getUserInfo(@RequestBody Map<String, String> userID) {
+    public Result<User> getUserInfo(@ApiIgnore @RequestBody Map<String, String> userID) {
         return new Result(200,"获取成功",userService.getUserInfo(userID));
     }
 
@@ -126,12 +125,13 @@ public class UserController {
     @DeleteMapping("/admin/delete")
     @ResponseBody
     @ApiOperation(value = "删除用户", notes = "由于各表的依赖，该功能可能引发各类问题，尚未处理，前端可以暂时搁置不接")
-    public Result delete(@RequestBody Map<String, String> deleteInfo) {
+    public Result delete(@ApiIgnore @RequestBody Map<String, String> deleteInfo) {
         int i=userService.deleteById(deleteInfo);
         Result result=new Result();
         if(i==1){
             result.setCode(200);
             result.setMsg("删除成功");
+            result.setData(true);
         }else {
             result.setCode(6000);
             result.setMsg("删除失败");
