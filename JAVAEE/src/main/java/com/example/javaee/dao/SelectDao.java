@@ -34,8 +34,6 @@ public interface SelectDao {
     @Select("SELECT * FROM News ")
     List<News> newsSelectAll();
 
-
-
     //这里是评论表的sql
 
     @Select("SELECT * FROM Comments WHERE user_id = #{user_id}")
@@ -64,8 +62,8 @@ public interface SelectDao {
     @Select("SELECT * FROM News_Categories WHERE name = #{categoryName}")
     Category categorySelectByName(String categoryName);
 
-    @Select("SELECT * FROM News_Categories ")
-    Category categorySelectAll();
+    @Select("SELECT * FROM News_Categories")
+    List<Category> categorySelectAll();
 
     //这里是联合表操作
     @Select("SELECT n.news_id,n.title,c.name,n.create_time,n.update_time,n.state FROM News n " +
