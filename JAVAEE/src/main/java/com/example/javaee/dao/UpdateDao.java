@@ -11,12 +11,12 @@ public interface UpdateDao {
     //这里是用户表的sql
 
     //这里是新闻表的sql
-    //todo 希望统一一下格式
+
     @Update("UPDATE News SET title = #{title}, content = #{content}, category_id = #{category_id}, update_time = #{update_time} WHERE news_id = #{news_id}")
-    int updateNews(int news_id, String title, String content, int category_id, Timestamp update_time);
+    int newsUpdateByNews_id(int news_id, String title, String content, int category_id, Timestamp update_time);
 
-                 //todo 这里不小心被我删了一条，好像是根据新闻id改变新闻状态
-
+     @Update("UPDATE News SET state = #{state} WHERE news_id = #{comment_id}")
+     int newsStateUpdateByNews_id();
 
 
     //这里是评论表的sql
