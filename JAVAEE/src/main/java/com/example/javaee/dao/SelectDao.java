@@ -22,14 +22,14 @@ public interface SelectDao {
 
     List<SimpleNews> newsSelectByStatus(List<Integer>  list);
 
-    @Select("SELECT * FROM News WHERE state = #{id}")
-    News  newsSelectByState(int state);
+    @Select("SELECT * FROM News WHERE state = #{state}")
+    List<News>  newsSelectByState(int state);
 
-    @Select("SELECT * FROM News WHERE author_id = #{id}")
-    News newsSelectByAuthor_id(int author_id);
+    @Select("SELECT * FROM News WHERE author_id = #{author_id}")
+    List<News> newsSelectByAuthor_id(int author_id);
 
-    @Select("SELECT * FROM News WHERE category_id = #{id}")
-    News newsSelectByCategory_id(int category_id);
+    @Select("SELECT * FROM News WHERE category_id = #{category_id}")
+    List<News> newsSelectByCategory_id(int category_id);
 
 
     @Select("SELECT * FROM News ")
@@ -56,6 +56,8 @@ public interface SelectDao {
     @Select("SELECT * FROM News_Like WHERE user_id = #{user_id}")
     List<Likes> likesSelectByUser_id(int user_id);
 
+    @Select("SELECT * FROM News_Like WHERE news_id = #{news_id}")
+    List<Likes> likesSelectByNews_id(int news_id);
 
     @Select("SELECT * FROM News_Like WHERE state = #{state}")
     List<Likes> likesSelectByState(int state);
