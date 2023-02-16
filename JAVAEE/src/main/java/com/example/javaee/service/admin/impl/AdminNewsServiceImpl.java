@@ -24,10 +24,12 @@ public class AdminNewsServiceImpl implements IAdminNewsService {
 
     @Override
     public News getNewsById(int id) {
-        News news=selectDao.;
+        News news=selectDao.newsSelectByNewsId(id);
         if(news==null){
             throw new BusinessException(ExceptionEnum.News_新闻不存在);
         }
+
+
         return news;
     }
 }

@@ -18,13 +18,11 @@
     <!--    这里是联合表操作-->
 
     <select id="newsSelectByStatus" resultType="com.example.javaee.vo.SimpleNews">
-       select a.news_id,a.title,b.name as category,create_time,update_time,state
-       from (select * from News where state in
+     select * from News where state in
         (
         <foreach collection="list" item="status" separator=",">
             #{status}
         </foreach>
-        )) as a
-        left join News_Categories as b on a.category_id=b.category_id
+        )
     </select>
 </mapper>

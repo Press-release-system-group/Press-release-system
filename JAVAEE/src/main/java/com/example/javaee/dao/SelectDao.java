@@ -19,6 +19,7 @@ public interface SelectDao {
     @Select("SELECT * FROM News WHERE news_id = #{news_id}")
     News newsSelectByNewsId(int news_id);
 
+
     List<SimpleNews> newsSelectByStatus(List<Integer>  list);
 
     @Select("SELECT * FROM News WHERE state = #{id}")
