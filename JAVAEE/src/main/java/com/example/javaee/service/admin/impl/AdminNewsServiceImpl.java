@@ -3,9 +3,7 @@ package com.example.javaee.service.admin.impl;
 import com.example.javaee.dao.SelectDao;
 import com.example.javaee.dao.UpdateDao;
 import com.example.javaee.dao.UserDao;
-import com.example.javaee.entity.Category;
-import com.example.javaee.entity.News;
-import com.example.javaee.entity.User;
+import com.example.javaee.entity.*;
 import com.example.javaee.exceptionHandler.exception.BusinessException;
 import com.example.javaee.exceptionHandler.exception.ExceptionEnum;
 import com.example.javaee.service.admin.IAdminNewsService;
@@ -70,12 +68,33 @@ public class AdminNewsServiceImpl implements IAdminNewsService {
             throw new BusinessException(ExceptionEnum.News_新闻不存在);
         }
         if((state==3||state==0)&&news.getState()==1){//就是从审核中转换保存中或者通过
-//            updateDao.new
+           updateDao.newsStateUpdateByNews_id(news_id,state);
         }else if(state==2&&news.getState()==3){//删除某条通过的新闻
-//            updateDao.
+           updateDao.newsStateUpdateByNews_id(news_id,state);
+
+          List<Comments> commentsList= selectDao.commentsSelectByNews_id(news_id);
+          if(commentsList==null||commentsList.size()==0)return true;
+
+          updateDao.commentsUpdateByNews_id(1,news_id);//删除评论
+
+          updateDao.likesUpdateByNews_id(1,news_id);//删除点赞
+
         }else {
             throw new BusinessException(ExceptionEnum.PARAMS_接收状态参数非法);
         }
+        return true;
+    }
+
+    @Override
+    public boolean changeCategoryState(int category_id) {
+        Category category = selectDao.categorySelectByCategory_id(category_id);
+        if(category==null)
+        {
+            throw new BusinessException(ExceptionEnum.Category_没有该类别Id);
+        }
+        updateDao.CategoryUpdateByCategory_id(category_id,1);
+        List<News> newsList=selectDao.newsSelectByCategory_id(category_id);
+
         return true;
     }
 }

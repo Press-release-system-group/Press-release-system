@@ -67,10 +67,23 @@ public class AdminNewsController {
         if(state<0||state>3){
             throw new BusinessException(ExceptionEnum.PARAMS_接收状态参数非法);
         }
-
+        newsService.changeNewsState(news_id,state);
         Result result=new Result();
         result.setCode(200);
         result.setData("操作成功");
+        return result;
+    }
+
+    //删除某个新闻类别
+    @PostMapping("changeCagegory")
+    public Result changeCategoryState(Integer category_id){
+        if(category_id==null){
+            throw new BusinessException(ExceptionEnum.PARAMS_接收参数错误);
+        }
+
+        Result result=new Result();
+        result.setCode(200);
+        result.setMsg("删除新闻类别成功");
         return result;
     }
 

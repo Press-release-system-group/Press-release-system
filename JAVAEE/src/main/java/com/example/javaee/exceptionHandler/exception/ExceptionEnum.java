@@ -34,7 +34,10 @@ public enum ExceptionEnum implements BaseErrorInfoInterface{
 
 
     PARAMS_接收参数错误("5501","接收参数错误"),
-    PARAMS_接收状态参数非法("5502","接收状态参数非法");
+    PARAMS_接收状态参数非法("5502","接收状态参数非法"),
+
+
+    Category_没有该类别Id("5601","没有该新闻类别id ");
     /**
      * 错误码
      */
