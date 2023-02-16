@@ -13,17 +13,17 @@ import java.util.UUID;
 //这里是拦截请求配置
 @Configuration
 public class LoginConfigInterceptor  implements WebMvcConfigurer {
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        HandlerInterceptor interceptor=new LoginInterceptor();
-            List<String> list=new ArrayList<>();
-
-            list.add("/user/login");//这里是放行的接口，其他接口都要拦截
-
-            list.add("/user/signup");
-            list.add("/swagger-ui.html");
-
-            registry.addInterceptor(interceptor).addPathPatterns("/**").excludePathPatterns(list);
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        HandlerInterceptor interceptor=new LoginInterceptor();
+//            List<String> list=new ArrayList<>();
+//
+//            list.add("/user/login");//这里是放行的接口，其他接口都要拦截
+//
+//            list.add("/user/signup");
+//            list.add("/swagger-ui.html");
+//
+//            registry.addInterceptor(interceptor).addPathPatterns("/**").excludePathPatterns(list);
+//    }
 
 }
