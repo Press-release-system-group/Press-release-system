@@ -19,6 +19,17 @@ public interface SelectDao {
 
     List<SimpleNews> newsSelectByStatus(List<Integer>  list);
 
+    @Select("SELECT * FROM News WHERE state = #{id}")
+    News  newsSelectByState(int state);
+
+    @Select("SELECT * FROM News WHERE author_id = #{id}")
+    News newsSelectByAuthor_id(int author_id);
+
+    @Select("SELECT * FROM News WHERE category_id = #{id}")
+    News newsSelectByCategory_id(int category_id);
+
+
+
 
     //这里是评论表的sql
 
