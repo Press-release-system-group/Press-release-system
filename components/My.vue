@@ -1,8 +1,8 @@
 <template>
     <div class="mycard">
     <el-avatar :size="50" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" class="avatar"/>
-    <div v-for="o in navs" :key="o" class="info">
-    {{o.name}}
+    <div v-for="my in myInfo" :key="my" class="info">
+    {{my.username}}
     </div>
     <div class="editbutton">
       <el-button plain >编辑资料</el-button>
@@ -11,22 +11,29 @@
   </template>
   <script >
   export default {
-
   data() {
   return {
-       navs: [
+       myInfo: [
       {
-        name: '我的用户名',
-      },
-      {
-        name: '我的职业',
+        user_id:'',
+        username:'',
+        password:'',
+        role:'',
+        email:'',
+        phone:'',
+        name:''      
       },
     ],
   }
 },
+async  fetch() {
+    console.log("111");
+     const {data} = await this.$axios.$get('/api/admin/findAllUser');
+     console.log(data);
+     this.myInfo=data;
+   }
 }
   </script >
-  
   <style >
   .avatar{
     margin-left: 1rem;

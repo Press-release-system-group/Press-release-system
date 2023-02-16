@@ -1,9 +1,9 @@
 <template>
   <div>
-      <div class="myHOME"  v-for="o in navs" :key="o">
+      <div class="myHOME"  v-for="news in navs" :key="news">
           <img src="~/assets/images/头像 男孩.svg" class="CCimg">
-          <div class="Ctext">{{ o.name }}</div>
-        <div class="Cinfo">{{ o.name }}</div>
+          <div class="Ctext">{{ news.name }}</div>
+        <div class="Cinfo">{{ news.name }}</div>
         <!-- <div class="Aimg"><img src="~/assets/images/头像 男孩.svg" class="AAimg"></div> -->
       </div>
     </div>
@@ -32,6 +32,14 @@ return {
   ],
 }
 },
+// async asyncData ({$axios}) {
+//     console.log("111");
+//      const {data} = await $axios.$get('/api/admin/findAllUser');
+//      console.log(data);
+//      return {
+//         data
+//      }
+//    }
 }
 </script>
 <style> 
