@@ -40,8 +40,8 @@ public class AdminNewsController {
             return result;
     }
 
-
-    @PostMapping("getNewsById")
+//查看某个具体新闻
+    @PostMapping("getNewsDetailByNews_id")
     public Result<News> getNewsDetailById(Integer news_id){
         if (news_id==null){
             throw   new BusinessException(ExceptionEnum.PARAMS_接收参数错误);

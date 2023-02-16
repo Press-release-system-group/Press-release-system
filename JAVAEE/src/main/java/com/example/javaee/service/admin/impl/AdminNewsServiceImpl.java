@@ -24,7 +24,7 @@ public class AdminNewsServiceImpl implements IAdminNewsService {
 
     @Override
     public News getNewsById(int id) {
-        News news=selectDao.getNewsByNewsId(id);
+        News news=selectDao.;
         if(news==null){
             throw new BusinessException(ExceptionEnum.News_新闻不存在);
         }

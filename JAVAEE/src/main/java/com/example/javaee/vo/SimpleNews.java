@@ -14,8 +14,7 @@ public class SimpleNews
 {
     int news_id;
     String title;
-    String category;
-    Date create_time;
+    int category_id;
     Date update_time;
     int state;
 }
