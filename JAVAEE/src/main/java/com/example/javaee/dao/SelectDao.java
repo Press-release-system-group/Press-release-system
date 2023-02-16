@@ -1,6 +1,8 @@
 package com.example.javaee.dao;
 
 import com.example.javaee.entity.Category;
+import com.example.javaee.entity.Comments;
+import com.example.javaee.entity.Likes;
 import com.example.javaee.entity.News;
 import com.example.javaee.vo.SimpleNews;
 import org.apache.ibatis.annotations.Mapper;
@@ -29,15 +31,41 @@ public interface SelectDao {
     News newsSelectByCategory_id(int category_id);
 
 
+    @Select("SELECT * FROM News ")
+    List<News> newsSelectAll();
+
 
 
     //这里是评论表的sql
 
+    @Select("SELECT * FROM Comments WHERE user_id = #{user_id}")
+    List<Comments> commentsSelectByUser_id(int user_id);
+
+    @Select("SELECT * FROM Comments WHERE news_id = #{news_id}")
+    List<Comments> commentsSelectByNews_id(int news_id);
+
+    @Select("SELECT * FROM Comments WHERE state = #{state}")
+    List<Comments> commentsSelectByState(int state);
+
+
+
     //这里是喜欢表
 
+    @Select("SELECT count(*) FROM News_Like WHERE news_id = #{news_id}")
+    int likesCountByNews_id(int news_id);
+
+    @Select("SELECT * FROM News_Like WHERE user_id = #{user_id}")
+    List<Likes> likesSelectByUser_id(int user_id);
+
+
+    @Select("SELECT * FROM News_Like WHERE state = #{state}")
+    List<Likes> likesSelectByState(int state);
     //这里是新闻类别表
     @Select("SELECT * FROM News_Categories WHERE name = #{categoryName}")
     Category categorySelectByName(String categoryName);
+
+    @Select("SELECT * FROM News_Categories ")
+    Category categorySelectAll();
 
     //这里是联合表操作
     @Select("SELECT n.news_id,n.title,c.name,n.create_time,n.update_time,n.state FROM News n " +
