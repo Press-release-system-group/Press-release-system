@@ -65,6 +65,9 @@ public interface SelectDao {
     @Select("SELECT * FROM News_Categories WHERE name = #{categoryName}")
     Category categorySelectByName(String categoryName);
 
+    @Select("SELECT * FROM News_Categories WHERE category_id = #{category_id}")
+    Category categorySelectById(int category_id);
+
     @Select("SELECT * FROM News_Categories")
     List<Category> categorySelectAll();
 
