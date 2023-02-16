@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PublishNewsServiceImpl implements IPublishNewsService {
@@ -54,49 +55,32 @@ public class PublishNewsServiceImpl implements IPublishNewsService {
 
     public List<SimpleNews> getAllSimpleNews(int user_id)
     {
-        return selectDao.selectAllSimpleNewsByUserId(user_id);
+        List<SimpleNews> simpleNews = selectDao.selectAllSimpleNewsByUserId(user_id);
+        List<SimpleNews> res = simpleNews.stream()
+                .filter(news -> news.getState() == 3)
+                .collect(Collectors.toList());
+        return res;
     }
 
-    // 查看自己的某个新闻详情
-    public News getNews(int user_id, int news_id)
+    public News getNews(int news_id)
     {
         return selectDao.getNewsByNewsId(news_id);
     }
 
-    public void saveNews(int user_id, String title, String content, String categoryName)
+    public void saveNews(int news_id, String title, String content, String categoryName)
     {
         java.util.Date date = new Date();
         Timestamp time = new Timestamp(date.getTime());
         Category category = selectDao.categorySelectByName(categoryName);
-        updateDao.updateNews(user_id, title, content, category.getCategory_id(), time);
+        updateDao.updateNews(news_id, title, content, category.getCategory_id(), time);
     }
 
-//    // 修改自己的新闻
-//    public News updateNewsByUser(int newsId, News news) {
-//        News oldNews = newsDao.findById(newsId).orElse(null);
-//        if (oldNews == null) {
-//            throw new EntityNotFoundException("News not found with id: " + newsId);
-//        }
-//        if (oldNews.getStatus() != NewsStatus.SAVED.getValue()) {
-//            throw new IllegalStateException("News can only be updated in SAVED status");
-//        }
-//        news.setId(newsId);
-//        news.setStatus(oldNews.getStatus());
-//        return newsDao.save(news);
-//    }
-//
-//    // 发布自己的某个新闻
-//    public News publishNewsByUser(int newsId) {
-//        News news = newsDao.findById(newsId).orElse(null);
-//        if (news == null) {
-//            throw new EntityNotFoundException("News not found with id: " + newsId);
-//        }
-//        if (news.getStatus() != NewsStatus.SAVED.getValue()) {
-//            throw new IllegalStateException("News can only be published in SAVED status");
-//        }
-//        news.setStatus(NewsStatus.PENDING.getValue());
-//        return newsDao.save(news);
-//    }
+
+    public void publishNews(int news_id,String title,String content,String category)
+    {
+        saveNews(news_id, title, content, category);
+        updateDao.updateNewsState(news_id, 1);
+    }
 
 
 

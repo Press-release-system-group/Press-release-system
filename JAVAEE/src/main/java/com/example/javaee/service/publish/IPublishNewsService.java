@@ -14,6 +14,7 @@ public interface IPublishNewsService
 
     public void createNews(int user_id, String title, String content, String categoryName);
     public List<SimpleNews> getAllSimpleNews(int user_id);
-    public News getNews(int user_id,int news_id);
+    public News getNews(int news_id);
     public void saveNews(int news_id, String title, String content, String categoryName);
+    public void publishNews(int news_id, String title, String content, String categoryName);
 }
