@@ -66,6 +66,9 @@ public interface SelectDao {
     @Select("SELECT * FROM News_Categories")
     List<Category> categorySelectAll();
 
+    @Select("SELECT * FROM News_Categories WHERE category_id = #{category_id}")
+    Category categorySelectByCategory_id(int category_id);
+
     //这里是联合表操作
     @Select("SELECT n.news_id,n.title,c.name,n.create_time,n.update_time,n.state FROM News n " +
             "LEFT JOIN News_Categories c ON n.category_id = c.category_id " +

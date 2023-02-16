@@ -5,6 +5,7 @@ import com.example.javaee.exceptionHandler.exception.BusinessException;
 import com.example.javaee.exceptionHandler.exception.ExceptionEnum;
 import com.example.javaee.service.admin.IAdminNewsService;
 import com.example.javaee.utils.Result;
+import com.example.javaee.vo.NewsDetails;
 import com.example.javaee.vo.SimpleNews;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,16 +43,34 @@ public class AdminNewsController {
 
 //查看某个具体新闻
     @PostMapping("getNewsDetailByNews_id")
-    public Result<News> getNewsDetailById(Integer news_id){
+    public Result<NewsDetails> getNewsDetailById(Integer news_id){
         if (news_id==null){
             throw   new BusinessException(ExceptionEnum.PARAMS_接收参数错误);
         }
 
-       News  news=newsService.getNewsById(news_id);
+       NewsDetails newsDetails=newsService.getNewsById(news_id);
         Result result=new Result();
         result.setCode(200);
         result.setMsg("查找某个详细新闻成功");
+        result.setData(newsDetails);
+        return result;
+    }
 
+
+    //审核新闻，其实就是改变新闻的状态，如果要改变状态是删除，其他的东西也要跟着改
+
+    @PostMapping("changeNewsState")
+        public Result changeNewsState(Integer news_id,Integer state){
+        if(news_id==null||state==null){
+            throw new BusinessException(ExceptionEnum.PARAMS_接收参数错误);
+        }
+        if(state<0||state>3){
+            throw new BusinessException(ExceptionEnum.PARAMS_接收状态参数非法);
+        }
+
+        Result result=new Result();
+        result.setCode(200);
+        result.setData("操作成功");
         return result;
     }
 

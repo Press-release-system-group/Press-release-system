@@ -1,5 +1,6 @@
 package com.example.javaee.dao;
 
+import com.example.javaee.entity.News;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
 
@@ -21,10 +22,14 @@ public interface UpdateDao {
 
     //这里是评论表的sql
     @Update("UPDATE  Comments SET  state = #{state} WHERE comment_id = #{comment_id}")
-    int commentsUpdateByComment_id();
+    int commentsUpdateByComment_id(int state,int comment_id);
+
+    @Update("UPDATE  Comments SET  state = #{state} WHERE news_id = #{news_id}")
+    int commentsUpdateByNews_id(int state,int news_id);
 
     //这里是喜欢表
-
+    @Update("UPDATE  News_Like SET  state = #{state} WHERE news_id = #{news_id}")
+    int likesUpdateByNews_id(int news_id,int state);
     //这里是新闻类别表
     @Update("UPDATE News_Categories SET  state = #{state} WHERE category_id = #{category_id}")
     int CategoryUpdateByCategory_id(int category_id,int state);
