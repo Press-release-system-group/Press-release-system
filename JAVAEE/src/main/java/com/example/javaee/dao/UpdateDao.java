@@ -15,8 +15,8 @@ public interface UpdateDao {
     @Update("UPDATE News SET title = #{title}, content = #{content}, category_id = #{category_id}, update_time = #{update_time} WHERE news_id = #{news_id}")
     int newsUpdateByNews_id(int news_id, String title, String content, int category_id, Timestamp update_time);
 
-     @Update("UPDATE News SET state = #{state} WHERE news_id = #{comment_id}")
-     int newsStateUpdateByNews_id();
+     @Update("UPDATE News SET state = #{state} WHERE news_id = #{news_id}")
+     int newsStateUpdateByNews_id(int news_id, int state);
 
 
     //这里是评论表的sql
