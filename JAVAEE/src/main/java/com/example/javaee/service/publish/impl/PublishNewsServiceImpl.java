@@ -72,14 +72,14 @@ public class PublishNewsServiceImpl implements IPublishNewsService {
         java.util.Date date = new Date();
         Timestamp time = new Timestamp(date.getTime());
         Category category = selectDao.categorySelectByName(categoryName);
-        updateDao.updateNews(news_id, title, content, category.getCategory_id(), time);
+        updateDao.newsUpdateByNews_id(news_id, title, content, category.getCategory_id(), time);
     }
 
 
     public void publishNews(int news_id,String title,String content,String category)
     {
         saveNews(news_id, title, content, category);
-        updateDao.updateNewsState(news_id, 1);
+        updateDao.newsStateUpdateByNews_id(news_id, 1);
     }
 
 
