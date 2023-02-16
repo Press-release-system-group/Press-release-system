@@ -30,11 +30,19 @@ public class PublishNewsServiceImpl implements IPublishNewsService {
         return category != null;
     }
 
-    public boolean NewsBelongsToUser(int user_id, int news_id)
+    public boolean newsBelongsToUser(int user_id, int news_id)
     {
-        News news = selectDao.getNewsByUserIdAndNewsId(news_id);
+        News news = selectDao.getNewsByNewsId(news_id);
         return news.getAuthor_id() == user_id;
     }
+
+    public boolean newsIsEditable(int news_id)
+    {
+        News news = selectDao.getNewsByNewsId(news_id);
+        return news.getState() == 0;
+    }
+
+
 
     public void createNews(int user_id, String title, String content, String categoryName)
     {
@@ -49,10 +57,18 @@ public class PublishNewsServiceImpl implements IPublishNewsService {
         return selectDao.selectAllSimpleNewsByUserId(user_id);
     }
 
-    // 查看自己的某个详细新闻
+    // 查看自己的某个新闻详情
     public News getNews(int user_id, int news_id)
     {
-        return selectDao.getNewsByUserIdAndNewsId(news_id);
+        return selectDao.getNewsByNewsId(news_id);
+    }
+
+    public void saveNews(int user_id, String title, String content, String categoryName)
+    {
+        java.util.Date date = new Date();
+        Timestamp time = new Timestamp(date.getTime());
+        Category category = selectDao.categorySelectByName(categoryName);
+        updateDao.updateNews(user_id, title, content, category.getCategory_id(), time);
     }
 
 //    // 修改自己的新闻

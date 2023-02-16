@@ -41,8 +41,6 @@ public class LoginInterceptor implements HandlerInterceptor {
                         Claims claims=JwtUtil.getClaim(token);
 
                         //role权限校验
-
-
                         String uri = request.getRequestURI();
                         System.out.println(uri);
                         Role role = Role.valueOf((String)claims.get("role"));

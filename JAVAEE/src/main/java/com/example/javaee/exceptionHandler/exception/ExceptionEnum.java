@@ -26,7 +26,9 @@ public enum ExceptionEnum implements BaseErrorInfoInterface{
     News_内容为空("5102","内容为空"),
     News_类别为空("5103","类别为空"),
     News_类别不存在("5104","类别不存在"),
-    News_不属于("5105","该新闻不属于你");
+    News_不属于("5105","该新闻不属于你"),
+    News_ID不合法("5106","新闻ID不合法"),
+    News_不可编辑("5107","该新闻已不可编辑");
 
     /**
      * 错误码
