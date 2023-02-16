@@ -1,19 +1,19 @@
 <template>
    <div>
+    <div class="title"><h2>校园趣闻</h2></div>
     <div class="login">
-      <h2>校园趣闻</h2>
       <form>
         <div class="user-box">
           <el-input v-model="username" placeholder="Please input" @input="changeValue" class="B1"/>
-          <label>用户名</label>
+          <label>账号</label>
         </div>
         <div class="user-box">
           <el-input v-model="password" type="password" placeholder="Please input password" show-password class="B2"/>
           <label>密码</label>
         </div>
         <div class="user-box">
-          <el-button type="success" plain>登陆</el-button>
-          <el-button type="primary" plain><nuxt-link to="register">注册</nuxt-link></el-button>
+          <el-button type="success" :plain="true" @click="login">登陆</el-button>
+          <nuxt-link to="register"><el-button type="primary" plain>注册</el-button></nuxt-link>
         </div>
       </form>
     </div>
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import axios from 'axios'
   export default{
     layout:"login",
     data() {
@@ -37,8 +38,6 @@
   },
   async asyncData ({ $axios, $http}) {
       const {data:{ data:topics}} = await $axios.get('https://cnodejs.org/api/v1//topics');
-      // const {data:topics} = await $axios.$get('https://cnodejs.org/api/v1//topics');
-     //  const {data:topics} = await $http.$get('https://cnodejs.org/api/v1//topics');
       return {
         topics
       }
@@ -46,7 +45,21 @@
   methods: {
     changeValue (e) {
       this.$forceUpdate()
-    }
+    },
+    login(){
+      console.log("登陆"+this.role+this.username);
+      axios.post('/api//user/login',{username:this.username,password:this.password})
+      .then(Response=>{
+        console.log(Response);
+        if(Response.data.code==200){
+          this.$message('登陆成功');
+          this.$router.push('/')
+        }
+        else{
+          this.$message('登陆失败')
+        }
+      })
+    },
   }
 }
 </script>
@@ -54,10 +67,14 @@
 <style>
 .login{
   width: 50%;
-  margin: 0 auto;
+  height: 20rem;
+   margin: 0 auto;
+   background-color: rgb(255, 255, 255);
+   box-shadow: 0 0.1rem 1rem  rgb(222, 218, 218);
 }
 .title{
   text-align: center;
+  margin-top: 5rem;
 }
 .B1{
   width: 50%;
@@ -66,7 +83,11 @@
   width: 50%;
 }
 .user-box{
-  margin-top: 0.5rem;
+  padding-top: 2rem;
+  padding-bottom: 0.5rem;
+  text-align: center;
+  /* background-color: aqua; */
+  margin-top: 1rem;
 }
 
 </style>
