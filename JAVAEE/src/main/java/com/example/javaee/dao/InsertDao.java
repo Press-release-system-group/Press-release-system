@@ -16,10 +16,9 @@ public interface InsertDao {
 
     //这里是新闻表的sql
 
-    //todo 希望统一一下格式
     @Insert("INSERT INTO News (title,content,author_id,category_id,create_time,update_time,state) VALUES" +
             " (#{title},#{content},#{user_id},#{category_id},#{create_time},#{update_time},#{state})")
-    int insertNews(int user_id, String title, String content, int category_id, Timestamp create_time, Timestamp update_time, int state);
+    int newsInsert(int user_id, String title, String content, int category_id, Timestamp create_time, Timestamp update_time, int state);
 
 
 

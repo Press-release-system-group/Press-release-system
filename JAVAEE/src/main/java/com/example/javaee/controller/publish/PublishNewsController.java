@@ -36,9 +36,7 @@ public class PublishNewsController
     @ApiOperation(value = "创建新闻", notes = "无需参数")
     public Result createNews(HttpServletRequest request, @RequestBody Map<String, String> createNewsInfo)
     {
-        String token = request.getHeader("token");
-        Claims claims= JwtUtil.getClaim(token);
-        int user_id=(int)claims.get("userId");
+        int user_id = GetUserID(request);
         if(!userService.user_idExist(user_id))
             throw new BusinessException(ExceptionEnum.ID_无效);
 
@@ -61,15 +59,13 @@ public class PublishNewsController
     @ApiOperation(value = "查看自己的所有新闻简略", notes = "无需参数")
     public Result<List<SimpleNews>> getAllSimpleNews(HttpServletRequest request)
     {
-        String token = request.getHeader("token");
-        Claims claims= JwtUtil.getClaim(token);
-        int user_id=(int)claims.get("userId");
+        int user_id = GetUserID(request);
         if(!userService.user_idExist(user_id))
             throw new BusinessException(ExceptionEnum.ID_无效);
 
         try
         {
-            return new Result(200,"查询简略新闻成功",publishNewsService.getAllSimpleNews(user_id));
+            return new Result(200,"查询新闻简略成功",publishNewsService.getAllSimpleNews(user_id));
         }
         catch (NumberFormatException e)
         {
@@ -82,19 +78,19 @@ public class PublishNewsController
     @ApiOperation(value = "查看自己的某个新闻详情", notes = "需要新闻ID")
     public Result<News> getNews(HttpServletRequest request,@RequestBody Map<String, String> getNewsInfo)
     {
-        String token = request.getHeader("token");
-        Claims claims= JwtUtil.getClaim(token);
-        int user_id=(int)claims.get("userId");
+        int user_id = GetUserID(request);
         if(!userService.user_idExist(user_id))
             throw new BusinessException(ExceptionEnum.ID_无效);
 
         try
         {
             int news_id = Integer.parseInt(getNewsInfo.get("news_id"));
+            if(!publishNewsService.newsExist(news_id))
+                throw new BusinessException(ExceptionEnum.News_新闻不存在);
             if(!publishNewsService.newsBelongsToUser(user_id, news_id))
                 throw new BusinessException((ExceptionEnum.News_不属于));
 
-            return new Result(200,"查看新闻成功",publishNewsService.getNews(news_id));
+            return new Result(200,"查看新闻成功",publishNewsService.getNewsDetail(news_id));
         }
         catch (NumberFormatException e)
         {
@@ -107,10 +103,7 @@ public class PublishNewsController
     @ApiOperation(value = "修改后保存新闻", notes = "需要新闻ID、标题、内容和新闻类别")
     public Result saveNews(HttpServletRequest request, @RequestBody Map<String, String> saveNewsInfo)
     {
-        String token = request.getHeader("token");
-        Claims claims= JwtUtil.getClaim(token);
-        int user_id=(int)claims.get("userId");
-
+        int user_id = GetUserID(request);
         if(!userService.user_idExist(user_id))
             throw new BusinessException(ExceptionEnum.ID_无效);
 
@@ -145,9 +138,7 @@ public class PublishNewsController
     @ApiOperation(value = "修改后保存新闻", notes = "需要新闻ID、标题、内容和新闻类别")
     public Result publishNews(HttpServletRequest request, @RequestBody Map<String, String> publishNewsInfo)
     {
-        String token = request.getHeader("token");
-        Claims claims= JwtUtil.getClaim(token);
-        int user_id=(int)claims.get("userId");
+        int user_id = GetUserID(request);
         if(!userService.user_idExist(user_id))
             throw new BusinessException(ExceptionEnum.ID_无效);
 
@@ -177,11 +168,40 @@ public class PublishNewsController
         }
     }
 
-//    // 删除自己的某个新闻
-//    @DeleteMapping("/{newsId}")
-//    public News deleteNewsByUser(@PathVariable("newsId") int newsId) {
-//        return newsService.deleteNewsByUser(newsId);
-//    }
+    // 删除自己的某个新闻
+    @DeleteMapping("/deleteNews")
+    @ResponseBody
+    @ApiOperation(value = "删除新闻", notes = "")
+    public Result deleteNewsByUser(HttpServletRequest request, @RequestBody Map<String, String> deleteNewsInfo)
+    {
+        int user_id = GetUserID(request);
+        if(!userService.user_idExist(user_id))
+            throw new BusinessException(ExceptionEnum.ID_无效);
+
+        try
+        {
+            int news_id = Integer.parseInt(deleteNewsInfo.get("news_id"));
+            if(!publishNewsService.newsExist(news_id))
+                throw new BusinessException(ExceptionEnum.News_新闻不存在);
+            if(!publishNewsService.newsIsDeletable(news_id))
+                throw new BusinessException(ExceptionEnum.News_不可删除);
+
+            publishNewsService.deleteNews(news_id);
+            return new Result<>(200,"新闻删除成功");
+        }
+        catch (NumberFormatException e)
+        {
+            throw new BusinessException(ExceptionEnum.News_ID不合法);
+        }
+    }
+
+
+    public int GetUserID(HttpServletRequest request)
+    {
+        String token = request.getHeader("token");
+        Claims claims= JwtUtil.getClaim(token);
+        return (int)claims.get("userId");
+    }
 
 
 

@@ -29,7 +29,8 @@ public enum ExceptionEnum implements BaseErrorInfoInterface{
     News_不属于("5105","该新闻不属于你"),
     News_ID不合法("5106","新闻ID不合法"),
     News_不可编辑("5107","该新闻已不可编辑"),
-    News_新闻不存在("5108","新闻不存在"),
+    News_不可删除("5108","该新闻正在审核中，暂时无法删除"),
+    News_新闻不存在("5109","新闻不存在"),
 
 
     PARAMS_接收参数错误("5501","接收参数错误"),

@@ -3,6 +3,9 @@ package com.example.javaee.service.publish.impl;
 import com.example.javaee.dao.*;
 import com.example.javaee.entity.Category;
 import com.example.javaee.entity.News;
+import com.example.javaee.exceptionHandler.exception.BusinessException;
+import com.example.javaee.exceptionHandler.exception.ExceptionEnum;
+import com.example.javaee.vo.NewsDetails;
 import com.example.javaee.vo.SimpleNews;
 import com.example.javaee.service.publish.IPublishNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,14 @@ public class PublishNewsServiceImpl implements IPublishNewsService {
     @Autowired
     private DeleteDao deleteDao;
 
+    @Autowired
+    private UserDao userDao;
+
+    public boolean newsExist(int news_id)
+    {
+        News news = selectDao.newsSelectByNewsId(news_id);
+        return news != null && news.getState() != 2;//删除状态的新闻对新闻发布者不可见
+    }
 
     public boolean categoryExist(String categoryName)
     {
@@ -43,6 +54,11 @@ public class PublishNewsServiceImpl implements IPublishNewsService {
         return news.getState() == 0;
     }
 
+    public boolean newsIsDeletable(int news_id)
+    {
+        News news = selectDao.newsSelectByNewsId(news_id);
+        return news.getState() == 0 || news.getState() == 3;
+    }
 
 
     public void createNews(int user_id, String title, String content, String categoryName)
@@ -50,7 +66,7 @@ public class PublishNewsServiceImpl implements IPublishNewsService {
         java.util.Date date = new Date();
         Timestamp time = new Timestamp(date.getTime());
         Category category = selectDao.categorySelectByName(categoryName);
-        insertDao.insertNews(user_id, title, content, category.getCategory_id(), time, time, 0);
+        insertDao.newsInsert(user_id, title, content, category.getCategory_id(), time, time, 0);
     }
 
     public List<SimpleNews> getAllSimpleNews(int user_id)
@@ -62,9 +78,28 @@ public class PublishNewsServiceImpl implements IPublishNewsService {
         return res;
     }
 
-    public News getNews(int news_id)
+    public NewsDetails getNewsDetail(int news_id)
     {
-        return selectDao.newsSelectByNewsId(news_id);
+        News news = selectDao.newsSelectByNewsId(news_id);
+        int author_id = news.getAuthor_id();
+        int category_id = news.getCategory_id();
+        String author_name= userDao.findByUserId(author_id).getName();
+        String category_name = selectDao.categorySelectByCategory_id(category_id).getName();
+
+        NewsDetails newsDetails = new NewsDetails();
+        newsDetails.setAuthor_id(author_id);
+        newsDetails.setAuthor_name(author_name);
+        newsDetails.setCategory_id(category_id);
+        newsDetails.setCategory_name(category_name);
+        newsDetails.setContent(news.getContent());
+        newsDetails.setCreate_time(news.getCreate_time());
+        newsDetails.setLikes_cnt(selectDao.likesCountByNews_id(news_id));
+        newsDetails.setNews_id(news_id);
+        newsDetails.setState(news.getState());
+        newsDetails.setTitle(news.getTitle());
+        newsDetails.setUpdate_time(news.getUpdate_time());
+
+        return newsDetails;
     }
 
     public void saveNews(int news_id, String title, String content, String categoryName)
@@ -82,6 +117,9 @@ public class PublishNewsServiceImpl implements IPublishNewsService {
         updateDao.newsStateUpdateByNews_id(news_id, 1);
     }
 
-
+    public void deleteNews(int news_id)
+    {
+        updateDao.newsStateUpdateByNews_id(news_id , 2);
+    }
 
 }
