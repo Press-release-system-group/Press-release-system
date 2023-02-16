@@ -33,13 +33,13 @@ public class PublishNewsServiceImpl implements IPublishNewsService {
 
     public boolean newsBelongsToUser(int user_id, int news_id)
     {
-        News news = selectDao.getNewsByNewsId(news_id);
+        News news = selectDao.newsSelectByNewsId(news_id);
         return news.getAuthor_id() == user_id;
     }
 
     public boolean newsIsEditable(int news_id)
     {
-        News news = selectDao.getNewsByNewsId(news_id);
+        News news = selectDao.newsSelectByNewsId(news_id);
         return news.getState() == 0;
     }
 
@@ -55,7 +55,7 @@ public class PublishNewsServiceImpl implements IPublishNewsService {
 
     public List<SimpleNews> getAllSimpleNews(int user_id)
     {
-        List<SimpleNews> simpleNews = selectDao.selectAllSimpleNewsByUserId(user_id);
+        List<SimpleNews> simpleNews = selectDao.allSimpleNewsSelectByUserId(user_id);
         List<SimpleNews> res = simpleNews.stream()
                 .filter(news -> news.getState() == 3)
                 .collect(Collectors.toList());
@@ -64,7 +64,7 @@ public class PublishNewsServiceImpl implements IPublishNewsService {
 
     public News getNews(int news_id)
     {
-        return selectDao.getNewsByNewsId(news_id);
+        return selectDao.newsSelectByNewsId(news_id);
     }
 
     public void saveNews(int news_id, String title, String content, String categoryName)

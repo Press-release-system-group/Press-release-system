@@ -15,7 +15,7 @@ public interface SelectDao {
 
     //这里是新闻表的sql
     @Select("SELECT * FROM News WHERE news_id = #{news_id}")
-    News getNewsByNewsId(int news_id);
+    News newsSelectByNewsId(int news_id);
 
     List<SimpleNews> newsSelectByStatus(List<Integer>  list);
 
@@ -32,5 +32,5 @@ public interface SelectDao {
     @Select("SELECT n.news_id,n.title,c.name,n.create_time,n.update_time,n.state FROM News n " +
             "LEFT JOIN News_Categories c ON n.category_id = c.category_id " +
             "WHERE author_id = #{user_id} ORDER BY update_time")
-    List<SimpleNews> selectAllSimpleNewsByUserId(int user_id);
+    List<SimpleNews> allSimpleNewsSelectByUserId(int user_id);
 }
