@@ -4,10 +4,10 @@
         <div class="edit">
         <div><h3>编辑用户资料</h3></div>
         <div>
-            <label>真实姓名：</label><el-input placeholder="请输入内容" v-model="username" clearable class="editInput"></el-input>
+            <label>用户名称：</label><el-input placeholder="请输入内容" v-model="username" clearable class="editInput"></el-input>
         </div>
         <div>
-            <label>用户名称：</label><el-input placeholder="请输入内容" v-model="name" clearable class="editInput"></el-input>
+            <label>真实姓名：</label><el-input placeholder="请输入内容" v-model="name" clearable class="editInput"></el-input>
         </div>
         <div>
             <label>我的邮箱：</label><el-input placeholder="请输入内容" v-model="email" clearable class="editInput"></el-input>
@@ -34,7 +34,8 @@ import axios from 'axios'
  methods:{
     Upadate(){
       console.log("编辑个人资料"+this.$store.state.userId);
-      axios.put('/api/common/updateUserInfo',{user_id:this.$store.state.userId,username:this.username,email:this.email,phone:this.phone,name:this.name})
+      axios.put('/api/common/updateUserInfo?',{user_id:this.$store.state.userId,username:this.username,email:this.email,phone:this.phone,name:this.name},
+      {headers:{token:this.$store.state.token,'platform': 'web'}})
       .then(Response=>{
         console.log(Response);
         if(Response.data.code==200){
@@ -42,7 +43,7 @@ import axios from 'axios'
           this.$router.push('home')
         }
         else{
-          this.$message('登陆失败')
+          this.$message('修改失败')
         }
       })
     }
