@@ -30,9 +30,11 @@ public class OrdinaryNewsController
 
     @PostMapping("/newscategory")
     @ResponseBody
+    @ApiOperation(value = "用户 查看简略新闻类别 ", notes = "需要一个或多个新闻类别 id")
     public Result newscategory(@RequestBody Map<String , String> categoryInfo)
     {
 //        暂时没想到该功能的错误拦截情况
+        //todo 这里需要改
         return new Result<>(200,"获取新闻类别成功",ordinaryNews.findAllCategory());
     }
 
@@ -40,7 +42,8 @@ public class OrdinaryNewsController
     @PostMapping("/briefnews")
     @ResponseBody
 //    允许用户通过标签名来访问对应的简略新闻
-    public Result briefnews(List<Integer> categorylist){
+    @ApiOperation(value = "用户 查看简略新闻 ", notes = "需要一个或多个新闻类别 id")
+    public Result briefnews(@RequestParam("categorylist") List<Integer> categorylist){
         if(categorylist==null||categorylist.size()==0) { //无类别id时会报错
             throw new BusinessException(ExceptionEnum.PARAMS_接收参数错误);
         }
@@ -49,6 +52,7 @@ public class OrdinaryNewsController
 
     @PostMapping("/detailnews")
     @ResponseBody
+    @ApiOperation(value = "用户 某个详细新闻 ", notes = "需要一个新闻id  news_id")
     public Result detailnews(Integer news_id){
         if (news_id==null){
             throw   new BusinessException(ExceptionEnum.PARAMS_接收参数错误);

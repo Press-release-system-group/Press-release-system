@@ -8,9 +8,11 @@ import com.example.javaee.utils.Result;
 import com.example.javaee.vo.NewsDetails;
 import com.example.javaee.vo.SimpleNews;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,10 +26,10 @@ public class AdminNewsController {
     @Autowired
     IAdminNewsService newsService;
 
-
+    @ApiOperation(value = "管理员查看某些状态的所有简略新闻", notes = "需要提供多个int 类型 状态集合 ")
     @PostMapping("getSimpleNewsByStatus")
     //查看某些状态的所有简略新闻
-    public Result<SimpleNews> getSimpleNewsByStatus(List<Integer> list){
+    public Result<List<SimpleNews>> getSimpleNewsByStatus(@RequestParam(value = "list")List<Integer> list){
 
         if(list==null||list.size()==0||list.size()>4){
             throw new BusinessException(ExceptionEnum.PARAMS_接收参数错误);
@@ -47,6 +49,7 @@ public class AdminNewsController {
 
 //查看某个具体新闻
     @PostMapping("getNewsDetailByNews_id")
+    @ApiOperation(value = "管理员 查看某个具体新闻", notes = "需要 news_id  ")
     public Result<NewsDetails> getNewsDetailById(Integer news_id){
         if (news_id==null){
             throw   new BusinessException(ExceptionEnum.PARAMS_接收参数错误);
@@ -62,7 +65,9 @@ public class AdminNewsController {
 
 
     //审核新闻，其实就是改变新闻的状态，如果要改变状态是删除，其他的东西也要跟着改
-
+    @ApiOperation(value = "管理员 审核新闻，有两种可能,第一种: 比如审核新闻原本状态为1（也就是审核中状态的新闻）的新闻," +
+            "此时传来的state参数可以为  0（就是未通过，变成保存中状态），或者为  3 （变成通过状态），第二种："+
+            "新闻原本状态为3，state参数为2，也就是将通过状态的新闻改成删除状态", notes = "需要 news_id （int）， int 类型 state ")
     @PostMapping("changeNewsState")
         public Result changeNewsState(Integer news_id,Integer state){
         if(news_id==null||state==null){

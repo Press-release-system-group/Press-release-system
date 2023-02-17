@@ -5,6 +5,8 @@ import com.example.javaee.exceptionHandler.exception.ExceptionEnum;
 import com.example.javaee.service.admin.IAdminCategoryService;
 import com.example.javaee.utils.Result;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +21,9 @@ public class AdminCategoryController {
     IAdminCategoryService categoryService;
 
     //删除某个新闻类别
+    @ApiOperation(value = "管理员删除某个新闻类别", notes = "需要提供新闻类别id   category_id int类型")
     @PostMapping("changeCagegory")
-    public Result changeCategoryState(Integer category_id){
+    public Result<Void> changeCategoryState( Integer category_id){
         if(category_id==null){
             throw new BusinessException(ExceptionEnum.PARAMS_接收参数错误);
         }
@@ -31,9 +34,9 @@ public class AdminCategoryController {
         return result;
 
     }
-
+    @ApiOperation(value = "管理员增加某个新闻类别", notes = "需要提供新闻类别名字   categoryName string类型")
     @PostMapping("addCategory")//增加某个新闻类别
-    public Result addCategory(String categoryName){
+    public Result<Void> addCategory(String categoryName){
         if (categoryName==null||categoryName.equals("")||categoryName.length()==0){
             throw new BusinessException(ExceptionEnum.PARAMS_接收参数错误);
         }

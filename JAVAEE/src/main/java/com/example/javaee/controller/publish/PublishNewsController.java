@@ -33,7 +33,7 @@ public class PublishNewsController
 
     @PostMapping ("/createNews")
     @ResponseBody
-    @ApiOperation(value = "创建新闻", notes = "无需参数")
+    @ApiOperation(value = "新闻发布者 创建新闻", notes = "需要 String 类型的 category,还有 string 类型 title ,String 类型 content ")
     public Result createNews(HttpServletRequest request, @RequestBody Map<String, String> createNewsInfo)
     {
         int user_id = GetUserID(request);
@@ -56,7 +56,7 @@ public class PublishNewsController
 
     @GetMapping("/getAllSimpleNews")
     @ResponseBody
-    @ApiOperation(value = "查看自己的所有新闻简略", notes = "无需参数")
+    @ApiOperation(value = "新闻发布者 查看自己的所有新闻简略", notes = "无需参数")
     public Result<List<SimpleNews>> getAllSimpleNews(HttpServletRequest request)
     {
         int user_id = GetUserID(request);
@@ -75,7 +75,7 @@ public class PublishNewsController
 
     @GetMapping("/getNews")
     @ResponseBody
-    @ApiOperation(value = "查看自己的某个新闻详情", notes = "需要新闻ID")
+    @ApiOperation(value = "新闻发布者  查看自己的某个新闻详情", notes = "需要新闻ID（int)  news_id")
     public Result<News> getNews(HttpServletRequest request,@RequestBody Map<String, String> getNewsInfo)
     {
         int user_id = GetUserID(request);
@@ -100,7 +100,7 @@ public class PublishNewsController
 
     @PutMapping ("/saveNews")
     @ResponseBody
-    @ApiOperation(value = "修改后保存新闻", notes = "需要新闻ID、标题、内容和新闻类别")
+    @ApiOperation(value = "新闻发布者 修改后保存新闻", notes = "需要新闻ID、标题、内容和新闻类别")
     public Result saveNews(HttpServletRequest request, @RequestBody Map<String, String> saveNewsInfo)
     {
         int user_id = GetUserID(request);
@@ -135,7 +135,7 @@ public class PublishNewsController
     // 发布自己的某个新闻
     @PostMapping("/publishNews")
     @ResponseBody
-    @ApiOperation(value = "修改后保存新闻", notes = "需要新闻ID、标题、内容和新闻类别")
+    @ApiOperation(value = "新闻发布者 发布自己的新闻，", notes = "需要新闻ID、标题、内容和新闻类别")
     public Result publishNews(HttpServletRequest request, @RequestBody Map<String, String> publishNewsInfo)
     {
         int user_id = GetUserID(request);
@@ -171,7 +171,7 @@ public class PublishNewsController
     // 删除自己的某个新闻
     @DeleteMapping("/deleteNews")
     @ResponseBody
-    @ApiOperation(value = "删除新闻", notes = "")
+    @ApiOperation(value = "新闻发布者  删除自己的新闻", notes = "需要新闻id  news_id")
     public Result deleteNewsByUser(HttpServletRequest request, @RequestBody Map<String, String> deleteNewsInfo)
     {
         int user_id = GetUserID(request);

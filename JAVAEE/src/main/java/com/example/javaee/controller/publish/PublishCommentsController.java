@@ -10,6 +10,7 @@ import com.example.javaee.vo.CommentsDetail;
 import com.example.javaee.vo.SimpleNews;
 import io.jsonwebtoken.Jwt;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,7 @@ public class PublishCommentsController {
     IPublishCommentsService commentsService;
 
     @PostMapping("findAllCommentsOfMe")
+    @ApiOperation(value = "发布者 查看自己的某个新闻的所有评论", notes = "需要新闻id   news_id   int类型")
     //查看某个新闻评论
     public Result findAllCommentsOfMe(Integer news_id, HttpServletRequest request){
 
@@ -48,7 +50,8 @@ public class PublishCommentsController {
 
     //删除自己的新闻下的某条新闻评论
     @PostMapping("deleteComment")
-        public Result deleteComment(Integer comment_id, HttpServletRequest request){
+    @ApiOperation(value = "发布者 删除自己的新闻下的某条新闻评论", notes = "需要评论id   comment_id   int类型")
+        public Result<Void> deleteComment(Integer comment_id, HttpServletRequest request){
             if(comment_id==null){
                 throw new BusinessException(ExceptionEnum.PARAMS_接收参数错误);
             }
