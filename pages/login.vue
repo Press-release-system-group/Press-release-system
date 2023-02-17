@@ -25,7 +25,6 @@
   </div>
 
 </template>
-
 <script>
 import axios from 'axios'
   export default{
@@ -53,6 +52,9 @@ import axios from 'axios'
         console.log(Response);
         if(Response.data.code==200){
           this.$message('登陆成功!');
+          this.$store.commit('updateUserId',Response.data.data.user_id);
+          this.$store.commit('updateRole',Response.data.data.role);
+          console.log(Response.data.data.user_id+"&"+this.$store.state.userId+"&"+this.$store.state.role)
           this.$router.push('/')
         }
         else{

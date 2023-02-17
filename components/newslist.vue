@@ -4,7 +4,7 @@
         <span>最新</span>
         <hr/>
     </div>
-    <div class="item"  v-for="o in navs" :key="o">
+    <div class="item"  v-for="o in navs" :key="o" v-on:click="todeatil">
           <img src="~/assets/images/头像 男孩.svg" class="item-img">
           <div class="item-text">{{ o.name }}</div>
         <div class="item-info">{{ o.name }}</div>
@@ -12,7 +12,7 @@
       </div>
     </div>
   </template>
-  <script >
+  <script>
   export default {
   data() {
   return {
@@ -35,7 +35,11 @@
     ],
   }
 },
-
+  methods:{
+    todeatil(){
+      this.$router.push('news_detail')
+    }
+ }
 }
   </script >
   

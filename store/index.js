@@ -1,16 +1,16 @@
 //存储公共数据
 export const state = ()=>({
-    count:0
+    username:'',
+    userId:11,
+    role:''
 })
 //完成数据的同步修改
 export const mutations = {
-    increment (state, payload) {
-       state.count+=payload;
-    }
-}
-//
-export const actions = {
-    asyncIncrement ({commit},payload) {
-       setTimeout (()=> commit('increment',payload), 1000);
-    }
+    //修改用户信息
+    updateUserId(state, payload) {
+       state.userId=payload;
+    },
+    updateRole(state, payload) {
+        state.role=payload;
+     }
 }

@@ -11,10 +11,26 @@
                                创作者中心
             <template #dropdown>
              <el-dropdown-menu>
-             <el-dropdown-item>发布新闻</el-dropdown-item>
-             <el-dropdown-item>发布日常</el-dropdown-item>
-             <el-dropdown-item>新闻编辑</el-dropdown-item>
-             <el-dropdown-item>草稿箱</el-dropdown-item>
+              <nuxt-link to="/news_edit">
+              <el-dropdown-item>
+              <span style="display:block;">新闻编辑</span>
+              </el-dropdown-item>
+              </nuxt-link>
+              <nuxt-link to="/news_edit">
+              <el-dropdown-item>
+              <span style="display:block;">新闻发布</span>
+              </el-dropdown-item>
+              </nuxt-link>
+              <nuxt-link to="/news_edit">
+              <el-dropdown-item>
+              <span style="display:block;">日常发布</span>
+              </el-dropdown-item>
+              </nuxt-link>
+              <nuxt-link to="/news_edit">
+              <el-dropdown-item>
+              <span style="display:block;">草稿箱</span>
+              </el-dropdown-item>
+              </nuxt-link>
              </el-dropdown-menu>
            </template>
            </el-dropdown>
