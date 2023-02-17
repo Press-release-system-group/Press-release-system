@@ -5,12 +5,14 @@ import com.example.javaee.exceptionHandler.exception.BusinessException;
 import com.example.javaee.exceptionHandler.exception.ExceptionEnum;
 import com.example.javaee.service.UserService;
 import com.example.javaee.utils.*;
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
@@ -118,14 +120,15 @@ public class UserController {
             "    \"old_password\": \"2\",\n" +
             "    \"new_password\": \"2\"\n" +
             "}")
-    public Result<Void> modifyPwd(@ApiIgnore @RequestBody Map<String, String> passwordInfo)
+    public Result<Void> modifyPwd(HttpServletRequest request,@ApiIgnore @RequestBody Map<String, String> passwordInfo)
     {
-        int user_id = Integer.parseInt(passwordInfo.get("user_id"));
+        int user_id = GetUserID(request);
+        if(!userService.user_idExist(user_id))
+            throw new BusinessException(ExceptionEnum.ID_无效);
+
         String old_pwd = passwordInfo.get("old_password");
         String new_pwd = passwordInfo.get("new_password");
 
-        if(!userService.user_idExist(user_id))
-            throw new BusinessException(ExceptionEnum.ID_无效);
 
         if(old_pwd == null || old_pwd.isEmpty() || new_pwd == null || new_pwd.isEmpty())
             throw new BusinessException(ExceptionEnum.PASSWORD_空);
@@ -157,11 +160,14 @@ public class UserController {
             "    \"phone\": \"123456789\",\n" +
             "    \"name\": \"丁一\"\n" +
             "}")
-    public Result<User> updateUserInfo(@ApiIgnore @RequestBody Map<String, String> updateInfo)
+    public Result<User> updateUserInfo(HttpServletRequest request,@ApiIgnore @RequestBody Map<String, String> updateInfo)
     {
         try
         {
-            int user_id = Integer.parseInt(updateInfo.get("user_id"));
+            int user_id = GetUserID(request);
+            if(!userService.user_idExist(user_id))
+                throw new BusinessException(ExceptionEnum.ID_无效);
+
             String username = updateInfo.get("username");
             String email = updateInfo.get("email");
             String phone = updateInfo.get("phone");
@@ -169,9 +175,6 @@ public class UserController {
 
             if(username == null || username.isEmpty())
                 throw new BusinessException(ExceptionEnum.USERNAME_空);
-
-            if(!userService.user_idExist(user_id))
-                throw new BusinessException(ExceptionEnum.ID_无效);
 
             SensitiveWordFilter filter = new SensitiveWordFilter();
             Set<String> set = filter.getSensitiveWord(username, 1);
@@ -194,12 +197,11 @@ public class UserController {
     @ApiOperation(value = "获取单个用户信息", notes = "\n{\n" +
             "    \"user_id\":2\n" +
             "}")
-    public Result<User> getUserInfo(@ApiIgnore @RequestBody Map<String, String> userID)
+    public Result<User> getUserInfo(HttpServletRequest request, @ApiIgnore @RequestBody Map<String, String> userID)
     {
         try
         {
-            int user_id = Integer.parseInt(userID.get("user_id"));
-
+            int user_id = GetUserID(request);
             if(!userService.user_idExist(user_id))
                 throw new BusinessException(ExceptionEnum.ID_无效);
 
@@ -222,12 +224,11 @@ public class UserController {
     @DeleteMapping("/admin/delete")
     @ResponseBody
     @ApiOperation(value = "删除用户", notes = "由于各表的依赖，该功能可能引发各类问题，尚未处理，前端可以暂时搁置不接")
-    public Result<Void> delete(@ApiIgnore @RequestBody Map<String, String> deleteInfo) {
+    public Result<Void> delete(HttpServletRequest request, @ApiIgnore @RequestBody Map<String, String> deleteInfo) {
 
         try
         {
-            int user_id = Integer.parseInt(deleteInfo.get("user_id"));
-
+            int user_id = GetUserID(request);
             if(!userService.user_idExist(user_id))
                 throw new BusinessException(ExceptionEnum.ID_无效);
 
@@ -251,5 +252,13 @@ public class UserController {
             throw new BusinessException(ExceptionEnum.ID_不合法);
         }
     }
+
+    public int GetUserID(HttpServletRequest request)
+    {
+        String token = request.getHeader("token");
+        Claims claims= JwtUtil.getClaim(token);
+        return (int)claims.get("userId");
+    }
+
 
 }
