@@ -2,7 +2,11 @@
     <div>
         <div class="sidebar">
          <div class="side"> <img src="~/assets/images/点赞.svg" class="tubiao"/></div>
-         <div class="side"> <img src="~/assets/images/点赞.svg" class="tubiao"/></div>
+         <div class="side"> <img src="~/assets/images/收藏 .svg" class="tubiao"/></div>
+         <div class="side"> <img src="~/assets/images/评论.svg" class="tubiao"/></div>
+         <div class="side"> <img src="~/assets/images/转发.svg" class="tubiao"/></div>
+         <hr>
+         <div class="side"> <img src="~/assets/images/举报.svg" class="tubiao"/></div>
         </div>
         <div class="detail">
         <div class="mytitle">
@@ -29,16 +33,19 @@ import axios from 'axios'
 
 <style>
 .sidebar{
+    margin-top: 10rem;
     margin-left: 10vw;
-    display: inline;
+    float: left;
     width: 5rem;
     background-color: antiquewhite;
 }
 .side{
-    
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
     display:inline-block;
 }
 .detail{
+   
     display: inline-block; 
     margin-left: 2vw;
     margin-top: 1rem;
