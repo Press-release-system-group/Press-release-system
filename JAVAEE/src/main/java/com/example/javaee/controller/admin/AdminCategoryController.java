@@ -4,6 +4,7 @@ import com.example.javaee.exceptionHandler.exception.BusinessException;
 import com.example.javaee.exceptionHandler.exception.ExceptionEnum;
 import com.example.javaee.service.admin.IAdminCategoryService;
 import com.example.javaee.utils.Result;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("admin")
+@Api(tags = "管理员 新闻类别相关接口")
 public class AdminCategoryController {
 
     @Autowired

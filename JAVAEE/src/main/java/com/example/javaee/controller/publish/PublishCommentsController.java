@@ -9,9 +9,11 @@ import com.example.javaee.utils.Result;
 import com.example.javaee.vo.CommentsDetail;
 import com.example.javaee.vo.SimpleNews;
 import io.jsonwebtoken.Jwt;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,8 @@ import java.util.List;
 
 
 @RestController
+@RequestMapping("/publisher")
+@Api(tags = "新闻发布者 关于评论接口")
 public class PublishCommentsController {
 
     @Autowired

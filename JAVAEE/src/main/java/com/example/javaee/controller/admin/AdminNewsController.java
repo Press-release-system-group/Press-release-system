@@ -7,6 +7,7 @@ import com.example.javaee.service.admin.IAdminNewsService;
 import com.example.javaee.utils.Result;
 import com.example.javaee.vo.NewsDetails;
 import com.example.javaee.vo.SimpleNews;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("admin")
+@Api(tags = "管理员 新闻相关接口")
 public class AdminNewsController {
 
     @Autowired

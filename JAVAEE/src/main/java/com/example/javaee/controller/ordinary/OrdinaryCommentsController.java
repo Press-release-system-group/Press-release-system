@@ -8,6 +8,7 @@ import com.example.javaee.utils.JwtUtil;
 import com.example.javaee.utils.Result;
 import com.example.javaee.utils.Role;
 import com.example.javaee.vo.CommentsDetail;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("ordinary")
+@Api(tags = "用户  评论相关接口")
 public class OrdinaryCommentsController {
     @Autowired
     IOrdinaryCommentsService commentsService;
