@@ -29,7 +29,7 @@ public class UserController {
 
 
 
-    @PostMapping("/user/signup")
+    @PostMapping("/common/signup")
     @ResponseBody
     @ApiOperation(value = "用户注册", notes = "{\n" +
             "    \"username\":\"周星驰\",\n" +
@@ -72,7 +72,7 @@ public class UserController {
         return new Result<>(200,"注册成功");
     }
 
-    @PostMapping("/user/login")
+    @PostMapping("/common/login")
     @ResponseBody
     @ApiOperation(value = "用户登陆", notes = "无需token，但它返回的Header中会携带一个token，前端记得保存好" +
             "\n{\n" +
@@ -197,7 +197,7 @@ public class UserController {
     @ApiOperation(value = "获取单个用户信息", notes = "\n{\n" +
             "    \"user_id\":2\n" +
             "}")
-    public Result<User> getUserInfo(HttpServletRequest request, @ApiIgnore @RequestBody Map<String, String> userID)
+    public Result<User> getUserInfo(HttpServletRequest request)
     {
         try
         {

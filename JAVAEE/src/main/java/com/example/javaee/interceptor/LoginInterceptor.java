@@ -47,8 +47,9 @@ public class LoginInterceptor implements HandlerInterceptor {
 
                         //放行的条件取反
                         if(!(uri.startsWith("/common") ||
-                                uri.startsWith("/publisher") && (role == Role.新闻发布者 || role == Role.管理员) ||
-                                uri.startsWith("/admin") && role == Role.管理员))
+                                uri.startsWith("/publisher") && role == Role.新闻发布者  ||
+                                uri.startsWith("/admin") && role == Role.管理员||
+                                uri.startsWith("/ordinary")&& role==Role.普通用户))
                         {
                             throw new BusinessException(ExceptionEnum.USER_无权限);
                         }
