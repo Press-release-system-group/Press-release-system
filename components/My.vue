@@ -12,6 +12,7 @@
     </div>
   </template>
   <script >
+  import axios from 'axios'
   export default {
   data() {
   return {
@@ -40,16 +41,24 @@
   }
 },
  async fetch() {
-    console.log("获取个人信息");
-     const {data} = await this.$axios.$get('/api/admin/findAllUser');
-     console.log(data);
-     console.log("!!"+this.$store.state.userId);
-    this.Info=data;
-    this.myInfo.user_id=this.$store.state.userId;
+    this.getUserInfo();
+    //  const {data} = await this.$axios.$get('/api/admin/findAllUser');
    },
    methods:{
     edit(){
       this.$router.push('editInfo')
+    },
+    getUserInfo(){
+      console.log("获取个人信息");
+      console.log(this.$store.state.token);
+      axios.get('/api/admin/findAllUser?',{headers:{token:this.$store.state.token,'platform': 'web'}})
+      .then(Response=>{
+        console.log(Response);
+        if(Response.data.code==200){
+          
+        }
+   
+      })
     }
   }
 }
