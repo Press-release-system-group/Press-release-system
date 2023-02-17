@@ -46,7 +46,7 @@ export default {
   proxy: {
     '/api': {
     changeOrigin: true,
-    target: 'http://localhost:7777/', // 允许跨域的服务器地址
+    target: 'http://124.221.88.141:7777/', // 允许跨域的服务器地址
     pathRewrite: {
       '^/api': '/'
     }
