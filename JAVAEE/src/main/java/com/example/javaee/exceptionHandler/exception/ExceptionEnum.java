@@ -1,5 +1,7 @@
 package com.example.javaee.exceptionHandler.exception;
 
+import com.example.javaee.entity.Category;
+
 public enum ExceptionEnum implements BaseErrorInfoInterface{
 
     // 数据操作错误定义
@@ -31,13 +33,21 @@ public enum ExceptionEnum implements BaseErrorInfoInterface{
     News_不可编辑("5107","该新闻已不可编辑"),
     News_不可删除("5108","该新闻正在审核中，暂时无法删除"),
     News_新闻不存在("5109","新闻不存在"),
+    News_该新闻不属于你("5110","该新闻不属于你"),
 
 
     PARAMS_接收参数错误("5501","接收参数错误"),
     PARAMS_接收状态参数非法("5502","接收状态参数非法"),
 
 
-    Category_没有该类别Id("5601","没有该新闻类别id ");
+    Category_没有该类别Id("5601","没有该新闻类别id "),
+    Category_该类别下没有新闻("5602","该类别下没有新闻"),
+    Category_类别名字已存在("5603","该类别名字重复"),
+
+
+    Comment_该评论不存在("5701","该评论不存在"),
+    Comment_该评论不属于你("5701","该评论不属于你");
+
     /**
      * 错误码
      */

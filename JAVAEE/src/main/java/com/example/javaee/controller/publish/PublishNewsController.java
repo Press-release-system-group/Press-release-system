@@ -22,7 +22,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/publisher")
-@Api(tags = "新闻发布相关接口")
+@Api(tags = "新闻发布者  新闻相关接口")
 public class PublishNewsController
 {
     @Autowired

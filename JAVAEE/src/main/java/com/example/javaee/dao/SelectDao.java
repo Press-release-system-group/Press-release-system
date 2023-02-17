@@ -4,6 +4,7 @@ import com.example.javaee.entity.Category;
 import com.example.javaee.entity.Comments;
 import com.example.javaee.entity.Likes;
 import com.example.javaee.entity.News;
+import com.example.javaee.vo.CommentsDetail;
 import com.example.javaee.vo.SimpleNews;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -45,6 +46,9 @@ public interface SelectDao {
 
     @Select("SELECT * FROM Comments WHERE state = #{state}")
     List<Comments> commentsSelectByState(int state);
+
+    @Select("SELECT * FROM Comments WHERE comment_id = #{comment_id}")
+    Comments commentsSelectByComment_id(int comment_id);
 
 
 

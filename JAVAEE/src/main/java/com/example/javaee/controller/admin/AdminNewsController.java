@@ -7,14 +7,18 @@ import com.example.javaee.service.admin.IAdminNewsService;
 import com.example.javaee.utils.Result;
 import com.example.javaee.vo.NewsDetails;
 import com.example.javaee.vo.SimpleNews;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 
-@RestController("admin")
+@RestController
+@RequestMapping("admin")
+@Api(tags = "管理员 新闻相关接口")
 public class AdminNewsController {
 
     @Autowired
@@ -74,17 +78,7 @@ public class AdminNewsController {
         return result;
     }
 
-    //删除某个新闻类别
-    @PostMapping("changeCagegory")
-    public Result changeCategoryState(Integer category_id){
-        if(category_id==null){
-            throw new BusinessException(ExceptionEnum.PARAMS_接收参数错误);
-        }
 
-        Result result=new Result();
-        result.setCode(200);
-        result.setMsg("删除新闻类别成功");
-        return result;
-    }
+
 
 }

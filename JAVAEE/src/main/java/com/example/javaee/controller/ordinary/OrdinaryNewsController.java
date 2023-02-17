@@ -18,7 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@Controller("ordinary")
+@Controller
+@RequestMapping("ordinary")
 
 @Api(tags = "用户新闻类接口")
 public class OrdinaryNewsController
