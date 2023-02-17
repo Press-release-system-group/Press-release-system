@@ -1,5 +1,6 @@
 package com.example.javaee.service.admin.impl;
 
+import com.example.javaee.dao.InsertDao;
 import com.example.javaee.dao.SelectDao;
 import com.example.javaee.dao.UpdateDao;
 import com.example.javaee.dao.UserDao;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -26,6 +28,9 @@ public class AdminNewsServiceImpl implements IAdminNewsService {
 
     @Autowired
     UpdateDao updateDao;
+
+    @Autowired
+    InsertDao insertDao;
 
     @Override
     public List<SimpleNews> getSimpleNews(List<Integer> list) {
@@ -41,7 +46,7 @@ public class AdminNewsServiceImpl implements IAdminNewsService {
         int author_id=news.getAuthor_id();
         int category_id = news.getCategory_id();
 
-       String  author_name= userDao.findByUserId(author_id).getName();
+        String  author_name= userDao.findByUserId(author_id).getName();
         String category_name = selectDao.categorySelectByCategory_id(category_id).getName();
 
         NewsDetails newsDetails=new NewsDetails();
@@ -85,16 +90,5 @@ public class AdminNewsServiceImpl implements IAdminNewsService {
         return true;
     }
 
-    @Override
-    public boolean changeCategoryState(int category_id) {
-        Category category = selectDao.categorySelectByCategory_id(category_id);
-        if(category==null)
-        {
-            throw new BusinessException(ExceptionEnum.Category_没有该类别Id);
-        }
-        updateDao.CategoryUpdateByCategory_id(category_id,1);
-        List<News> newsList=selectDao.newsSelectByCategory_id(category_id);
 
-        return true;
-    }
 }

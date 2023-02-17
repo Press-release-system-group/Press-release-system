@@ -18,6 +18,5 @@ public interface IAdminNewsService {
     boolean changeNewsState(int news_id,int state);
 
 
-    //删除某个新闻类别，并且删除它所有新闻以及新闻评论以及点赞;
-    boolean changeCategoryState(int Category_id);
+
 }
