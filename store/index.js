@@ -2,7 +2,8 @@
 export const state = ()=>({
     username:'',
     userId:11,
-    role:''
+    role:'',
+    token:''
 })
 //完成数据的同步修改
 export const mutations = {
@@ -12,5 +13,8 @@ export const mutations = {
     },
     updateRole(state, payload) {
         state.role=payload;
+     },
+     updateToken(state, payload) {
+        state.token=payload;
      }
 }

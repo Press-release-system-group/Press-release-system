@@ -47,14 +47,16 @@ import axios from 'axios'
     },
     login(){
       console.log("登陆"+this.role+this.username);
-      axios.post('/api//user/login',{username:this.username,password:this.password})
+      axios.post('/api/common/login',{username:this.username,password:this.password})
       .then(Response=>{
         console.log(Response);
+        console.log(Response.headers.token);
         if(Response.data.code==200){
           this.$message('登陆成功!');
           this.$store.commit('updateUserId',Response.data.data.user_id);
           this.$store.commit('updateRole',Response.data.data.role);
-          console.log(Response.data.data.user_id+"&"+this.$store.state.userId+"&"+this.$store.state.role)
+          this.$store.commit('updateToken',Response.headers.token);
+          console.log(Response.data.data.user_id+"&"+this.$store.state.userId+"&"+this.$store.state.role+this.$store.state.token)
           this.$router.push('/')
         }
         else{

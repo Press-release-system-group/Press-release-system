@@ -53,7 +53,7 @@
     },
     register(){
       console.log("注册"+this.user.role+this.user.username+this.user.password);
-      axios.post('/api/user/signup',{username:this.user.username,password:this.user.password,role:this.user.role})
+      axios.post('/api/common/signup',{username:this.user.username,password:this.user.password,role:this.user.role})
       .then(Response=>{
         console.log(Response);
         if(Response.data.code==200){
