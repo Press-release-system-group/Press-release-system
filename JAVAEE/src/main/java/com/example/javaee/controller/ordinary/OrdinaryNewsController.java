@@ -1,10 +1,13 @@
 package com.example.javaee.controller.ordinary;
 
+import com.example.javaee.entity.Category;
 import com.example.javaee.entity.User;
 import com.example.javaee.exceptionHandler.exception.BusinessException;
 import com.example.javaee.exceptionHandler.exception.ExceptionEnum;
 import com.example.javaee.service.ordinary.IOrdinaryNewsService;
 import com.example.javaee.utils.*;
+import com.example.javaee.vo.NewsDetails;
+import com.example.javaee.vo.SimpleNews;
 import io.swagger.annotations.*;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +34,7 @@ public class OrdinaryNewsController
     @PostMapping("/newscategory")
     @ResponseBody
     @ApiOperation(value = "用户 查看简略新闻类别 ", notes = "需要一个或多个新闻类别 id")
-    public Result newscategory(@RequestBody Map<String , String> categoryInfo)
+    public Result<List<Category>> newscategory(@RequestBody Map<String , String> categoryInfo)
     {
 //        暂时没想到该功能的错误拦截情况
         //todo 这里需要改
@@ -43,7 +46,7 @@ public class OrdinaryNewsController
     @ResponseBody
 //    允许用户通过标签名来访问对应的简略新闻
     @ApiOperation(value = "用户 查看简略新闻 ", notes = "需要一个或多个新闻类别 id")
-    public Result briefnews(@RequestParam("categorylist") List<Integer> categorylist){
+    public Result<List<SimpleNews>> briefnews(@RequestParam("categorylist") List<Integer> categorylist){
         if(categorylist==null||categorylist.size()==0) { //无类别id时会报错
             throw new BusinessException(ExceptionEnum.PARAMS_接收参数错误);
         }
@@ -53,7 +56,7 @@ public class OrdinaryNewsController
     @PostMapping("/detailnews")
     @ResponseBody
     @ApiOperation(value = "用户 某个详细新闻 ", notes = "需要一个新闻id  news_id")
-    public Result detailnews(Integer news_id){
+    public Result<NewsDetails> detailnews(Integer news_id){
         if (news_id==null){
             throw   new BusinessException(ExceptionEnum.PARAMS_接收参数错误);
         }

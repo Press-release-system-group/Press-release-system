@@ -34,7 +34,7 @@ public class UserController {
             "    \"password\":\"周星驰\",\n" +
             "    \"role\":\"普通用户\"\n" +
             "}")
-    public Result signup(@ApiIgnore @RequestBody Map<String, String> signupInfo)
+    public Result<Void> signup(@ApiIgnore @RequestBody Map<String, String> signupInfo)
     {
         String username = signupInfo.get("username");
         String password = signupInfo.get("password");
@@ -78,7 +78,7 @@ public class UserController {
             "    \"password\":\"n\"\n" +
             "}")
 
-    public Result login(@ApiIgnore @RequestBody Map<String, String> loginInfo, HttpServletResponse response) {
+    public Result<User> login(@ApiIgnore @RequestBody Map<String, String> loginInfo, HttpServletResponse response) {
 
         String username = loginInfo.get("username");
         String password = loginInfo.get("password");
@@ -118,7 +118,7 @@ public class UserController {
             "    \"old_password\": \"2\",\n" +
             "    \"new_password\": \"2\"\n" +
             "}")
-    public Result modifyPwd(@ApiIgnore @RequestBody Map<String, String> passwordInfo)
+    public Result<Void> modifyPwd(@ApiIgnore @RequestBody Map<String, String> passwordInfo)
     {
         int user_id = Integer.parseInt(passwordInfo.get("user_id"));
         String old_pwd = passwordInfo.get("old_password");
@@ -222,7 +222,7 @@ public class UserController {
     @DeleteMapping("/admin/delete")
     @ResponseBody
     @ApiOperation(value = "删除用户", notes = "由于各表的依赖，该功能可能引发各类问题，尚未处理，前端可以暂时搁置不接")
-    public Result delete(@ApiIgnore @RequestBody Map<String, String> deleteInfo) {
+    public Result<Void> delete(@ApiIgnore @RequestBody Map<String, String> deleteInfo) {
 
         try
         {

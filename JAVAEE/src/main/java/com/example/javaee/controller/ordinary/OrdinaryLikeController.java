@@ -7,6 +7,7 @@ import com.example.javaee.exceptionHandler.exception.ExceptionEnum;
 import com.example.javaee.service.UserService;
 import com.example.javaee.utils.JwtUtil;
 import com.example.javaee.utils.Result;
+import com.example.javaee.vo.SimpleNews;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("ordinary")
@@ -33,7 +35,7 @@ public class OrdinaryLikeController {
     @PostMapping("/addlike")
     @ApiOperation(value = "用户 点赞某个新闻", notes = "需要新闻id   news_id   int类型")
     @ResponseBody
-    public Result addLike(HttpServletRequest request,Integer news_id){
+    public Result<Void> addLike(HttpServletRequest request,Integer news_id){
         int user_id = GetUserID(request);
 
         if (news_id==null){
@@ -46,7 +48,7 @@ public class OrdinaryLikeController {
     @PostMapping("/checklike")
     @ResponseBody
     @ApiOperation(value = "用户 查看自己点赞的所有简略新闻", notes = "不需要参数")
-    public Result checkLike(HttpServletRequest request){
+    public Result<List<SimpleNews>> checkLike(HttpServletRequest request){
         int user_id = GetUserID(request);
 
         return new Result(200,"查看自己简略新闻成功",ordinaryLike.checklikeNews(user_id));

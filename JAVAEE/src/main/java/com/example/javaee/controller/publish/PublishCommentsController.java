@@ -32,7 +32,7 @@ public class PublishCommentsController {
     @PostMapping("findAllCommentsOfMe")
     @ApiOperation(value = "发布者 查看自己的某个新闻的所有评论", notes = "需要新闻id   news_id   int类型")
     //查看某个新闻评论
-    public Result findAllCommentsOfMe(Integer news_id, HttpServletRequest request){
+    public Result<List<CommentsDetail>> findAllCommentsOfMe(Integer news_id, HttpServletRequest request){
 
         if(news_id==null){
             throw new BusinessException(ExceptionEnum.PARAMS_接收参数错误);

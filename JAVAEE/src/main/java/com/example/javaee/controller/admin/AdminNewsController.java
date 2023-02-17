@@ -69,7 +69,7 @@ public class AdminNewsController {
             "此时传来的state参数可以为  0（就是未通过，变成保存中状态），或者为  3 （变成通过状态），第二种："+
             "新闻原本状态为3，state参数为2，也就是将通过状态的新闻改成删除状态", notes = "需要 news_id （int）， int 类型 state ")
     @PostMapping("changeNewsState")
-        public Result changeNewsState(Integer news_id,Integer state){
+        public Result<Void> changeNewsState(Integer news_id,Integer state){
         if(news_id==null||state==null){
             throw new BusinessException(ExceptionEnum.PARAMS_接收参数错误);
         }

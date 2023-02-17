@@ -28,7 +28,7 @@ public class OrdinaryCommentsController {
     //获取某新闻下所有评论
     @PostMapping("getAllCommentsByNewsId")
     @ApiOperation(value = "用户查看某条新闻的所有评论", notes = "需要提供 news_id ")
-    public Result getAllCommentsByNewsId(Integer news_id){
+    public Result<List<CommentsDetail>> getAllCommentsByNewsId(Integer news_id){
         if (news_id==null){
             throw new BusinessException(ExceptionEnum.PARAMS_接收参数错误);
         }
@@ -64,7 +64,7 @@ public class OrdinaryCommentsController {
     //查询所有自己的评论
     @GetMapping("findMyAllComments")
     @ApiOperation(value = "用户查询所有自己的评论", notes = "不需要参数")
-    public Result findMyAllComments( HttpServletRequest request){
+    public Result<List<CommentsDetail>> findMyAllComments( HttpServletRequest request){
         String token=request.getHeader("token");
         int user_id=Integer.parseInt(JwtUtil.getClaim(token).get("userId").toString()) ;
 

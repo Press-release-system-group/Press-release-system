@@ -34,7 +34,7 @@ public class PublishNewsController
     @PostMapping ("/createNews")
     @ResponseBody
     @ApiOperation(value = "新闻发布者 创建新闻", notes = "需要 String 类型的 category,还有 string 类型 title ,String 类型 content ")
-    public Result createNews(HttpServletRequest request, @RequestBody Map<String, String> createNewsInfo)
+    public Result<Void> createNews(HttpServletRequest request, @RequestBody Map<String, String> createNewsInfo)
     {
         int user_id = GetUserID(request);
         if(!userService.user_idExist(user_id))
@@ -101,7 +101,7 @@ public class PublishNewsController
     @PutMapping ("/saveNews")
     @ResponseBody
     @ApiOperation(value = "新闻发布者 修改后保存新闻", notes = "需要新闻ID、标题、内容和新闻类别")
-    public Result saveNews(HttpServletRequest request, @RequestBody Map<String, String> saveNewsInfo)
+    public Result<Void> saveNews(HttpServletRequest request, @RequestBody Map<String, String> saveNewsInfo)
     {
         int user_id = GetUserID(request);
         if(!userService.user_idExist(user_id))
@@ -136,7 +136,7 @@ public class PublishNewsController
     @PostMapping("/publishNews")
     @ResponseBody
     @ApiOperation(value = "新闻发布者 发布自己的新闻，", notes = "需要新闻ID、标题、内容和新闻类别")
-    public Result publishNews(HttpServletRequest request, @RequestBody Map<String, String> publishNewsInfo)
+    public Result<Void> publishNews(HttpServletRequest request, @RequestBody Map<String, String> publishNewsInfo)
     {
         int user_id = GetUserID(request);
         if(!userService.user_idExist(user_id))
@@ -172,7 +172,7 @@ public class PublishNewsController
     @DeleteMapping("/deleteNews")
     @ResponseBody
     @ApiOperation(value = "新闻发布者  删除自己的新闻", notes = "需要新闻id  news_id")
-    public Result deleteNewsByUser(HttpServletRequest request, @RequestBody Map<String, String> deleteNewsInfo)
+    public Result<Void> deleteNewsByUser(HttpServletRequest request, @RequestBody Map<String, String> deleteNewsInfo)
     {
         int user_id = GetUserID(request);
         if(!userService.user_idExist(user_id))
