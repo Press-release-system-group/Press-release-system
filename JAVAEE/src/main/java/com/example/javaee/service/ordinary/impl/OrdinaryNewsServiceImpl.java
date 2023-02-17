@@ -27,7 +27,8 @@ public class OrdinaryNewsServiceImpl implements IOrdinaryNewsService {
     public List<Category> findAllCategory() {
         List<Category> allCategory = new ArrayList<Category>();
         allCategory = selectDao.categorySelectAll();
-        for (int i = 0 ; i < allCategory.size();++i){
+        int size = allCategory.size();
+        for (int i = 0 ; i < size;++i){
             if(allCategory.get(i).getState()==1){
                 allCategory.remove(allCategory.get(i));
             }
@@ -42,7 +43,8 @@ public class OrdinaryNewsServiceImpl implements IOrdinaryNewsService {
 
             listnews.addAll(selectDao.newsSelectByCategory_id(list.get(i)));
         }
-        for (int i = 0;i < listnews.size();++i){
+        int size = listnews.size();
+        for (int i = 0;i < size;++i){
             if(listnews.get(i).getState() != 3){
                 listnews.remove(listnews.get(i));
             }
@@ -67,7 +69,9 @@ public class OrdinaryNewsServiceImpl implements IOrdinaryNewsService {
         if(news==null){
             throw new BusinessException(ExceptionEnum.News_新闻不存在);
         }
-
+        if(news.getState()!=3){
+            throw new BusinessException(ExceptionEnum.News_该新闻不属于你);
+        }
         detailnews.setNews_id(news_id);
         detailnews.setTitle(news.getTitle());
         detailnews.setAuthor_name((userDao.findByUserId(news.getAuthor_id())).getName());
