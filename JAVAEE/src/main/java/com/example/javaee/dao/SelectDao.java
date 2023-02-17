@@ -61,6 +61,10 @@ public interface SelectDao {
 
     @Select("SELECT * FROM News_Like WHERE state = #{state}")
     List<Likes> likesSelectByState(int state);
+
+    @Select(("SELECT * FROM News_Like WHERE state = #{state} and user_id = #{user_id}"))
+    List<Likes> likeSelectByStateAndUser_id(int state ,int user_id);
+
     //这里是新闻类别表
     @Select("SELECT * FROM News_Categories WHERE name = #{categoryName}")
     Category categorySelectByName(String categoryName);

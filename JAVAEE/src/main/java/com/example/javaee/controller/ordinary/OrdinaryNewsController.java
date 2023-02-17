@@ -35,6 +35,7 @@ public class OrdinaryNewsController
         return new Result<>(200,"获取新闻类别成功",ordinaryNews.findAllCategory());
     }
 
+
     @PostMapping("/briefnews")
     @ResponseBody
 //    允许用户通过标签名来访问对应的简略新闻
