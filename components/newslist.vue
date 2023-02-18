@@ -4,19 +4,19 @@
         <span>最新</span>
         <hr/>
     </div>
-    <div class="item"  v-for="o in navs" :key="o" v-on:click="todeatil">
+    <div class="item"  v-for="news in newslist" :key="o" v-on:click="todeatil">
           <img src="~/assets/images/头像 男孩.svg" class="item-img">
-          <div class="item-text">{{ o.name }}</div>
-        <div class="item-info">{{ o.name }}</div>
-        <!-- <div class="Aimg"><img src="~/assets/images/头像 男孩.svg" class="AAimg"></div> -->
+          <div class="item-text">{{ news.name }}</div>
+        <div class="item-info">{{ news.name }}</div>
       </div>
     </div>
   </template>
   <script>
+import axios from 'axios';
   export default {
   data() {
   return {
-       navs: [
+       newslist: [
       {
         name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
       },
@@ -33,13 +33,30 @@
         name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
       },
     ],
+    categorylist:[1]
   }
+},
+created(){
+  this.load();
 },
   methods:{
     todeatil(){
       this.$router.push('news_detail')
-    }
- }
+    },
+    load(){
+      axios.post('/api/ordinary/briefnews?',{categorylist:4},{headers:{token:this.$store.state.token,'platform': 'web'}})
+      .then(Response=>{
+        console.log(Response);
+        console.log(Response.headers.token);
+        if(Response.data.code==200){
+          console.log(Response.data.data.user_id+"&"+this.$store.state.userId+"&"+this.$store.state.role+this.$store.state.token)
+          this.$router.push('/')
+        }
+        else{
+          this.$message(Response.data.msg)
+        }
+      })
+    }}
 }
   </script >
   

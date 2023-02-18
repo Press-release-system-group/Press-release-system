@@ -9,6 +9,7 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   layout:"home",
   data() {
@@ -32,14 +33,23 @@ return {
   ],
 }
 },
-// async asyncData ({$axios}) {
-//     console.log("111");
-//      const {data} = await $axios.$get('/api/admin/findAllUser');
-//      console.log(data);
-//      return {
-//         data
-//      }
-//    }
+created(){
+this.getAll();
+},
+   methods:{
+    getAll(){
+      console.log("获取所有的新闻");
+      console.log(this.$store.state.token);
+      axios.get('/api/publisher/getAllSimpleNews?',{headers:{token:this.$store.state.token,'platform': 'web'}})
+      .then(Response=>{
+        console.log(Response);
+        if(Response.data.code==200){
+          
+        }
+   
+      })
+    }
+  }
 }
 </script>
 <style> 

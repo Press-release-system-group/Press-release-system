@@ -4,15 +4,15 @@
      <div class="register">
        <el-form>
          <div class="user-box">
-           <el-input v-model="user.username" placeholder="Please input" @input="changeValue" class="B1"/>
+           <el-input v-model="username" placeholder="Please input" @input="changeValue" class="B1"/>
            <label>账号</label>
          </div>
          <div class="user-box">
-           <el-input v-model="user.password" type="password" placeholder="Please input password" show-password class="B2" @input="changeValue"/>
+           <el-input v-model="password" type="password" placeholder="Please input password" show-password class="B2" @input="changeValue"/>
            <label>密码</label>
          </div>
          <div class="user-box">
-            <el-radio-group v-model="user.role" class="ml-4" >
+            <el-radio-group v-model="role" class="ml-4" >
             <el-radio label="普通用户" size="large" >普通用户</el-radio>
             <el-radio label="新闻发布者" size="large" >新闻发布者</el-radio>
             <el-radio label="管理员" size="large">管理员</el-radio>
@@ -39,11 +39,9 @@
      layout:"login",
      data() {
      return {
-      user:{
         username: '', // 账号
         password: '',    // 密码
         role:''
-      }
      }
    },
 
@@ -52,8 +50,8 @@
       this.$forceUpdate()
     },
     register(){
-      console.log("注册"+this.user.role+this.user.username+this.user.password);
-      axios.post('/api/common/signup',{username:this.user.username,password:this.user.password,role:this.user.role})
+      console.log("注册"+this.role+this.username+this.password);
+      axios.post('/api/common/signup',{username:this.username,password:this.password,role:this.role})
       .then(Response=>{
         console.log(Response);
         if(Response.data.code==200){

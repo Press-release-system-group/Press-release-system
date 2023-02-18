@@ -1,9 +1,11 @@
+// const cookieParser = require('cookieparser');
 //存储公共数据
 export const state = ()=>({
     username:'',
     userId:11,
     role:'',
-    token:'eyJ0eXAiOiJqd3QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoi5pmu6YCa55So5oi3IiwidXNlcklkIjoxMSwidXNlcm5hbWUiOiLpmYjpmYjpmYgiLCJpYXQiOjE2NzY2NDI3MDIsImV4cCI6MTY3NjY0MzMwMn0.-uBx9MEvjJM1BGOTu1eB2OfqHv3OSZh4wqcAB0xpPL8'
+    token:'',
+    category_id:''
 })
 //完成数据的同步修改
 export const mutations = {
@@ -16,5 +18,22 @@ export const mutations = {
      },
      updateToken(state, payload) {
         state.token=payload;
-     }
+     },
+     updatecategory_id(state, payload) {
+      state.category_id=payload;
+   }
 }
+
+
+// export const actions = {
+//    //  只能使用在store/index.js中的actoins中
+//    nuxtServerInit({commit}, {req}){
+//        let token = '';
+//        if (req.headers.cookie) {
+//            let parserd = cookieParser.parse(req.headers.cookie);
+//            token = parserd.token;
+//            console.log(token,'token');
+//        }
+//        commit('updateToken', token);
+//    }
+// }

@@ -9,14 +9,18 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/proxy": "^2.1.0",
     "core-js": "^3.25.3",
+    "element-ui": "^2.15.13",
+    "express-session": "^1.17.3",
+    "js-cookie": "^3.0.1",
     "nuxt": "^2.15.8",
     "vue": "^2.7.10",
     "vue-server-renderer": "^2.7.10",
-    "vue-template-compiler": "^2.7.10",
-    "element-ui":"^2.15.13",
-    "@nuxtjs/axios":"^5.13.6",
-    "@nuxtjs/proxy":"^2.1.0"
+    "vue-template-compiler": "^2.7.10"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "cookie-parser": "^1.4.6"
+  }
 }

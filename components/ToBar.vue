@@ -26,7 +26,7 @@
               <span style="display:block;">日常发布</span>
               </el-dropdown-item>
               </nuxt-link>
-              <nuxt-link to="/news_edit">
+              <nuxt-link to="drafts">
               <el-dropdown-item>
               <span style="display:block;">草稿箱</span>
               </el-dropdown-item>

@@ -26,7 +26,8 @@
 
 </template>
 <script>
-import axios from 'axios'
+import axios from 'axios';
+import {Cookie} from 'js-cookie';
   export default{
     layout:"login",
     data() {
@@ -56,8 +57,13 @@ import axios from 'axios'
           this.$store.commit('updateUserId',Response.data.data.user_id);
           this.$store.commit('updateRole',Response.data.data.role);
           this.$store.commit('updateToken',Response.headers.token);
+           //设置token
+        // this.updateToken(token);
+        // // 存储token到cookie
+        // Cookie.set('token',token) 
           console.log(Response.data.data.user_id+"&"+this.$store.state.userId+"&"+this.$store.state.role+this.$store.state.token)
-          this.$router.push('/')
+          if(Response.data.data.role=='普通用户'||Response.data.data.role=='新闻发布者')this.$router.push('/')
+          else{this.$router.push('admin')}
         }
         else{
           this.$message('登陆失败')

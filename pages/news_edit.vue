@@ -3,18 +3,19 @@
         <div class="edit">
         <div><h3>新闻编辑</h3></div>
         <div>
-            <label>新闻标题：</label><el-input placeholder="请输入内容" v-model="username" clearable class="editInput"></el-input>
+            <label>新闻标题：</label><el-input placeholder="请输入新闻标题" v-model="title" clearable class="editInput"></el-input>
         </div>
         <div>
-            <label>新闻内容：</label><el-input placeholder="请输入内容" v-model="name" clearable class="editInput"></el-input>
+          <label>新闻类别：</label>
+          <el-select v-model="category" placeholder="请选择" class="edit_select">
+                   <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+           </el-select>
         </div>
         <div>
-            <label>新闻类别：</label><el-input placeholder="请输入内容" v-model="email" clearable class="editInput"></el-input>
+          <label>新闻内容：</label><el-input type="textarea"  :autosize="{ minRows: 10, maxRows: 20}" placeholder="请输入新闻内容" v-model="content" class="edit_textarea"></el-input>
         </div>
-        <div>
-            <label>新闻栏目：</label><el-input placeholder="请输入内容" v-model="phone" clearable class="editInput"></el-input>
-        </div>
-        <div><el-button plain @click="Upadate">确认更新</el-button></div>
+        <div><el-button plain >草稿箱</el-button></div>
+        <div><el-button plain @click="Upadate">确认保存</el-button></div>
         </div>
     </div>
 </template>
@@ -24,24 +25,46 @@ import axios from 'axios'
  export default{
    data(){
     return {
-    username:'',
-    name:'',
-    email:'',
-    phone:''
+    title:'',
+    category:'',
+    content:'',
+    options: [{
+          value: '学习',
+          label: '学习'
+        }, {
+          value: '日常',
+          label: '日常'
+        }, {
+          value: '美食',
+          label: '美食'
+        }, {
+          value: '旅游',
+          label: '旅游'
+        }, {
+          value: '时政',
+          label: '时政'
+        },{
+          value: '体育',
+          label: '体育'
+        },
+        {
+          value: '竞赛',
+          label: '竞赛'
+        }],
    }
  },
  methods:{
     Upadate(){
-      console.log("编辑个人资料"+this.$store.state.userId);
-      axios.put('/api/common/updateUserInfo',{user_id:this.$store.state.userId,username:this.username,email:this.email,phone:this.phone,name:this.name})
+      console.log("发布新闻"+this.$store.state.userId+"&"+this.category);
+      axios.post('/api/publisher/createNews?',{category:this.category,title:this.title,content:this.content},{headers:{token:this.$store.state.token,'platform': 'web'}})
       .then(Response=>{
         console.log(Response);
-        if(Response.data.code==200){
-          this.$message('修改成功!');
-          this.$router.push('home')
+        if(Response.status==200){
+          this.$message('保存成功!');
+          this.$router.push('drafts')
         }
         else{
-          this.$message('登陆失败')
+          this.$message('保存失败')
         }
       })
     }
@@ -54,7 +77,7 @@ import axios from 'axios'
     display: inline-block; 
     margin-left: 14vw;
     margin-top: 0.5rem;
-    height: 22rem;
+    height: 35rem;
     width:52.5vw;
     background-color: aliceblue;    
     box-shadow: 0 0.1rem 1rem  rgb(222, 218, 218);
@@ -63,6 +86,13 @@ import axios from 'axios'
     text-align: center;
     margin-top: 0.5rem;
     /* background-color:aqua; */
+}
+.edit_textarea{
+  width: 20rem;
+  
+}
+.edit_select{
+  width: 20rem;
 }
 .editInput{
     width:20rem;
