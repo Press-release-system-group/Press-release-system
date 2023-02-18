@@ -14,7 +14,7 @@
         <div>
           <label>新闻内容：</label><el-input type="textarea"  :autosize="{ minRows: 10, maxRows: 20}" placeholder="请输入新闻内容" v-model="content" class="edit_textarea"></el-input>
         </div>
-        <div><el-button plain >草稿箱</el-button></div>
+        <div><el-button plain @click="todrafts">草稿箱</el-button></div>
         <div><el-button plain @click="Upadate">确认保存</el-button></div>
         </div>
     </div>
@@ -61,12 +61,15 @@ import axios from 'axios'
         console.log(Response);
         if(Response.status==200){
           this.$message('保存成功!');
-          this.$router.push('drafts')
+          this.$router.push('home')
         }
         else{
           this.$message('保存失败')
         }
       })
+    },
+    todrafts(){
+      this.$router.push('drafts')
     }
  }
 }

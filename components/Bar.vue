@@ -1,10 +1,7 @@
 <template>
     <div>
         <nav >
-          <ul class="bars">
-          <nuxt-link v-for="item in navs" :key="item.id" :to="item.link" tag="li" class="bar">{{item.name}}</nuxt-link>
-          <li><img src="~/assets/images/头像 女孩.svg" class="tubiao"/></li>
-        </ul>
+          
         </nav>
     </div>
   </template>

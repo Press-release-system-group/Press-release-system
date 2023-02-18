@@ -4,59 +4,54 @@
         <span>最新</span>
         <hr/>
     </div>
-    <div class="item"  v-for="news in newslist" :key="o" v-on:click="todeatil">
-          <img src="~/assets/images/头像 男孩.svg" class="item-img">
-          <div class="item-text">{{ news.name }}</div>
-        <div class="item-info">{{ news.name }}</div>
+    <div class="item"  v-for="news in newslist" :key="o" v-on:click="todeatil(news.news_id)">
+          <!-- <img src="~/assets/images/头像 男孩.svg" class="item-img"> -->
+          <div class="item-text"><h4>{{ news.title}}</h4></div>
+        <div class="item-info"> 
+          <span>新闻Id:{{news.news_id}}</span>
+          <span>类别Id:{{news.category_id}}</span>
+          <span>更新时间:{{news.update_time}}</span>
+        </div>
       </div>
     </div>
   </template>
   <script>
 import axios from 'axios';
+import Cookie from 'js-cookie';
   export default {
   data() {
   return {
        newslist: [
       {
-        name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
-      },
-      {
-        name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
-      },
-      {
-        name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
-      },
-      {
-        name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
-      },
-      {
-        name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
-      },
+        news_id:'',
+        title:'',
+        category_id:'',
+        update_time:''
+      }
     ],
     categorylist:[1]
   }
 },
 created(){
-  this.load();
+  this.load()
 },
   methods:{
-    todeatil(){
+    todeatil(n){
+      Cookie.set('news_id',n);
       this.$router.push('news_detail')
     },
     load(){
-      axios.post('/api/ordinary/briefnews?',{categorylist:4},{headers:{token:this.$store.state.token,'platform': 'web'}})
-      .then(Response=>{
-        console.log(Response);
-        console.log(Response.headers.token);
-        if(Response.data.code==200){
-          console.log(Response.data.data.user_id+"&"+this.$store.state.userId+"&"+this.$store.state.role+this.$store.state.token)
-          this.$router.push('/')
-        }
-        else{
-          this.$message(Response.data.msg)
-        }
+      let params={categorylist: 1};
+      this.$axios({
+        method:'post',
+        url:'/api/ordinary/briefnews',
+        params:params
+      }).then((result)=>{
+        console.log(result);
+        this.newslist=result.data.data;
       })
-    }}
+    }
+    }
 }
   </script >
   
@@ -94,7 +89,7 @@ created(){
   margin-top: 0.5rem;
   margin-left: 0.5rem;
   width:45vw;
-  background-color: green;
+  /* background-color: green; */
 }
 .item-info{
   float: left;
@@ -102,7 +97,7 @@ created(){
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   width:45vw;
-  background-color: rgb(127, 55, 86);
+  /* background-color: rgb(127, 55, 86); */
 }
 /* .Aimg{
   margin-left: 0;

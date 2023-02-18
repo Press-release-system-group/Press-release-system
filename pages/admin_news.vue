@@ -70,6 +70,7 @@ return {
 
 methods:{
     todeatil(){
+      console.log("身份"+this.$store.state.role);
       this.$router.push('news_detail')
     },
     getBriefNews(){

@@ -11,17 +11,17 @@
                                创作者中心
             <template #dropdown>
              <el-dropdown-menu>
-              <nuxt-link to="/news_edit">
+              <nuxt-link to="news_edit">
               <el-dropdown-item>
               <span style="display:block;">新闻编辑</span>
               </el-dropdown-item>
               </nuxt-link>
-              <nuxt-link to="/news_edit">
+              <nuxt-link to="news_push">
               <el-dropdown-item>
               <span style="display:block;">新闻发布</span>
               </el-dropdown-item>
               </nuxt-link>
-              <nuxt-link to="/news_edit">
+              <nuxt-link to="news_edit">
               <el-dropdown-item>
               <span style="display:block;">日常发布</span>
               </el-dropdown-item>
