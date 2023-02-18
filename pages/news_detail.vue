@@ -31,18 +31,6 @@
           {{ newsdetail.content}}
          </div>
         </div>
-        <div class="comment" v-for="comment in comments">
-        <div class="mytitle" >
-           <h6>
-            <span>作者:{{}}</span>
-            <span>新闻类别:{{}}</span>
-            <span>更新时间:{{}}</span>
-           </h6>
-         </div>
-         <div class="mydetail">
-          {{}}
-         </div>
-        </div>
         <div class="pass" v-if="role=='管理员'">
             <el-button type="primary">审核通过</el-button>
         </div>

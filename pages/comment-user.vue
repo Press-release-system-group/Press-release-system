@@ -15,7 +15,6 @@
 
 <script>
 import axios from 'axios'
-import { onMounted } from 'vue'
 
 export default {
   data() {
@@ -23,7 +22,7 @@ export default {
         navs: []
     }
   },
-  onMounted(){
+  mounted(){
     this.$axios({
         method: 'POST',
         url: '/api/ordinary/getAllCommentsByNewsId',
