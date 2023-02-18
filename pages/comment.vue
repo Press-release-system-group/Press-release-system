@@ -1,18 +1,14 @@
 <template>
     <div>
-        <div class="mycomment"  v-for="news in  mycomments" :key="news" v-on:click="todeatil(news.news_id)">
-            <!-- <img src="~/assets/images/头像 男孩.svg" class="CCimg"> -->
+        <div class="mycomment"  v-for="news in  mycomments" :key="news" >
+            <el-button type="info" plain class="DD" @click="deleteC(news.comment_id)">删除</el-button>
             <el-button type="info" plain class="CC" v-if="news.state==0">保存中</el-button>
-            <el-button type="info" plain class="CC" v-if="news.state==1">审核中</el-button>
-            <el-button type="info" plain class="CC" v-if="news.state==2">已删除</el-button>
-            <el-button type="info" plain class="CC" v-if="news.state==3">已审核</el-button>
+            <el-button type="info" plain class="CC" v-if="news.state==1">已删除</el-button>
           <div class="Ctext"><h4>{{ news.content }}</h4></div>
           <div class="Cinfo">
-            <span>新闻Id:{{news.news_id}}</span>
-            <span>类别Id:{{news.category_id}}</span>
-            <span>更新时间:{{news.update_time}}</span>
+            <p>新闻名称:{{news.news_title}}Id:{{news.news_id}}</p>
+            <p>更新时间:{{news.create_time}}</p>
           </div>
-          <!-- <div class="Aimg"><img src="~/assets/images/头像 男孩.svg" class="AAimg"></div> -->
         </div>
       </div>
   </template>
@@ -59,6 +55,25 @@
         console.log(this.$store.state.role);
         console.log(this.$store.state.userId);
         
+      },
+      deleteC(n){
+        
+        let params={comments_id:n};
+        this.$axios({
+        method:'post',
+        url:'/api/ordinary/deleteMyComments',
+        params:params,
+        headers:{
+          token:this.$store.state.token
+        }
+      }).then((result)=>{
+        console.log(n);
+        console.log(result);
+        if(result.data.code==200)
+        {
+            this.$message('删除成功!');
+        }
+      })
       }
     },
   
@@ -101,6 +116,12 @@
     width: 5rem;
   } */
   .CC{
+    width: 5rem;
+    float: right;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+  }
+  .DD{
     width: 5rem;
     float: right;
     margin-top: 0.5rem;

@@ -10,7 +10,7 @@
            <el-button slot="append" icon="el-icon-search" v-on:click="getBriefNews"></el-button>
            <!-- <el-button v-on:click="changeNewsState"></el-button> -->
          </div>
-            <div class="getnews" v-for="news in navs" :key="news" v-on:click="todeatil">
+            <div class="getnews" v-for="news in navs" :key="news" v-on:click="todeatil(news.news_id)">
                 <el-select v-model="news.state" :key="news" class="state_select" @change="(status_id) => {changeNewsState(news.news_id, status_id)}">
                    <el-option v-for="item in options" :key="item" :label="item.label" :value="item.value"></el-option>
                 </el-select>
@@ -23,7 +23,7 @@
 
 <script>
 import axios from 'axios'
-
+import Cookie from 'js-cookie';
 export default {
   data() {
 return {
@@ -69,8 +69,9 @@ return {
 },
 
 methods:{
-    todeatil(){
-      console.log("身份"+this.$store.state.role);
+  todeatil(n){
+    console.log(n)
+      Cookie.set('news_id',n);
       this.$router.push('news_detail')
     },
     getBriefNews(){
@@ -82,6 +83,8 @@ methods:{
           }
       }).then((result) => {
         this.navs = [];
+        console.log(result)
+        console.log(result.data.data[0].news_id)
         this.$message("查找成功！");
         this.navs = result.data.data;
       });

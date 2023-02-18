@@ -1,9 +1,13 @@
 <template>
     <div class="mycard">
     <el-avatar :size="50" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" class="avatar"/>
-    <div v-for="my in Info" :key="my" class="info">
-      <div v-if="my.user_id==myInfo.user_id">
-        {{my.username}}{{ my.phone }}
+    <div>
+      <div class="myinfo">
+        <p>用户名:{{Info.username}}</p>
+        <p>真实姓名:{{ Info.name}}</p>
+        <p>手机号:{{ Info.phone }}</p>
+        <p>邮箱:{{ Info.email}}</p>
+        <p>角色:{{ Info.role}}</p>
       </div>
     </div>
     <div class="editbutton">
@@ -29,36 +33,53 @@
     ],
     Info: [
       {
-        user_id:'',
-        username:'',
-        password:'',
-        role:'',
-        email:'',
-        phone:'',
-        name:''      
+        // user_id:'',
+        // username:'',
+        // password:'',
+        // role:'',
+        // email:'',
+        // phone:'',
+        // name:''      
       },
     ],
   }
 },
- async fetch() {
-    this.getUserInfo();
-    //  const {data} = await this.$axios.$get('/api/admin/findAllUser');
-   },
+   mounted(){
+    console.log(this.role);
+    this.$axios({
+        method: 'get',
+        url: '/api/common/getUserInfo',
+        headers:{
+          token:this.$store.state.token
+         }}).then((result) => {
+         console.log(result)
+       if(result.data.code==200)
+       this.Info=result.data.data
+
+});
+  },
    methods:{
     edit(){
       this.$router.push('editInfo')
     },
-    getUserInfo(){
+     getUserInfo(){
       console.log("获取个人信息");
-      console.log(this.$store.state.token+this.$store.state.userId);
-      axios.get('/api/admin/getUserInfo?',{user_id:this.$store.state.userId},{headers:{token:this.$store.state.token,'platform': 'web'}})
-      .then(Response=>{
-        console.log(Response);
-        if(Response.data.code==200){
-          
-        }
-   
-      })
+      this.$axios({
+        method: 'get',
+        url: '/api/common/getUserInfo',
+        headers:{
+          token:this.$store.state.token
+         }
+
+}).then((result) => {
+
+console.log(result)
+
+if(result.data.code==200)
+
+this.Info=result.data.data
+
+});
     }
   }
 }
@@ -67,12 +88,18 @@
   .avatar{
     margin-left: 1rem;
   }
+  .myinfo{
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+   
+  }
   .mycard {
+    display: inline-block;
     position: relative;
     margin-top: 1.5%;
-    height:15rem;
+    height:16rem;
     width: 52.5vw;
-    background-color: rgb(255, 255, 255);
+   
     margin-left: 14vw;
     box-shadow: 0 0.1rem 1rem  rgb(222, 218, 218);
   }

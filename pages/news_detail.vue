@@ -31,9 +31,9 @@
           {{ newsdetail.content}}
          </div>
         </div>
-        <div class="pass" v-if="role=='管理员'">
+        <!-- <div class="pass" v-if="role=='管理员'">
             <el-button type="primary">审核通过</el-button>
-        </div>
+        </div> -->
         <!-- <div class="bbtwo" v-if="role=='新闻发布者'">
           <el-button type="primary" @click="pushnews">编辑新闻</el-button>
           <el-button type="primary" @click="pushnews">确认发布</el-button>
@@ -74,6 +74,8 @@ import Cookie from 'js-cookie';
         this.getdetail();
       }else if(this.$store.state.role=="新闻发布者"){
         this.pdetail();
+      }else{
+        this.Adetail()
       }
  },
  methods: {
@@ -151,6 +153,23 @@ import Cookie from 'js-cookie';
           console.log(response);
           this.newsdetail=response.data.data
         });
+    },
+    Adetail(){
+      console.log("新闻Id"+this.$store.state.news_id);
+      let params={
+        news_id:this.$store.state.news_id
+      };
+      this.$axios({
+        method:'post',
+        url:'/api/admin/getNewsDetailByNews_id',
+        params:params,
+        headers:{
+          "token": this.$store.state.token
+        }
+      }).then((res)=>{
+        console.log(res)
+        this.newsdetail=res.data.data;
+      })
     },
     getdetail(){
       let params={news_id:this.$store.state.news_id};
