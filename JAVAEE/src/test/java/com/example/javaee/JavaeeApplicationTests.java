@@ -16,18 +16,18 @@ import java.util.List;
 @SpringBootTest
 class JavaeeApplicationTests {
 
-	@Resource
-	SelectDao selectDao;
-	@Resource
-	InsertDao insertDao;
-	@Test
-	void contextLoads() {
-		Category category=new Category();
-		category.setCreate_time(new Date());
-		category.setName("hhhhhh");
-		category.setState(0);
-		insertDao.categoryInsert(category);
-
-	}
+//	@Resource
+//	SelectDao selectDao;
+//	@Resource
+//	InsertDao insertDao;
+//	@Test
+//	void contextLoads() {
+//		Category category=new Category();
+//		category.setCreate_time(new Date());
+//		category.setName("hhhhhh");
+//		category.setState(0);
+//		insertDao.categoryInsert(category);
+//
+//	}
 
 }

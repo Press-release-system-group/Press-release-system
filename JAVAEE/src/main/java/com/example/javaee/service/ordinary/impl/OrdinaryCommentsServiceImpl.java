@@ -93,6 +93,7 @@ public class OrdinaryCommentsServiceImpl implements IOrdinaryCommentsService {
                commentsDetail.setContent(comments.getContent());
                commentsDetail.setCreate_time(comments.getCreate_time());
                commentsDetail.setState(comments.getState());
+               commentsDetail.setNews_id(comments.getNews_id());
                commentsDetail.setNews_title(selectDao.newsSelectByNewsId(comments.getNews_id()).getTitle());
                detailList.add(commentsDetail);
            }

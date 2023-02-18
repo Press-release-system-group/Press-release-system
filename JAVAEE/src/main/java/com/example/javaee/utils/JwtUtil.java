@@ -5,6 +5,7 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,6 +17,13 @@ public class JwtUtil {
 
 //    public static final SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);//密钥，动态生成的密钥
     public static final SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);//密钥，动态生成的密钥
+    // decode the base64 encoded string
+//    String encodedKey="hhhh";
+//    byte[] decodedKey = Base64.getDecoder().decode(encodedKey);
+//    // rebuild key using SecretKeySpec
+//    public static final SecretKey key SecretKey key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
+
+
 
     /**
      * 生成token
