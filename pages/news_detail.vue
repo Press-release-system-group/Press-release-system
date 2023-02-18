@@ -32,6 +32,7 @@ import axios from 'axios'
    }
  },
  created(){
+    console.log("新闻Id"+this.$store.state.news_id);
     this.role=this.$store.state.role
  },
   

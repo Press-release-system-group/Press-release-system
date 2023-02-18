@@ -1,8 +1,11 @@
 <template>
   <div>
-      <div class="myHOME"  v-for="news in mynews" :key="news">
+      <div class="myHOME"  v-for="news in mynews" :key="news" v-on:click="todeatil(news.news_id)">
           <!-- <img src="~/assets/images/头像 男孩.svg" class="CCimg"> -->
-          <div class="Ctext"><h4>{{ news.title }}</h4></div>
+          <el-button type="info" plain class="CC" v-if="news.state==0">保存中</el-button>
+          <el-button type="info" plain class="CC" v-if="news.state==1">待审核</el-button>
+          <el-button type="info" plain class="CC" v-if="news.state==2">已审核</el-button>
+        <div class="Ctext"><h4>{{ news.title }}</h4></div>
         <div class="Cinfo">
           <span>新闻Id:{{news.news_id}}</span>
           <span>类别Id:{{news.category_id}}</span>
@@ -13,7 +16,8 @@
     </div>
 </template>
 <script>
-import axios from 'axios'
+import axios from 'axios';
+import Cookie from 'js-cookie';
 export default {
   layout:"home",
   data() {
@@ -33,6 +37,10 @@ created(){
 this.getAll();
 },
    methods:{
+    todeatil(n){
+      Cookie.set('news_id',n);
+      this.$router.push('news_detail')
+    },
     getAll(){
       console.log("获取所有的新闻");
       console.log(this.$store.state.token);
@@ -44,7 +52,6 @@ this.getAll();
         if(Response.data.code==200){
           this.mynews=Response.data.data
         }
-   
       })
     }
   }
@@ -79,10 +86,16 @@ this.getAll();
   background-color: rgb(92, 76, 146);
   float:left;
 } */
-.CCimg{
+/* .CCimg{
   margin-top: 0.5rem;
   margin-right: 0.5rem;
   float: right;
   width: 5rem;
+} */
+.CC{
+  width: 5rem;
+  float: right;
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
 }
 </style>
