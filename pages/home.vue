@@ -36,6 +36,8 @@ this.getAll();
     getAll(){
       console.log("获取所有的新闻");
       console.log(this.$store.state.token);
+      console.log(this.$store.state.role);
+      console.log(this.$store.state.userId);
       axios.get('/api/publisher/getAllSimpleNews?',{headers:{token:this.$store.state.token,'platform': 'web'}})
       .then(Response=>{
         console.log(Response);
