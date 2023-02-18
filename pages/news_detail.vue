@@ -75,10 +75,6 @@ import Cookie from 'js-cookie';
       }else if(this.$store.state.role=="新闻发布者"){
         this.pdetail();
       }
-      this.state = false;
-      this.$nextTick(()=>{
-        this.state = true;
-      })
  },
  methods: {
     changeValue (e) {

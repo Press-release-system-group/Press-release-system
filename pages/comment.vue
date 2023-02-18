@@ -1,12 +1,12 @@
 <template>
     <div>
-        <div class="myHOME"  v-for="news in mynews" :key="news" v-on:click="todeatil(news.news_id)">
+        <div class="mycomment"  v-for="news in  mycomments" :key="news" v-on:click="todeatil(news.news_id)">
             <!-- <img src="~/assets/images/头像 男孩.svg" class="CCimg"> -->
             <el-button type="info" plain class="CC" v-if="news.state==0">保存中</el-button>
             <el-button type="info" plain class="CC" v-if="news.state==1">审核中</el-button>
             <el-button type="info" plain class="CC" v-if="news.state==2">已删除</el-button>
             <el-button type="info" plain class="CC" v-if="news.state==3">已审核</el-button>
-          <div class="Ctext"><h4>{{ news.title }}</h4></div>
+          <div class="Ctext"><h4>{{ news.content }}</h4></div>
           <div class="Cinfo">
             <span>新闻Id:{{news.news_id}}</span>
             <span>类别Id:{{news.category_id}}</span>
@@ -23,7 +23,7 @@
     layout:"Info",
     data() {
   return {
-       mynews: [
+       mycomments: [
       {
         state:'',
         news_id:'',
@@ -35,14 +35,18 @@
   }
   },
   created(){
-  this.getAll();
-  axios.get('/api/publisher/getAllSimpleNews?',{headers:{token:this.$store.state.token,'platform': 'web'}})
-        .then(Response=>{
-          console.log(Response);
-          if(Response.data.code==200){
-            this.mynews=Response.data.data
-          }
-        })
+      this.getAll();
+      this.$axios.get('/api/ordinary/findMyAllComments', {
+        headers:{
+          "token": this.$store.state.token
+        }
+        }
+      )
+        .then((response)=> {
+          console.log(response);
+          if(response.data.code==200)
+          this.mycomments=response.data.data
+        });
   },
      methods:{
       todeatil(n){
