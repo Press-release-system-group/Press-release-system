@@ -192,11 +192,9 @@ public class UserController {
         }
     }
 
-    @GetMapping("/admin/getUserInfo")
+    @GetMapping("/common/getUserInfo")
     @ResponseBody
-    @ApiOperation(value = "获取单个用户信息", notes = "\n{\n" +
-            "    \"user_id\":2\n" +
-            "}")
+    @ApiOperation(value = "用户查看自己信息", notes = "不需要参数")
     public Result<User> getUserInfo(HttpServletRequest request)
     {
         try
