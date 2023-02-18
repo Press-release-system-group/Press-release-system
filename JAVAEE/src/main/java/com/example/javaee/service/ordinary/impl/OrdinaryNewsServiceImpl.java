@@ -29,12 +29,13 @@ public class OrdinaryNewsServiceImpl implements IOrdinaryNewsService {
 
     @Override
     public List<Category> findAllCategory() {
-        List<Category> allCategory = new ArrayList<Category>();
-        allCategory = selectDao.categorySelectAll();
-        int size = allCategory.size();
+        List<Category> allCategory1 = new ArrayList<Category>();
+        allCategory1 = selectDao.categorySelectAll();
+        List<Category> allCategory=new ArrayList<>();
+        int size = allCategory1.size();
         for (int i = 0 ; i < size;++i){
-            if(allCategory.get(i).getState()==1){
-                allCategory.remove(allCategory.get(i));
+            if(allCategory1.get(i).getState()!=1){
+               allCategory.add(allCategory1.get(i));
             }
         }
         return allCategory;
