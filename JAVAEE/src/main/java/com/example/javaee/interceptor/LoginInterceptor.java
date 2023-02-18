@@ -56,11 +56,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 
                         String username=(String)claims.get("username");
                         int userId=(int)claims.get("userId");
-
+                        Role role1= claims.get("role",Role.class);
                         Map<String,Object> map=new HashMap<>();
 
                         map.put("username",username);
                         map.put("userId",userId);
+                        map.put("role",role1);
                         String newToken=JwtUtil.generate(map);
                         response.setHeader("token",newToken);
                         return true;

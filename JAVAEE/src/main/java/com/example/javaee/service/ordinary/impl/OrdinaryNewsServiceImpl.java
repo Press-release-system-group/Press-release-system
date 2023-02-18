@@ -38,17 +38,21 @@ public class OrdinaryNewsServiceImpl implements IOrdinaryNewsService {
 
     @Override
     public List<SimpleNews> findSimpleNews(List<Integer> list) {
-        List<News> listnews = new ArrayList<News>();
-        for (int i = 0; i < list.size();++i){
+        List<News> listnews1 = new ArrayList<News>();
+        for (int i = 0; i < list.size();i++){
+            if(selectDao.categorySelectById(list.get(i)).getState()==1) throw new BusinessException(ExceptionEnum.Category_没有该类别);
 
-            listnews.addAll(selectDao.newsSelectByCategory_id(list.get(i)));
+            listnews1.addAll(selectDao.newsSelectByCategory_id(list.get(i)));
         }
-        int size = listnews.size();
-        for (int i = 0;i < size;++i){
-            if(listnews.get(i).getState() != 3){
-                listnews.remove(listnews.get(i));
+        List<News> listnews=new ArrayList<>();
+        int size = listnews1.size();
+        for (int i = 0;i < size;i++){
+            if(listnews1.get(i).getState() == 3){
+//                listnews.remove(listnews.get(i));
+                listnews.add(listnews1.get(i));
             }
         }
+
         List<SimpleNews> listresult = new ArrayList<SimpleNews>();
         for (int i = 0;i < listnews.size();++i){
             SimpleNews x = new SimpleNews();

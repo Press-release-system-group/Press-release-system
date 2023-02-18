@@ -43,7 +43,7 @@ public enum ExceptionEnum implements BaseErrorInfoInterface{
     Category_没有该类别Id("5601","没有该新闻类别id "),
     Category_该类别下没有新闻("5602","该类别下没有新闻"),
     Category_类别名字已存在("5603","该类别名字重复"),
-
+    Category_没有该类别("5604","没有该类别"),
 
     Comment_该评论不存在("5701","该评论不存在"),
     Comment_该评论不属于你("5701","该评论不属于你");
