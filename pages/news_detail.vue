@@ -13,8 +13,8 @@
           <img src="~/assets/images/点赞选中.svg" class="tubiao" @click="addlike" v-if="isadd"/>
         </div>
          <div class="side"> <img src="~/assets/images/收藏 .svg" class="tubiao"/></div>
-         <div class="side"> <img src="~/assets/images/评论.svg" class="tubiao" @click="readComment"/></div>
-         <div class="side"> <img src="~/assets/images/转发.svg" class="tubiao" @click="addComment"/></div>
+         <div class="side"> <img src="~/assets/images/note.svg" class="tubiao" @click="readComment"/></div>
+         <div class="side"> <img src="~/assets/images/评论.svg" class="tubiao" @click="addComment"/></div>
          <hr>
          <div class="side"> <img src="~/assets/images/举报.svg" class="tubiao"/></div>
         </div>
@@ -75,10 +75,6 @@ import Cookie from 'js-cookie';
       }else if(this.$store.state.role=="新闻发布者"){
         this.pdetail();
       }
-      this.state = false;
-      this.$nextTick(()=>{
-        this.state = true;
-      })
  },
  methods: {
     changeValue (e) {
