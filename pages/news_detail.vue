@@ -13,7 +13,7 @@
           <img src="~/assets/images/点赞选中.svg" class="tubiao" @click="addlike" v-if="isadd"/>
         </div>
          <div class="side"> <img src="~/assets/images/收藏 .svg" class="tubiao"/></div>
-         <div class="side"> <img src="~/assets/images/评论.svg" class="tubiao"/></div>
+         <div class="side"> <img src="~/assets/images/评论.svg" class="tubiao" @click="readComment"/></div>
          <div class="side"> <img src="~/assets/images/转发.svg" class="tubiao"/></div>
          <hr>
          <div class="side"> <img src="~/assets/images/举报.svg" class="tubiao"/></div>
@@ -158,6 +158,9 @@ import Cookie from 'js-cookie';
         console.log(result);
         this.newsdetail=result.data.data;
       })
+    },
+    readComment(){
+      this.$router.push('comment-user');
     }
 }
 }
