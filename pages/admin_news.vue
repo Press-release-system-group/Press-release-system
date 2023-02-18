@@ -3,18 +3,19 @@
         <adminBar/>
         <div class="admin_news">
          <div class="getstate">
-            <label>新闻类别：</label>
+            <label>新闻状态：</label>
           <el-select v-model="category" placeholder="请选择" class="category_select">
                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
            </el-select>
-           <el-button slot="append" icon="el-icon-search"></el-button>
+           <el-button slot="append" icon="el-icon-search" v-on:click="getBriefNews"></el-button>
+           <!-- <el-button v-on:click="changeNewsState"></el-button> -->
          </div>
-            <div class="getnews"  v-for="news in navs" :key="news" v-on:click="todeatil">
-                <el-select v-model="state" placeholder="审核" class="state_select">
-                   <el-option v-for="item in statelist" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+            <div class="getnews" v-for="news in navs" :key="news" v-on:click="todeatil">
+                <el-select v-model="news.state" :key="news" class="state_select" @change="(status_id) => {changeNewsState(news.news_id, status_id)}">
+                   <el-option v-for="item in options" :key="item" :label="item.label" :value="item.value"></el-option>
                 </el-select>
-                <div class="gettext">{{ news.name }}</div>
-                <div class="getinfo">{{ news.name }}</div>
+                <div class="gettext">{{ news.title }}</div>
+                <div class="getinfo">{{ news.update_time }}</div>
             </div>
         </div>
     </div>
@@ -22,64 +23,80 @@
 
 <script>
 import axios from 'axios'
+
 export default {
   data() {
 return {
-    state:'',
+    state: true,
     category:'',
-     navs: [
-    {
-      name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
-    },
-    {
-      name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
-    },
-    {
-      name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
-    },
-    {
-      name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
-    },
-    {
-      name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
-    },
+    navs: [
+      // {
+      //   "category_id": 0,
+      //   "news_id": 0,
+      //   "state": 0,
+      //   "title": "string1",
+      //   "update_time": "2023-02-18T11:51:13.181Z"
+      // },
+      // {
+      //   "category_id": 1,
+      //   "news_id": 1,
+      //   "state": 1,
+      //   "title": "string2",
+      //   "update_time": "2023-02-18T11:51:13.181Z"
+      // },
+      // {
+      //   "category_id": 2,
+      //   "news_id": 2,
+      //   "state": 1,
+      //   "title": "string3",
+      //   "update_time": "2023-02-18T11:51:13.181Z"
+      // },
   ],
   options: [{
-          value: '',
-          label: '学习'
+          value: 0,
+          label: '保存中'
         }, {
-          value: '',
-          label: '日常'
+          value: 1,
+          label: '审核中'
         }, {
-          value: '',
-          label: '美食'
+          value: 2,
+          label: '已删除'
         }, {
-          value: '',
-          label: '旅游'
-        }, {
-          value: '1',
-          label: '时政'
-        },{
-          value: '4',
-          label: '体育'
-        },
-        {
-          value: '',
-          label: '竞赛'
-        }],
-        statelist:[{
-          value: '0',
-          label: '待审核'
-        }, {
-          value: '1',
-          label: '审核通过'
+          value: 3,
+          label: '通过'
         }],
 }
 },
+
 methods:{
     todeatil(){
       this.$router.push('news_detail')
     },
+    getBriefNews(){
+      this.$axios({
+          method: 'POST',
+          url: '/api/admin/getSimpleNewsByStatus',
+          params:{
+            list : this.category
+          }
+      }).then((result) => {
+        this.navs = [];
+        this.$message("查找成功！");
+        this.navs = result.data.data;
+      });
+    },
+    changeNewsState(news_id, status_id){
+      this.$axios({
+          method: 'POST',
+          url: '/api/admin/changeNewsState',
+          params:{
+            news_id : news_id,
+            state : status_id
+          }
+      }).then((result) => {
+        this.$message("修改成功！");
+      });
+    }
 }
 }
 </script>
