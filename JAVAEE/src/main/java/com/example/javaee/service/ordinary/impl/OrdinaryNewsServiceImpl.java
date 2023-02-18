@@ -21,6 +21,8 @@ import java.util.List;
 public class OrdinaryNewsServiceImpl implements IOrdinaryNewsService {
     @Autowired
     private SelectDao selectDao;
+
+    @Autowired
     private UserDao userDao;
 
     @Override
@@ -80,7 +82,8 @@ public class OrdinaryNewsServiceImpl implements IOrdinaryNewsService {
         }
         detailnews.setNews_id(news_id);
         detailnews.setTitle(news.getTitle());
-        detailnews.setAuthor_name((userDao.findByUserId(news.getAuthor_id())).getName());
+
+        detailnews.setAuthor_name((userDao.findByUserId(news.getAuthor_id())).getUsername());
         detailnews.setCategory_name((selectDao.categorySelectByCategory_id(news.getCategory_id())).getName());
         detailnews.setContent(news.getContent());
         detailnews.setLikes_cnt(selectDao.likesCountByNews_id(news_id));
