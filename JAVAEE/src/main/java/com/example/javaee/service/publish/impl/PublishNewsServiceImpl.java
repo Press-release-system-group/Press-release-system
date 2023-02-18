@@ -73,7 +73,7 @@ public class PublishNewsServiceImpl implements IPublishNewsService {
     {
         List<SimpleNews> simpleNews = selectDao.allSimpleNewsSelectByUserId(user_id);
         List<SimpleNews> res = simpleNews.stream()
-                .filter(news -> news.getState() == 3)
+                .filter(news -> news.getState() != 3)
                 .collect(Collectors.toList());
         return res;
     }
