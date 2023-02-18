@@ -1,7 +1,17 @@
 <template>
     <div>
+      <div class="SideRight">
+         <div class="side" v-if="role=='新闻发布者'"> 
+          <el-button type="primary" @click="editnews(newsdetail.news_id)">编辑新闻</el-button>
+        </div>
+         <div class="side" v-if="role=='新闻发布者'"> <el-button type="primary" @click="pushnews">确认发布</el-button></div>
+         <div class="side" v-if="role=='新闻发布者'"> <el-button type="danger" icon="el-icon-delete" circle v-on:click="deletenews"></el-button></div>
+       </div>
         <div class="sidebar">
-         <div class="side"> <img src="~/assets/images/点赞.svg" class="tubiao"/></div>
+         <div class="side"> 
+          <img src="~/assets/images/点赞.svg" class="tubiao" @click="addlike" v-if="isture"/>
+          <img src="~/assets/images/点赞选中.svg" class="tubiao" @click="addlike" v-if="isadd"/>
+        </div>
          <div class="side"> <img src="~/assets/images/收藏 .svg" class="tubiao"/></div>
          <div class="side"> <img src="~/assets/images/评论.svg" class="tubiao"/></div>
          <div class="side"> <img src="~/assets/images/转发.svg" class="tubiao"/></div>
@@ -9,45 +19,167 @@
          <div class="side"> <img src="~/assets/images/举报.svg" class="tubiao"/></div>
         </div>
         <div class="detail">
-        <div class="mytitle">
-           <h2>新闻标题</h2>  
-           <h6>新闻发布者——新闻时间</h6>
+        <div class="mytitle" >
+           <h2>{{newsdetail.title}}</h2>  
+           <h6>
+            <span>作者:{{newsdetail.author_name}}</span>
+          <span>新闻类别:{{newsdetail.category_name}}</span>
+          <span>更新时间:{{newsdetail.update_time}}</span>
+           </h6>
          </div>
          <div class="mydetail">
-            {{name}}
+          {{ newsdetail.content}}
          </div>
         </div>
         <div class="pass" v-if="role=='管理员'">
             <el-button type="primary">审核通过</el-button>
         </div>
+        <!-- <div class="bbtwo" v-if="role=='新闻发布者'">
+          <el-button type="primary" @click="pushnews">编辑新闻</el-button>
+          <el-button type="primary" @click="pushnews">确认发布</el-button>
+         <el-button type="danger" icon="el-icon-delete" circle v-on:click="deletenews"></el-button>
+        </div> -->
     </div>
 </template>
 <script>
 import axios from 'axios'
+import Cookie from 'js-cookie';
  export default{
    data(){
     return {
+        isture:true,
+        isadd:false,
         role:'',
-        name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
+        newsdetail: [
+      {
+      //  title:'标题',
+      //  author_name:'作者',
+      //  category_name:'类别',
+      //  update_time:'时间',
+      //  content:''
+      }
+    ],
    }
  },
  created(){
+    this.role=this.$store.state.role;
     console.log("新闻Id"+this.$store.state.news_id);
-    this.role=this.$store.state.role
+      console.log("身份"+this.$store.state.role);
+      console.log("token="+this.$store.state.token);
+      if(this.$store.state.role=="普通用户"){
+        this.getdetail();
+      }else if(this.$store.state.role=="新闻发布者"){
+        this.pdetail();
+      }
  },
-  
+ methods: {
+    changeValue (e) {
+      this.$forceUpdate()
+    },
+    addlike(){
+      let params={news_id:this.$store.state.news_id};
+      this.$axios({
+        method:'post',
+        url:'/api/ordinary/addlike',
+        params:params,
+        headers:{
+          token:this.$store.state.token
+        }
+      }).then((result)=>{
+        console.log(result);
+        if(result.data.code==200)
+        {
+          this.isadd=true;
+          this.isture=false;
+        }
+      })
+    },
+    editnews(n){
+      Cookie.set('news_id',n);
+      this.$router.push('drafts')
+    },
+    pushnews(){
+      let data={
+        news_id:this.newsdetail.news_id,
+        title:this.newsdetail.title,
+        content:this.newsdetail.content,
+        "category":this.newsdetail.category_name
+      };
+      this.$axios.post('/api/publisher/publishNews', data,{
+        headers:{
+          "token": this.$store.state.token
+        }
+        }
+      )
+        .then((response)=> {
+          console.log(response);
+          if(response.data.code==200)
+          this.$message('发布成功!');
+        });
+    },
+    deletenews(){
+      let data={
+        news_id:this.$store.state.news_id
+      };
+      this.$axios.post('/api/publisher/deleteNews', data,{
+        headers:{
+          "token": this.$store.state.token
+        }
+        }
+      )
+        .then((response)=> {
+          console.log(response);
+          if(response.data.code==200)
+          this.$message('删除成功!');
+        });
+    },
+    pdetail(){
+      let data={
+        news_id:this.$store.state.news_id
+      };
+      this.$axios.post('/api/publisher/getNews', data,{
+        headers:{
+          "token": this.$store.state.token
+        }
+        }
+      )
+        .then((response)=> {
+          console.log(response);
+          this.newsdetail=response.data.data
+        });
+    },
+    getdetail(){
+      let params={news_id:this.$store.state.news_id};
+      this.$axios({
+        method:'post',
+        url:'/api/ordinary/detailnews',
+        params:params
+      }).then((result)=>{
+        console.log(result);
+        this.newsdetail=result.data.data;
+      })
+    }
+}
 }
 </script>
 
 <style>
+.SideRight{
+  text-align: center;
+    margin-top: 10rem;
+   margin-right: 15vw;
+   float: right;
+   width: 5rem;
+}
 .sidebar{
     margin-top: 10rem;
     margin-left: 10vw;
     float: left;
     width: 5rem;
-    background-color: antiquewhite;
+    
 }
 .side{
+
     margin-top: 1rem;
     margin-bottom: 0.5rem;
     display:inline-block;
@@ -62,6 +194,20 @@ import axios from 'axios'
     box-shadow: 0 0.1rem 1rem  rgb(222, 218, 218);
     background-color: rgb(255, 255, 255);
     display:inline-block;
+}
+.bbtwo{
+    margin-left: 2rem;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    text-align: center;
+    height: 12%;
+    width: 10%;
+    box-shadow: 0 0.1rem 1rem  rgb(222, 218, 218);
+    background-color: rgb(255, 255, 255);
+    display:inline-block;
+}
+.bbtwo el-button{
+  margin-top: 2rem;
 }
 .detail{
    
@@ -78,12 +224,15 @@ import axios from 'axios'
     margin-right: 1rem;
     margin-left: 1rem;
     margin-top: 0.5rem;
-    background-color:aqua;
 }
 .mydetail{
+  padding-left: 0.2rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
     margin-right: 1rem;
-    margin-left: 1rem;
+    margin-left: 0.8rem;
     margin-top: 0.5rem;
-    background-color:aquamarine
+    background-color: rgb(255, 255, 255);    
+    box-shadow: 0 0.1rem 1rem  rgb(222, 218, 218);
 }
 </style>

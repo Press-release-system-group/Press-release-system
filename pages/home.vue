@@ -3,8 +3,9 @@
       <div class="myHOME"  v-for="news in mynews" :key="news" v-on:click="todeatil(news.news_id)">
           <!-- <img src="~/assets/images/头像 男孩.svg" class="CCimg"> -->
           <el-button type="info" plain class="CC" v-if="news.state==0">保存中</el-button>
-          <el-button type="info" plain class="CC" v-if="news.state==1">待审核</el-button>
-          <el-button type="info" plain class="CC" v-if="news.state==2">已审核</el-button>
+          <el-button type="info" plain class="CC" v-if="news.state==1">审核中</el-button>
+          <el-button type="info" plain class="CC" v-if="news.state==2">已删除</el-button>
+          <el-button type="info" plain class="CC" v-if="news.state==3">已审核</el-button>
         <div class="Ctext"><h4>{{ news.title }}</h4></div>
         <div class="Cinfo">
           <span>新闻Id:{{news.news_id}}</span>
@@ -35,6 +36,13 @@ return {
 },
 created(){
 this.getAll();
+axios.get('/api/publisher/getAllSimpleNews?',{headers:{token:this.$store.state.token,'platform': 'web'}})
+      .then(Response=>{
+        console.log(Response);
+        if(Response.data.code==200){
+          this.mynews=Response.data.data
+        }
+      })
 },
    methods:{
     todeatil(n){
@@ -46,15 +54,10 @@ this.getAll();
       console.log(this.$store.state.token);
       console.log(this.$store.state.role);
       console.log(this.$store.state.userId);
-      axios.get('/api/publisher/getAllSimpleNews?',{headers:{token:this.$store.state.token,'platform': 'web'}})
-      .then(Response=>{
-        console.log(Response);
-        if(Response.data.code==200){
-          this.mynews=Response.data.data
-        }
-      })
+      
     }
-  }
+  },
+
 }
 </script>
 <style> 
@@ -71,7 +74,7 @@ this.getAll();
   margin-top: 0.5rem;
   margin-left: 0.5rem;
   width:45vw;
-  background-color: green;
+  /* background-color: green; */
 }
 .Cinfo{
   float: left;
@@ -79,7 +82,7 @@ this.getAll();
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   width:45vw;
-  background-color: rgb(127, 55, 86);
+  /* background-color: rgb(127, 55, 86); */
 }
 /* .Aimg{
   margin-left: 0;
