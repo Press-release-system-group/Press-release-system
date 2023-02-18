@@ -18,7 +18,7 @@
          <hr>
          <div class="side"> <img src="~/assets/images/举报.svg" class="tubiao"/></div>
         </div>
-        <div class="detail">
+        <div class="detail" v-if="state">
         <div class="mytitle" >
            <h2>{{newsdetail.title}}</h2>  
            <h6>
@@ -47,6 +47,7 @@ import Cookie from 'js-cookie';
  export default{
    data(){
     return {
+        state: true,
         isture:true,
         isadd:false,
         role:'',
@@ -74,6 +75,10 @@ import Cookie from 'js-cookie';
       }else if(this.$store.state.role=="新闻发布者"){
         this.pdetail();
       }
+      this.state = false;
+      this.$nextTick(()=>{
+        this.state = true;
+      })
  },
  methods: {
     changeValue (e) {
