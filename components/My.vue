@@ -11,6 +11,8 @@
       </div>
     </div>
     <div class="editbutton">
+      <el-button plain type="text" @click="Apassword">密码验证</el-button>
+      <el-button plain type="text" @click="updatepassword">修改密码</el-button>
       <el-button plain @click="edit">编辑资料</el-button>
     </div>
     </div>
@@ -20,17 +22,8 @@
   export default {
   data() {
   return {
-       myInfo: [
-      {
-        user_id:'',
-        username:'',
-        password:'',
-        role:'',
-        email:'',
-        phone:'',
-        name:''      
-      },
-    ],
+      old_password:'',
+      new_password:'',
     Info: [
       {
         // user_id:'',
@@ -59,6 +52,56 @@
 });
   },
    methods:{
+    Apassword(){
+      this.$prompt('请输入旧的密码', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+        }).then(({ value }) => {
+          if(value==this.Info.password)
+          {
+            this.old_password=value;
+            this.$message({
+            type: 'success',
+            message: '验证成功'
+          });
+          }
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '验证失败'
+          });       
+        });
+    },
+    updatepassword(){
+      this.$prompt('请输入更新的密码', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+        }).then(({ value }) => {
+          let data={
+            user_id:this.Info.user_id,
+            old_password:this.old_password,
+            new_password:value
+          };
+          this.$axios.post('/api/common/modifyPwd', data,{
+           headers:{
+          "token": this.$store.state.token
+           }}) .then((response)=> {
+          console.log(response);
+          if(response.data.code==200)
+          {
+            this.$message({
+              type: 'success',
+                message: '修改成功！'
+          });       
+          }
+        });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '修改失败'
+          });       
+        });
+    },
     edit(){
       this.$router.push('editInfo')
     },
