@@ -40,7 +40,9 @@ public class OrdinaryNewsServiceImpl implements IOrdinaryNewsService {
     public List<SimpleNews> findSimpleNews(List<Integer> list) {
         List<News> listnews1 = new ArrayList<News>();
         for (int i = 0; i < list.size();i++){
-            if(selectDao.categorySelectById(list.get(i)).getState()==1) throw new BusinessException(ExceptionEnum.Category_没有该类别);
+
+            //todo 这里要改
+            if(selectDao.categorySelectById(list.get(i))==null||selectDao.categorySelectById(list.get(i)).getState()==1) throw new BusinessException(ExceptionEnum.Category_没有该类别);
 
             listnews1.addAll(selectDao.newsSelectByCategory_id(list.get(i)));
         }
@@ -74,7 +76,7 @@ public class OrdinaryNewsServiceImpl implements IOrdinaryNewsService {
             throw new BusinessException(ExceptionEnum.News_新闻不存在);
         }
         if(news.getState()!=3){
-            throw new BusinessException(ExceptionEnum.News_该新闻不属于你);
+            throw new BusinessException(ExceptionEnum.News_新闻不存在);
         }
         detailnews.setNews_id(news_id);
         detailnews.setTitle(news.getTitle());

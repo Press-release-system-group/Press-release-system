@@ -73,7 +73,7 @@ public class PublishNewsController
         }
     }
 
-    @GetMapping("/getNews")
+    @PostMapping("/getNews")
     @ResponseBody
     @ApiOperation(value = "新闻发布者  查看自己的某个新闻详情", notes = "需要新闻ID（int)  news_id")
     public Result<News> getNews(HttpServletRequest request,@RequestBody Map<String, String> getNewsInfo)
