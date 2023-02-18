@@ -125,8 +125,8 @@ data() {
         link: '/live'
       },
       {
-        name: '直播',
-        link: '/live'
+        name: '更多',
+        link: '/catch_category'
       }
     ],
   }

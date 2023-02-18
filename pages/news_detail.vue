@@ -14,7 +14,7 @@
         </div>
          <div class="side"> <img src="~/assets/images/收藏 .svg" class="tubiao"/></div>
          <div class="side"> <img src="~/assets/images/note.svg" class="tubiao" @click="readComment"/></div>
-         <div class="side"> <img src="~/assets/images/评论.svg" class="tubiao"/></div>
+         <div class="side"> <img src="~/assets/images/评论.svg" class="tubiao" @click="addComment"/></div>
          <hr>
          <div class="side"> <img src="~/assets/images/举报.svg" class="tubiao"/></div>
         </div>
@@ -183,7 +183,35 @@ import Cookie from 'js-cookie';
       })
     },
     readComment(){
-      this.$router.push('comment-user');
+      this.$router.push('comment_user');
+    },
+    addComment(){
+      this.$prompt('请输入评论', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+        }).then((content) => {
+          this.$axios({
+            headers: {
+              token: this.$store.state.token,
+            },
+            method:'post',
+            url:'/api/ordinary/addCommnets',
+            params:{
+              news_id: this.$store.state.news_id,
+              content: content.value
+            }}).then((result)=>{
+              console.log(result);
+              this.$message({
+                type: 'success',
+                message: '评论成功！'
+              }); 
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消评论'
+          });       
+        });
     }
 }
 }
