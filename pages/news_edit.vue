@@ -32,11 +32,11 @@ import axios from 'axios'
           value: '学习',
           label: '学习'
         }, {
-          value: '日常',
-          label: '日常'
+          value: '生活',
+          label: '生活'
         }, {
-          value: '美食',
-          label: '美食'
+          value: '娱乐',
+          label: '娱乐'
         }, {
           value: '旅游',
           label: '旅游'

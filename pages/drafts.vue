@@ -73,7 +73,10 @@ import axios from 'axios'
         .then((response)=> {
           console.log(response);
           if(response.data.code==200)
-          this.$message('保存成功!');
+          {
+            this.$message('保存成功!');
+            this.$router.push('home')
+          }
         });
     },
     pdetail(){

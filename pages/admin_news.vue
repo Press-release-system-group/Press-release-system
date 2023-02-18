@@ -144,7 +144,7 @@ methods:{
   margin-top: 0.5rem;
   margin-left: 0.5rem;
   width:42vw;
-  background-color: green;
+  /* background-color: green; */
 }
 .getinfo{
   float: left;
@@ -152,6 +152,6 @@ methods:{
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   width:42vw;
-  background-color: rgb(127, 55, 86);
+  /* background-color: rgb(127, 55, 86); */
 }
 </style>

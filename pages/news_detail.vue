@@ -22,7 +22,9 @@
         <div class="mytitle" >
            <h2>{{newsdetail.title}}</h2>  
            <h6>
-            <span>作者:{{newsdetail.author_name}}</span>
+            <p>累计点赞数：{{newsdetail.likes_cnt}}</p>
+            <span v-if="newsdetail.author_name!=null">作者:{{newsdetail.author_name}}</span>
+            <span v-if="newsdetail.author_name==null">作者:匿名</span>
             <span>新闻类别:{{newsdetail.category_name}}</span>
             <span>更新时间:{{newsdetail.update_time}}</span>
            </h6>
@@ -120,7 +122,10 @@ import Cookie from 'js-cookie';
         .then((response)=> {
           console.log(response);
           if(response.data.code==200)
-          this.$message('发布成功!');
+          {
+            this.$message('发布成功!');
+            this.$router.push('home')
+          }
         });
     },
     deletenews(){
@@ -136,7 +141,14 @@ import Cookie from 'js-cookie';
         .then((response)=> {
           console.log(response);
           if(response.data.code==200)
-          this.$message('删除成功!');
+          {
+            this.$message('删除成功!');
+            this.$router.push('home')
+          }
+          else if(response.data.code==5108)
+          {
+            this.$message('正在审核中的新闻无法删除!');
+          }
         });
     },
     pdetail(){

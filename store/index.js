@@ -5,7 +5,7 @@ export const state = ()=>({
     role:'',
     token:'',
     category_id:'',
-    news_id:''
+    news_id:'',
 })
 //完成数据的同步修改
 export const mutations = {
@@ -24,7 +24,7 @@ export const mutations = {
    },
    updatenews_id(state, payload) {
       state.news_id=payload;
-   }
+   },
 }
 
 

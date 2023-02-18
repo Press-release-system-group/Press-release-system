@@ -7,7 +7,7 @@
         <nuxt-link v-for="item in navs" :key="item.id" :to="item.link" tag="li" class="bar">{{item.name}}</nuxt-link>
         <li> <div class="container"><input class="search"/><button  class="searchbutton"><img src="~/assets/images/搜索框 .svg"  class="searchimg"/></button></div></li>
         <li>
-          <el-dropdown size="large" split-button type="primary">
+          <el-dropdown size="large" split-button type="primary" v-if="role=='新闻发布者'">
                                创作者中心
             <template #dropdown>
              <el-dropdown-menu>
@@ -99,29 +99,30 @@ export default {
 name: 'TopBar',
 data() {
   return {
+      role:this.$store.state.role,
        navs: [
       {
         name: '首页',
         link: '/'
       },
       {
-        name: '沸点',
-        link: '/hot'
+        name: '时政',
+        link: '/'
       },
       {
-        name: '课程',
-        link: '/course'
+        name: '体育',
+        link: '/sports'
       },
       {
-        name: '直播',
-        link: '/live'
+        name: '娱乐',
+        link: '/game'
       }, 
       {
-        name: '直播',
-        link: '/live'
+        name: '学习',
+        link: '/study'
       },
       {
-        name: '直播',
+        name: '生活',
         link: '/live'
       },
       {

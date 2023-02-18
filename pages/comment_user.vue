@@ -6,14 +6,13 @@
          </div>
             <div class="getnews" v-for="comments in navs" :key="comments" v-on:click="todeatil">
                 <el-button type="info" plain class="DD" @click="deleteC(comments.comment_id)">删除</el-button>
-                <div class="gettext">{{ comments.user_name }}</div>
+                <div class="gettext">{{ comments.user_name }}:</div>
                 <div class="gettext">{{ comments.content }}</div>
                 <div class="getinfo">{{ comments.create_time }}</div>
             </div>
         </div>
     </div>
 </template>
-
 <script>
 import axios from 'axios'
 export default {
@@ -35,8 +34,14 @@ export default {
     }).then((result) => {
       console.log(result)
       this.navs = [];
+      if(result.data.code==200)
+      {
       this.$message("查找成功！");
       this.navs = result.data.data;
+      }
+      else{
+        this.$message("查找失败！");
+      }
     });
     }
     else {
@@ -52,8 +57,14 @@ export default {
     }).then((result) => {
       console.log(result)
       this.navs = [];
+      if(result.data.code==200)
+      {
       this.$message("查找成功！");
       this.navs = result.data.data;
+      }
+      else{
+        this.$message("查找失败！");
+      }
     });
     }
   },
@@ -72,7 +83,12 @@ export default {
     }).then((result) => {
       console.log(result)
       if(result.data.code==200)
-      this.$message("删除成功！");
+      {
+        this.$message("删除成功！");
+      }
+      else{
+        this.$message(result.data.msg+"，所以删除失败！");
+      }
     });
     }
   }
@@ -119,7 +135,7 @@ export default {
   margin-top: 0.5rem;
   margin-left: 0.5rem;
   width:42vw;
-  background-color: green;
+  /* background-color: green; */
 }
 .getinfo{
   float: left;
@@ -127,7 +143,7 @@ export default {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   width:42vw;
-  background-color: rgb(127, 55, 86);
+  /* background-color: rgb(127, 55, 86); */
 }
 .CC{
     width: 5rem;
