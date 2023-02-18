@@ -23,12 +23,24 @@
            <h2>{{newsdetail.title}}</h2>  
            <h6>
             <span>作者:{{newsdetail.author_name}}</span>
-          <span>新闻类别:{{newsdetail.category_name}}</span>
-          <span>更新时间:{{newsdetail.update_time}}</span>
+            <span>新闻类别:{{newsdetail.category_name}}</span>
+            <span>更新时间:{{newsdetail.update_time}}</span>
            </h6>
          </div>
          <div class="mydetail">
           {{ newsdetail.content}}
+         </div>
+        </div>
+        <div class="comment" v-for="comment in comments">
+        <div class="mytitle" >
+           <h6>
+            <span>作者:{{}}</span>
+            <span>新闻类别:{{}}</span>
+            <span>更新时间:{{}}</span>
+           </h6>
+         </div>
+         <div class="mydetail">
+          {{}}
          </div>
         </div>
         <div class="pass" v-if="role=='管理员'">
@@ -59,6 +71,9 @@ import Cookie from 'js-cookie';
       //  content:''
       }
     ],
+    comments:[{
+
+    }]
    }
  },
  created(){
@@ -215,6 +230,15 @@ import Cookie from 'js-cookie';
     margin-left: 2vw;
     margin-top: 1rem;
     height: 45rem;
+    width:52.5vw;
+    background-color: rgb(255, 255, 255);    
+    box-shadow: 0 0.1rem 1rem  rgb(222, 218, 218);
+}
+.comment{
+    display: inline-block; 
+    margin-left: 17vw;
+    margin-top: 2rem;
+    height: 100%;
     width:52.5vw;
     background-color: rgb(255, 255, 255);    
     box-shadow: 0 0.1rem 1rem  rgb(222, 218, 218);
