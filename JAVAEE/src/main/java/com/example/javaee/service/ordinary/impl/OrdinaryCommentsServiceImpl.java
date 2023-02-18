@@ -46,7 +46,7 @@ public class OrdinaryCommentsServiceImpl implements IOrdinaryCommentsService {
        for(int i=0;i<commentsList.size();i++)
        {
 
-           Comments comments=new Comments();
+           Comments comments=commentsList.get(i);
            if(comments.getState()==1)continue;//如果是删除状态的数据就跳过
 
            CommentsDetail detail=new CommentsDetail();
