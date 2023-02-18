@@ -5,7 +5,6 @@ import com.example.javaee.utils.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import sun.awt.SunHints;
 
 import java.security.SignatureException;
 
