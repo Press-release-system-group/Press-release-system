@@ -1,9 +1,13 @@
 <template>
   <div>
-      <div class="myHOME"  v-for="news in navs" :key="news">
-          <img src="~/assets/images/头像 男孩.svg" class="CCimg">
-          <div class="Ctext">{{ news.name }}</div>
-        <div class="Cinfo">{{ news.name }}</div>
+      <div class="myHOME"  v-for="news in mynews" :key="news">
+          <!-- <img src="~/assets/images/头像 男孩.svg" class="CCimg"> -->
+          <div class="Ctext"><h4>{{ news.title }}</h4></div>
+        <div class="Cinfo">
+          <span>新闻Id:{{news.news_id}}</span>
+          <span>类别Id:{{news.category_id}}</span>
+          <span>更新时间:{{news.update_time}}</span>
+        </div>
         <!-- <div class="Aimg"><img src="~/assets/images/头像 男孩.svg" class="AAimg"></div> -->
       </div>
     </div>
@@ -14,22 +18,14 @@ export default {
   layout:"home",
   data() {
 return {
-     navs: [
+     mynews: [
     {
-      name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
-    },
-    {
-      name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
-    },
-    {
-      name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
-    },
-    {
-      name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
-    },
-    {
-      name: '掘友们新年快乐~2023年第一次更文挑战正式上线啦！相信大家已经调整好状态，蓄势待发了，2月与掘金一起在技术写作之路「兔飞猛进」吧！',
-    },
+      state:'',
+      news_id:'',
+      title:'',
+      category_id:'',
+      update_time:''
+    }
   ],
 }
 },
@@ -44,7 +40,7 @@ this.getAll();
       .then(Response=>{
         console.log(Response);
         if(Response.data.code==200){
-          
+          this.mynews=Response.data.data
         }
    
       })

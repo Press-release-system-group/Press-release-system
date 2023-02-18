@@ -50,8 +50,8 @@
     },
     getUserInfo(){
       console.log("获取个人信息");
-      console.log(this.$store.state.token);
-      axios.get('/api/admin/findAllUser?',{headers:{token:this.$store.state.token,'platform': 'web'}})
+      console.log(this.$store.state.token+this.$store.state.userId);
+      axios.get('/api/admin/getUserInfo?',{user_id:this.$store.state.userId},{headers:{token:this.$store.state.token,'platform': 'web'}})
       .then(Response=>{
         console.log(Response);
         if(Response.data.code==200){
