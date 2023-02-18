@@ -50,8 +50,7 @@ public class OrdinaryCommentsController {
             throw new BusinessException(ExceptionEnum.PARAMS_接收参数错误);
         }
        int user_id=Integer.parseInt(JwtUtil.getClaim(token).get("userId").toString()) ;
-        Role role=(Role) JwtUtil.getClaim(token).get("userId");
-        if (role!=Role.普通用户)throw  new BusinessException(ExceptionEnum.USER_无权限);
+
 
         commentsService.addComments(news_id,user_id,content);
 

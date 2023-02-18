@@ -19,6 +19,7 @@ public class OrdinaryLikeServiceImpl implements IOrdinaryLikeService {
 
     @Autowired
     private SelectDao selectDao;
+    @Autowired
     private InsertDao insertDao;
 
 
@@ -38,17 +39,19 @@ public class OrdinaryLikeServiceImpl implements IOrdinaryLikeService {
     @Override
     public List<SimpleNews> checklikeNews(int user_id) {
         List<Likes> likenews = new ArrayList<Likes>();
-        List<SimpleNews> simplenews = new ArrayList<SimpleNews>();
+        List<SimpleNews> simpleNewsList = new ArrayList<SimpleNews>();
         likenews = selectDao.likeSelectByStateAndUser_id(0,user_id);
         for (int i = 0 ; i < likenews.size();++i){
-            News new_data;
-            new_data = selectDao.newsSelectByNewsId(likenews.get(i).getNews_id());
-            simplenews.get(i).setState(0);
-            simplenews.get(i).setNews_id(new_data.getNews_id());
-            simplenews.get(i).setTitle(new_data.getTitle());
-            simplenews.get(i).setCategory_id(new_data.getCategory_id());
-            simplenews.get(i).setUpdate_time(new_data.getCreate_time());
+
+            News new_data = selectDao.newsSelectByNewsId(likenews.get(i).getNews_id());
+            SimpleNews simpleNews=new SimpleNews();
+            simpleNews.setState(0);
+                    simpleNews.setNews_id(new_data.getNews_id());
+                    simpleNews.setTitle(new_data.getTitle());
+                    simpleNews.setCategory_id(new_data.getCategory_id());
+                    simpleNews.setUpdate_time(new_data.getCreate_time());
+          simpleNewsList.add(simpleNews);
         }
-        return simplenews;
+        return simpleNewsList;
     }
 }
