@@ -22,14 +22,14 @@ public class GlobalExceptionHandler {
         return result;
     }
 
-    @ExceptionHandler(value = RuntimeException.class)
-    public Result businessException(RuntimeException e){
-        Result result=new Result();
-        result.setCode(500);
-        result.setMsg("服务器出现未定义异常   "+  e.toString());
-
-        return result;
-    }
+//    @ExceptionHandler(value = RuntimeException.class)
+//    public Result businessException(RuntimeException e){
+//        Result result=new Result();
+//        result.setCode(500);
+//        result.setMsg("服务器出现未定义异常   "+  e.toString());
+//
+//        return result;
+//    }
 
 
 }

@@ -38,8 +38,9 @@ public class PublishCommentsController {
             throw new BusinessException(ExceptionEnum.PARAMS_接收参数错误);
         }
         String token=request.getHeader("token");
-        int user_id= Integer.parseInt(JwtUtil.getClaim("token").get("userId").toString());
+        int user_id= Integer.parseInt(JwtUtil.getClaim(token).get("userId").toString());
        List<CommentsDetail> list= commentsService.findComments(news_id,user_id);
+
        Result result=new Result();
        result.setCode(200);
        result.setMsg("查看成功");

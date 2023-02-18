@@ -154,13 +154,13 @@ public class UserController {
     @ResponseBody
     @ApiOperation(value = "更新单个用户信息", notes = "用来更新用户名、邮箱、电话、真实姓名" +
             "\n{\n" +
-            "    \"user_id\": 2,\n" +
+
             "    \"username\": \"新用户名\",\n" +
             "    \"email\": \"1234567@qq.com\",\n" +
             "    \"phone\": \"123456789\",\n" +
             "    \"name\": \"丁一\"\n" +
             "}")
-    public Result<User> updateUserInfo(HttpServletRequest request,@ApiIgnore @RequestBody Map<String, String> updateInfo)
+    public Result<User> updateUserInfo(HttpServletRequest request, @RequestBody Map<String, String> updateInfo)
     {
         try
         {
@@ -223,7 +223,7 @@ public class UserController {
 
     @DeleteMapping("/admin/delete")
     @ResponseBody
-    @ApiOperation(value = "删除用户", notes = "由于各表的依赖，该功能可能引发各类问题，尚未处理，前端可以暂时搁置不接")
+    @ApiOperation(value = "删除用户", notes = "由于各表的依赖，该功能可能引发各类问题，尚未处理，前端可以暂时搁置不接，废弃")
     public Result<Void> delete(HttpServletRequest request, @ApiIgnore @RequestBody Map<String, String> deleteInfo) {
 
         try
