@@ -11,11 +11,13 @@ import com.example.javaee.exceptionHandler.exception.ExceptionEnum;
 import com.example.javaee.service.admin.IAdminCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional(rollbackFor =RuntimeException.class)
 public class AdminCategoryServiceImpl implements IAdminCategoryService {
     @Autowired
     SelectDao selectDao;

@@ -10,6 +10,7 @@ import com.example.javaee.vo.SimpleNews;
 import com.example.javaee.service.publish.IPublishNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(rollbackFor =RuntimeException.class)
 public class PublishNewsServiceImpl implements IPublishNewsService {
     @Autowired
     private InsertDao insertDao;

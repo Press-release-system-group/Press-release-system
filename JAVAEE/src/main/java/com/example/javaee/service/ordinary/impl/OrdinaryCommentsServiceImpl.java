@@ -12,12 +12,14 @@ import com.example.javaee.service.ordinary.IOrdinaryCommentsService;
 import com.example.javaee.vo.CommentsDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional(rollbackFor =RuntimeException.class)
 public class OrdinaryCommentsServiceImpl implements IOrdinaryCommentsService {
     @Autowired
     SelectDao selectDao;

@@ -5,6 +5,9 @@ import com.example.javaee.utils.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import sun.awt.SunHints;
+
+import java.security.SignatureException;
 
 //这里是异常的处理区
 @RestControllerAdvice
@@ -18,4 +21,15 @@ public class GlobalExceptionHandler {
         result.setMsg(e.getMsg());
         return result;
     }
+
+    @ExceptionHandler(value = RuntimeException.class)
+    public Result businessException(RuntimeException e){
+        Result result=new Result();
+        result.setCode(500);
+        result.setMsg("服务器出现未定义异常   "+  e.toString());
+
+        return result;
+    }
+
+
 }

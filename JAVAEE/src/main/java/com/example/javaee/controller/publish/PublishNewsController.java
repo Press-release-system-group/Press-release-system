@@ -169,7 +169,7 @@ public class PublishNewsController
     }
 
     // 删除自己的某个新闻
-    @DeleteMapping("/deleteNews")
+    @PostMapping("/deleteNews")
     @ResponseBody
     @ApiOperation(value = "新闻发布者  删除自己的新闻", notes = "需要新闻id  news_id")
     public Result<Void> deleteNewsByUser(HttpServletRequest request, @RequestBody Map<String, String> deleteNewsInfo)

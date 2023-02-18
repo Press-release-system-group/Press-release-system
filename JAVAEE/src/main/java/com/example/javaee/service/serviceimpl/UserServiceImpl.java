@@ -11,6 +11,7 @@ import com.example.javaee.utils.SensitiveWordFilter;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Service
+@Transactional(rollbackFor =RuntimeException.class)
 public class UserServiceImpl implements UserService
 {
     @Autowired

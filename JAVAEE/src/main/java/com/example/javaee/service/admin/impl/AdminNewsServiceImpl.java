@@ -12,12 +12,14 @@ import com.example.javaee.vo.NewsDetails;
 import com.example.javaee.vo.SimpleNews;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional(rollbackFor =RuntimeException.class)
 public class AdminNewsServiceImpl implements IAdminNewsService {
 
     @Autowired

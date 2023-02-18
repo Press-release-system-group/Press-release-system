@@ -11,11 +11,13 @@ import com.example.javaee.service.publish.IPublishNewsService;
 import com.example.javaee.vo.CommentsDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional(rollbackFor =RuntimeException.class)
 public class PublishCommentsServiceImpl implements IPublishCommentsService {
     @Autowired
     SelectDao selectDao;

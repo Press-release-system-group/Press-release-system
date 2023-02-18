@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.javaee.entity.Likes;
 import com.example.javaee.vo.SimpleNews;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional(rollbackFor =RuntimeException.class)
 public class OrdinaryLikeServiceImpl implements IOrdinaryLikeService {
 
     @Autowired
