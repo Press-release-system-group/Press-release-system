@@ -49,7 +49,7 @@
         this.$router.push('news_detail')
       },
       load(){
-        let params={categorylist: 3};
+        let params={categorylist: 6};
         this.$axios({
           method:'post',
           url:'/api/ordinary/briefnews',

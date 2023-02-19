@@ -1,4 +1,6 @@
 <template>
+  <div>
+    <Bar />
     <div class="box-card">
     <div class="head">
         <span>最新</span>
@@ -14,8 +16,14 @@
         </div>
       </div>
     </div>
-  </template>
-  <script>
+    <div>
+      <!-- <nuxt-link :to="{name: 'about', params: {id: 3306 }}">params传参</nuxt-link> -->
+    </div>
+
+  </div>
+ 
+</template>
+<script>
 import axios from 'axios';
 import Cookie from 'js-cookie';
   export default {
@@ -41,7 +49,7 @@ created(){
       this.$router.push('news_detail')
     },
     load(){
-      let params={categorylist: 1};
+      let params={categorylist: 4};
       this.$axios({
         method:'post',
         url:'/api/ordinary/briefnews',

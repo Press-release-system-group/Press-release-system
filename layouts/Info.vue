@@ -3,12 +3,15 @@
       <header>
         <ToBar />
       </header>
+      <InfoBar/>
        <Nuxt />
     </div>
   </template>
-  <script>
+<script>
+import Mylist from '../components/mylist.vue';
   export default {
-  }
+
+}
 </script>
   <style>
   header{

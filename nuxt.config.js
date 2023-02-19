@@ -18,13 +18,13 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    "element-ui/lib/theme-chalk/index.css"
+    // "element-ui/lib/theme-chalk/index.css"
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '@/plugins/element-ui',
-    '@/plugins/axios'
+    // '@/plugins/axios'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -37,26 +37,27 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/proxy'
+    '@nuxtjs/proxy',
   ],
 
-
   axios: {
-    proxy: true,
-    prefix: '/api/',
-    credential: true
+    proxy: true // Can be also an object with default options
   },
- 
   proxy: {
-    '/api/': {
-      target: 'http://101.33.202.174:7777/', // 目标服务器ip
-      pathRewrite: {
-        '^/api/': '/',  // 把 /api 替换成 /
-        changeOrigin: true // 是否跨域
-      }
-    }},
+    '/api': {
+    changeOrigin: true,
+    target: 'http://localhost:7777/', // 允许跨域的服务器地址
+    pathRewrite: {
+      '^/api': '/'
+    }
+   }
+  },
+  server: {
+    host: 'localhost',
+    port: 8080
+  },
   build: {
-    vendor: ["axios"]
+    
 
   }
 }

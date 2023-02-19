@@ -3,14 +3,20 @@
       <header>
         <ToBar />
       </header>
-       <Nuxt />
-    </div>
+      <div class="d1"><my/></div>
+      <div class="d2"><mylist/></div>
+      <Nuxt />
+      </div>
   </template>
-  <script>
+<script>
   export default {
-  }
+
+}
 </script>
   <style>
+    .d2{
+    margin-top: 2rem;
+  }  
   header{
     margin: 0;
     position: relative;
