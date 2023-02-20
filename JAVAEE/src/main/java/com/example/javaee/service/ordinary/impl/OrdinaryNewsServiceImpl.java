@@ -21,6 +21,7 @@ import java.util.List;
 @Service
 @Transactional(rollbackFor =RuntimeException.class)
 public class OrdinaryNewsServiceImpl implements IOrdinaryNewsService {
+    //就是创建一个已被初始化的bean，且创建初始化是根据无参构造函数，spring自动将匹配到的属性值进行注入，之后就可以正常使用这个对象的方法
     @Autowired
     private SelectDao selectDao;
 
@@ -85,7 +86,6 @@ public class OrdinaryNewsServiceImpl implements IOrdinaryNewsService {
         }
         detailnews.setNews_id(news_id);
         detailnews.setTitle(news.getTitle());
-
         detailnews.setAuthor_name((userDao.findByUserId(news.getAuthor_id())).getUsername());
         detailnews.setCategory_name((selectDao.categorySelectByCategory_id(news.getCategory_id())).getName());
         detailnews.setContent(news.getContent());

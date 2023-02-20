@@ -22,17 +22,17 @@ import java.util.Map;
 import java.util.Set;
 
 @Controller
-@RequestMapping("ordinary")
+@RequestMapping("ordinary") //映射请求
 
 @Api(tags = "用户新闻类接口")
 public class OrdinaryNewsController
 {
 
-    @Autowired
+    @Autowired//就是创建一个已被初始化的bean，且创建初始化是根据无参构造函数，spring自动将匹配到的属性值进行注入，之后就可以正常使用这个对象的方法
     IOrdinaryNewsService ordinaryNews;
 
     @PostMapping("/newscategory")
-    @ResponseBody
+    @ResponseBody //个人理解：该方法的返回的结果直接写入 HTTP 响应正文
     @ApiOperation(value = "用户 查看简略新闻类别 ", notes = "需要一个或多个新闻类别 id")
     public Result<List<Category>> newscategory(@RequestBody Map<String , String> categoryInfo)
     {

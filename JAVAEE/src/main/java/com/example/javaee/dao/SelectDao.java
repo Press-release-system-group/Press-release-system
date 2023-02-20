@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
-@Mapper
+@Mapper //mybatis的注解，说明这是一个Mapper
 public interface SelectDao {
 
     //这里是用户表的sql
